@@ -1,6 +1,7 @@
 package LIAO;
 
-class Point {
+
+public class Point {
 	int angle;
 	double length;
 	public int getAngle(){
@@ -10,3 +11,4 @@ class Point {
 		return length;
 	}
 }
+

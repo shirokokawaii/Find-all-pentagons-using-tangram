@@ -1,5 +1,7 @@
 package LIAO;
 
+import LIAO.utils.Connector;
+
 import java.util.*;
 
 public class Algorithm {
@@ -124,8 +126,8 @@ public class Algorithm {
 	private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
 		Shape result = new Shape();
 		// calculate the results and store it into set.*****
-		return result;
-		
+		return Connector.connect(shape1, shape2, new Point(), new Point(), true);
+
 	}
 	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
@@ -134,9 +136,11 @@ public class Algorithm {
 		return edgeSet;
 	}
 	
-	private Queue<Shape> connectAll(Shape order, Shape shape ) {
+
+	private Queue<Shape> connectAll(Shape order, Shape shape) {
 		Queue<Shape> resultSet = new LinkedList<Shape>();
 		//calculate the results and store them into set.*****
-		return resultSet;
+		return Connector.connectAll(order, shape);
 	}
 }
+
