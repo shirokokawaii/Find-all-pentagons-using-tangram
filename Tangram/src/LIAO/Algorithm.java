@@ -1,5 +1,7 @@
 package LIAO;
 
+import LIAO.utils.Connector;
+
 import java.util.*;
 
 public class Algorithm {
@@ -17,14 +19,14 @@ public class Algorithm {
 	ArrayList<Shape> answerSet = new ArrayList<Shape>(); 
 	
 	private void displayAnswer(Shape shape) {
-		if(shape.point.size()==5) {//This shape is a pentagon, draw and display it
+		if(shape.size()==5) {//This shape is a pentagon, draw and display it
 			//here needs to draw and display the answer shape
 		}
 		else {//This shape is not a pentagon, only output its angleSet on the terminal
-			int len = shape.point.size();
+			int len = shape.size();
 			int[] angleSet = new int[len];
 			for(int i=0;i<len;i++) {
-				angleSet[i] = shape.point.get(i).getAngle();
+				angleSet[i] = shape.getPoint(i).getAngle();
 			}
 			System.out.println(angleSet);
 		}
@@ -79,6 +81,8 @@ public class Algorithm {
 	private Shape connect(Shape shape1, Shape shape2, String edge) {//connect shape1 and shape2 with specified edge
 		Shape result = new Shape();
 		// calculate the results and store it into set.
+
+		Connector.connect(shape1, shape2, new Point(), new Point(), true);
 		return result;
 		
 	}
@@ -91,34 +95,7 @@ public class Algorithm {
 	
 	private void connectAll(Shape order, Shape shape, Queue<Shape> set) {
 		//calculate the results and store them into set.
-		
-	}
-}
 
-class Shape {
-	ArrayList<Point> point;
-	Queue<Shape> shapesSet = new LinkedList<Shape>();
-	Queue<String> orderSet = new LinkedList<String>();
-	
-	public boolean contains(Shape shape) {
-		if(shapesSet.contains(shape)) {
-			return true;
-		}
-		return false;
-	}
-	public void add(Shape shape, String edge) {
-		shapesSet.add(shape);
-		orderSet.add(edge);
-	}
-}
-
-class Point {
-	int angle;
-	double length;
-	public int getAngle(){
-		return angle;
-	}
-	public double getLength() {
-		return length;
+		set = Connector.connectAll(order, shape);
 	}
 }
