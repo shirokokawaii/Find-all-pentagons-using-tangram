@@ -5,11 +5,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Shape {
-    ArrayList<Point> point;
+    public CircleList<Point> point;
     Queue<Shape> shapesSet = new LinkedList();
     Queue<String> orderSet = new LinkedList();
 
-    Shape() {
+    public Shape() {
+    }
+
+    public Shape(CircleList<Point> point) {
+        this.point = point;
     }
 
     public int size() {
@@ -18,6 +22,14 @@ public class Shape {
 
     public Point getPoint(int n) {
         return point.get(n);
+    }
+
+    public void addPoint(Point point) {
+        this.point.add(point);
+    }
+
+    public Double getLength(int n) {
+        return point.get(n).getLength();
     }
 
     public boolean contains(Shape shape) {
