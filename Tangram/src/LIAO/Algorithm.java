@@ -21,29 +21,33 @@ public class Algorithm {
 			//here needs to draw and display the answer shape
 		}
 		else {//This shape is not a pentagon, only output its angleSet on the terminal
-			int len = shape.point.size();
-			int[] angleSet = new int[len];
-			for(int i=0;i<len;i++) {
-				angleSet[i] = shape.point.get(i).getAngle();
-			}
+			int[] angleSet= checkAngle(shape);
 			System.out.println(angleSet);
 		}
 	}
 
+	public int[] checkAngle(Shape shape) {
+		int len = shape.point.size();
+		int[] angleSet = new int[len];
+		for(int i=0;i<len;i++) {
+			angleSet[i] = shape.point.get(i).getAngle();
+		}
+		return angleSet;
+	}
 	
 	public void bfsSearch() {
 		Queue<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(s[6]);
 		set1.offer(s[7]);
 		for(int i=0;i<6;i++) {
-			System.out.println("Calculating "+i+"st shape");
+			System.out.println("Adding "+i+1+"st shape");
 			Queue<Shape> set2 = new LinkedList<Shape>();
 			while(!set1.isEmpty()) {
 				Shape order = new Shape();
 				order = set1.poll();
 				for(int j=0;j<6;j++) {
 					if(!order.contains(s[j])) {
-						connectAll(order,s[j],set2);
+						set2 = connectAll(order,s[j]);
 					}
 				}
 			}
@@ -76,6 +80,29 @@ public class Algorithm {
 		}
 	}
 	
+	private void aStarSearch() {
+		Queue<Shape> shapeSet = new LinkedList<Shape>();
+		aStarAlgorithm(s[6]);
+	}
+	
+	private void aStarAlgorithm(Shape shape) {
+		if(shape.shapesSet.size()==7) {
+			displayAnswer(shape);
+			return;
+		}
+		HashMap<Integer, Shape> costSet = new HashMap<Integer, Shape>();
+		Queue<Shape> set = new LinkedList<Shape>();
+		for(int i=0;i<6;i++) {
+			if(!shape.contains(s[i])) {
+				set = connectAll(shape, s[i]);
+				while(!set.isEmpty()) {
+					int cost = set.poll().point.size();
+					costSet.push()
+				}
+			}
+		}
+	}
+	
 	private Shape connect(Shape shape1, Shape shape2, String edge) {//connect shape1 and shape2 with specified edge
 		Shape result = new Shape();
 		// calculate the results and store it into set.
@@ -89,9 +116,10 @@ public class Algorithm {
 		return edgeSet;
 	}
 	
-	private void connectAll(Shape order, Shape shape, Queue<Shape> set) {
+	private Queue<Shape> connectAll(Shape order, Shape shape ) {
+		Queue<Shape> resultSet = new LinkedList<Shape>();
 		//calculate the results and store them into set.
-		
+		return resultSet;
 	}
 }
 
