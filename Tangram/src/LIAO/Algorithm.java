@@ -18,7 +18,7 @@ public class Algorithm {
 	
 	private void displayAnswer(Shape shape) {
 		if(shape.point.size()==5) {//This shape is a pentagon, draw and display it
-			//here needs to draw and display the answer shape
+			//here needs to draw and display the answer shape*****
 		}
 		else {//This shape is not a pentagon, only output its angleSet on the terminal
 			int[] angleSet= checkAngle(shape);
@@ -72,7 +72,8 @@ public class Algorithm {
 				Queue<String> edgeSet = getAllEdgePossibility(shape, s[j]);
 				while(!edgeSet.isEmpty()) {
 					String edge = edgeSet.poll();
-					Shape result = connect(shape,s[j],edge);
+					Shape result = new Shape();
+					//here needs to connect shapes with specified edge*****
 					dfsAlgorithm(result);
 				}
 				
@@ -83,6 +84,7 @@ public class Algorithm {
 	private void aStarSearch() {
 		Queue<Shape> shapeSet = new LinkedList<Shape>();
 		aStarAlgorithm(s[6]);
+		aStarAlgorithm(s[7]);
 	}
 	
 	private void aStarAlgorithm(Shape shape) {
@@ -90,35 +92,51 @@ public class Algorithm {
 			displayAnswer(shape);
 			return;
 		}
-		HashMap<Integer, Shape> costSet = new HashMap<Integer, Shape>();
+		ArrayList<ArrayList<Shape>> costSet= new ArrayList<ArrayList<Shape>>();
 		Queue<Shape> set = new LinkedList<Shape>();
-		for(int i=0;i<6;i++) {
+		for(int i=0;i<7;i++){//up to decagon
+			costSet.add(new ArrayList<Shape>());
+		}
+		for(int i=0;i<6;i++) {//calculate all the cost in a row
 			if(!shape.contains(s[i])) {
 				set = connectAll(shape, s[i]);
 				while(!set.isEmpty()) {
-					int cost = set.poll().point.size();
-					costSet.push()
+					Shape shapeTem = set.poll();
+					int cost = 5 - shapeTem.point.size();
+					if(cost > 5){
+						costSet.get(6).add(shapeTem);
+					}
+					else{
+						costSet.get(cost).add(shapeTem);
+					}
 				}
+			}
+		}
+		for(int i=0;i<7;i++){//connect the shape from the lowest cost
+			int len = costSet.get(i).size();
+			for(int j=0;j<len;j++){
+				Shape shapeTem = costSet.get(i).get(j);
+				aStarAlgorithm(shapeTem);
 			}
 		}
 	}
 	
-	private Shape connect(Shape shape1, Shape shape2, String edge) {//connect shape1 and shape2 with specified edge
+	private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
 		Shape result = new Shape();
-		// calculate the results and store it into set.
+		// calculate the results and store it into set.*****
 		return result;
 		
 	}
 	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
 		Queue<String> edgeSet = new LinkedList<String>();
-		//here calculate all the possible edge combination and store them into edgeSet.
+		//here calculate all the possible edge combination and store them into edgeSet.*****
 		return edgeSet;
 	}
 	
 	private Queue<Shape> connectAll(Shape order, Shape shape ) {
 		Queue<Shape> resultSet = new LinkedList<Shape>();
-		//calculate the results and store them into set.
+		//calculate the results and store them into set.*****
 		return resultSet;
 	}
 }
@@ -137,6 +155,9 @@ class Shape {
 	public void add(Shape shape, String edge) {
 		shapesSet.add(shape);
 		orderSet.add(edge);
+	}
+	public void getLoopValue(){
+		
 	}
 }
 
