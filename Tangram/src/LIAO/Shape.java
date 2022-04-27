@@ -1,11 +1,10 @@
 package LIAO;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Shape {
-    public CircleList<Point> point;
+    CircleList<Point> points;
     Queue<Shape> shapesSet = new LinkedList();
     Queue<String> orderSet = new LinkedList();
 
@@ -13,23 +12,23 @@ public class Shape {
     }
 
     public Shape(CircleList<Point> point) {
-        this.point = point;
+        this.points = point;
     }
 
     public int size() {
-        return point.size();
+        return points.size();
     }
 
     public Point getPoint(int n) {
-        return point.get(n);
+        return points.get(n);
     }
 
     public void addPoint(Point point) {
-        this.point.add(point);
+        this.points.add(point);
     }
 
     public Double getLength(int n) {
-        return point.get(n).getLength();
+        return points.get(n).getLength();
     }
 
     public boolean contains(Shape shape) {

@@ -16,5 +16,13 @@ public class Point {
 	public double getLength() {
 		return length;
 	}
+
+	@Override
+	public String toString() {
+		return "Point{" +
+				"angle=" + angle +
+				", length=" + length +
+				'}';
+	}
 }
 
