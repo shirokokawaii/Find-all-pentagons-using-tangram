@@ -140,34 +140,3 @@ public class Algorithm {
 		return resultSet;
 	}
 }
-
-class Shape {
-	ArrayList<Point> point;
-	Queue<Shape> shapesSet = new LinkedList<Shape>();
-	Queue<String> orderSet = new LinkedList<String>();
-	
-	public boolean contains(Shape shape) {
-		if(shapesSet.contains(shape)) {
-			return true;
-		}
-		return false;
-	}
-	public void add(Shape shape, String edge) {
-		shapesSet.add(shape);
-		orderSet.add(edge);
-	}
-	public void getLoopValue(){
-		
-	}
-}
-
-class Point {
-	int angle;
-	double length;
-	public int getAngle(){
-		return angle;
-	}
-	public double getLength() {
-		return length;
-	}
-}
