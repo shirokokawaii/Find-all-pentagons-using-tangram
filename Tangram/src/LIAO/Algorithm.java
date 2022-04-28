@@ -17,22 +17,25 @@ public class Algorithm {
 	}
 	Shape[] s = new Shape[8];
 	ArrayList<Shape> answerSet = new ArrayList<Shape>(); 
-	
+
 	private void displayAnswer(Shape shape) {
+		ArrayList<Integer> angleSet = checkAngle(shape);
 		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
+			System.out.println("hit:" + shape.size());
+			System.out.println(angleSet);
 			//here needs to draw and display the answer shape*****
 		}
 		else {//This shape is not a pentagon, only output its angleSet on the terminal
-			int[] angleSet= checkAngle(shape);
+			System.out.print(angleSet.size() );
 			System.out.println(angleSet);
 		}
 	}
 
-	public int[] checkAngle(Shape shape) {
-		int len = shape.points.size();
-		int[] angleSet = new int[len];
+	public ArrayList<Integer> checkAngle(Shape shape) {
+		int len = shape.size();
+		ArrayList<Integer> angleSet = new ArrayList<Integer>(); 
 		for(int i=0;i<len;i++) {
-			angleSet[i] = shape.points.get(i).getAngle();
+			angleSet.add(shape.points.get(i).getAngle());
 		}
 		return angleSet;
 	}
@@ -43,20 +46,23 @@ public class Algorithm {
 		set1.offer(s[7]);
 		for(int i=0;i<6;i++) {
 			HashMap<ArrayList<Integer>,Integer> angleSetMap = new HashMap<>();
-			System.out.println("Adding "+i+1+"st shape");
+			System.out.println("Adding "+(i+1)+"st shape");
 			Queue<Shape> set2 = new LinkedList<Shape>();
 			while(!set1.isEmpty()) {
 				Shape order = new Shape();
 				order = set1.poll();
 				for(int j=0;j<6;j++) {
 					if(!order.contains(s[j])) {
-						set2 = connectAll(order,s[j]);
+						set2 = Connector.connectAll(order,s[j]);
 					}
 				}
 			}
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
-				ArrayList<Integer> angleSetTem = getAngleSet(shape);
+				if(shape == null){
+					continue;
+				}
+				ArrayList<Integer> angleSetTem = getAngleList(shape);
 				if(!angleSetMap.containsKey(angleSetTem)){
 					angleSetMap.put(angleSetTem, 1);
 					set1.offer(shape);
@@ -85,7 +91,7 @@ public class Algorithm {
 					String edge = edgeSet.poll();
 					Shape result = new Shape();
 					//here needs to get all the possibility edge and connect shapes with specified edge*****
-					if(!angleSetMap.containsKey(getAngleSet(result))){
+					if(!angleSetMap.containsKey(getAngleList(result))){
 						dfsAlgorithm(result, angleSetMap);
 					}
 				}
@@ -94,8 +100,7 @@ public class Algorithm {
 		}
 	}
 	
-	private void aStarSearch() {
-		Queue<Shape> shapeSet = new LinkedList<Shape>();
+	public void aStarSearch() {
 		aStarAlgorithm(s[6]);
 		aStarAlgorithm(s[7]);
 	}
@@ -112,7 +117,7 @@ public class Algorithm {
 		}
 		for(int i=0;i<6;i++) {//calculate all the cost in a row
 			if(!shape.contains(s[i])) {
-				set = connectAll(shape, s[i]);
+				set = Connector.connectAll(shape, s[i]);
 				while(!set.isEmpty()) {
 					Shape shapeTem = set.poll();
 					int cost = 5 - shapeTem.points.size();
@@ -158,13 +163,13 @@ public class Algorithm {
 	// 	return true;
 	// }
 
-		private ArrayList<Integer> getAngleSet(Shape shape){
+		private ArrayList<Integer> getAngleList(Shape shape){
 		ArrayList<Integer> angleSet = new ArrayList<Integer>();
-		int len = shape.point.size();
+		int len = shape.size();
 		int min = 8;
 		int index = 0;
 		for(int i=0;i<len;i++){
-			int tem = shape.point.get(i).getAngle();
+			int tem = shape.points.get(i).getAngle();
 			if(tem < min){
 				min = tem;
 				index = i;
@@ -174,18 +179,17 @@ public class Algorithm {
 			if(index > len-1){
 				index = 0;
 			}
-			angleSet.add(shape.point.get(index).getAngle());
+			angleSet.add(shape.points.get(index).getAngle());
 			index++;
 		}
 		return angleSet;
 	}
 
-	private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
-		Shape result = new Shape();
-		// calculate the results and store it into set.*****
-		return Connector.connect(shape1, shape2, 0, 0, true);
-
-	}
+	// private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
+	// 	Shape result = new Shape();
+	// 	// calculate the results and store it into set.*****
+	// 	return Connector.connect(shape1, shape2, 0, 0, true);
+	// }
 	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
 		Queue<String> edgeSet = new LinkedList<String>();
@@ -194,10 +198,10 @@ public class Algorithm {
 	}
 	
 
-	private Queue<Shape> connectAll(Shape order, Shape shape) {
-		Queue<Shape> resultSet = new LinkedList<Shape>();
-		//calculate the results and store them into set.*****
-		return Connector.connectAll(order, shape);
-	}
+	// private Queue<Shape> connectAll(Shape order, Shape shape) {
+	// 	Queue<Shape> resultSet = new LinkedList<Shape>();
+	// 	//calculate the results and store them into set.*****
+	// 	return Connector.connectAll(order, shape);
+	// }
 }
 

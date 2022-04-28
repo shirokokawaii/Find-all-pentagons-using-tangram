@@ -5,9 +5,11 @@ import java.util.Queue;
 
 public class Shape {
     CircleList<Point> points = new CircleList<>();
-    Queue<Shape> shapesSet = new LinkedList();
-    Queue<String> orderSet = new LinkedList();
-    
+    Queue<Shape> shapesSet = new LinkedList<Shape>();
+    Queue<Integer> pointOrder1 = new LinkedList<Integer>();
+    Queue<Integer> pointOrder2 = new LinkedList<Integer>();
+    Queue<Boolean> orderDirection = new LinkedList<Boolean>();
+
     public Shape() {
     }
 
@@ -39,9 +41,12 @@ public class Shape {
         return this.shapesSet.contains(shape);
     }
 
-    public void add(Shape shape, String edge) {
+    public void add(Shape shape, int pointA, int pointB, Boolean direction) {
         this.shapesSet.add(shape);
-        this.orderSet.add(edge);
+        this.pointOrder1.add(pointA);
+        this.pointOrder2.add(pointA);
+        orderDirection.add(direction);
+
     }
 
     @Override

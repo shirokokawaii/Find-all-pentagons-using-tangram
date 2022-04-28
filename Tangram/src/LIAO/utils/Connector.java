@@ -69,7 +69,7 @@ public class Connector {
         if (flag.equals("failed") || flag.equals("deleted"))
             return null;
         else
-            System.out.println("pointA:"+pointA+"  pointB:"+pointB);
+            // System.out.println("pointA:"+pointA+"  pointB:"+pointB);
             return result;
     }
     public static LinkedList<Shape> connectAll(Shape shapeA, Shape shapeB) {
