@@ -170,7 +170,7 @@ public class Algorithm {
 		int index = 0;
 		for(int i=0;i<len;i++){
 			int tem = shape.points.get(i).getAngle();
-			if(tem < min){
+			if(tem <= min){
 				min = tem;
 				index = i;
 			}
