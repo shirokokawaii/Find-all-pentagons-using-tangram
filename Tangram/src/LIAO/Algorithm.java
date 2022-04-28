@@ -42,6 +42,7 @@ public class Algorithm {
 		set1.offer(s[6]);
 		set1.offer(s[7]);
 		for(int i=0;i<6;i++) {
+			HashMap<ArrayList<Integer>,Integer> angleSetMap = new HashMap<>();
 			System.out.println("Adding "+i+1+"st shape");
 			Queue<Shape> set2 = new LinkedList<Shape>();
 			while(!set1.isEmpty()) {
@@ -53,7 +54,14 @@ public class Algorithm {
 					}
 				}
 			}
-			set1 = set2;
+			while(!set2.isEmpty()){
+				Shape shape = set2.poll();
+				ArrayList<Integer> angleSetTem = getAngleSet(shape);
+				if(!angleSetMap.containsKey(angleSetTem)){
+					angleSetMap.put(angleSetTem, 1);
+					set1.offer(shape);
+				}
+			}
 		}
 		while(!set1.isEmpty()) {
 			displayAnswer(set1.poll());
@@ -61,10 +69,11 @@ public class Algorithm {
 	}
 
 	public void dfsSearch() {
-		dfsAlgorithm(s[6]);
-		dfsAlgorithm(s[7]);
+		HashMap<ArrayList<Integer>,Integer> angleSetMap = new HashMap<>();
+		dfsAlgorithm(s[6], angleSetMap);
+		dfsAlgorithm(s[7], angleSetMap);
 	}
-	private void dfsAlgorithm(Shape shape) {
+	private void dfsAlgorithm(Shape shape,HashMap<ArrayList<Integer>,Integer> angleSetMap) {
 		if(shape.shapesSet.size()==7) {
 			displayAnswer(shape);
 			return;
@@ -75,8 +84,10 @@ public class Algorithm {
 				while(!edgeSet.isEmpty()) {
 					String edge = edgeSet.poll();
 					Shape result = new Shape();
-					//here needs to connect shapes with specified edge*****
-					dfsAlgorithm(result);
+					//here needs to get all the possibility edge and connect shapes with specified edge*****
+					if(!angleSetMap.containsKey(getAngleSet(result))){
+						dfsAlgorithm(result, angleSetMap);
+					}
 				}
 				
 			}
@@ -123,6 +134,52 @@ public class Algorithm {
 		}
 	}
 	
+	// private boolean isAngleSetEquals(Shape shape1, Shape shape2){
+	// 	int len = shape1.point.size();
+	// 	int first = shape1.point.get(0).getAngle();
+	// 	int index = -1;
+	// 	for(int i=0;i<len;i++){
+	// 		if(shape2.point.get(i).getAngle()==first){
+	// 			index = i;
+	// 		}
+	// 	}
+	// 	if(index == -1){
+	// 		return false;
+	// 	}
+	// 	for( int i=1;i<5;i++){
+	// 		index++;
+	// 		if(index > len){
+	// 			index = 0;
+	// 		}
+	// 		if(shape1.point.get(i).getAngle() != shape2.point.get(index).getAngle()){
+	// 			return false;
+	// 		}
+	// 	}
+	// 	return true;
+	// }
+
+		private ArrayList<Integer> getAngleSet(Shape shape){
+		ArrayList<Integer> angleSet = new ArrayList<Integer>();
+		int len = shape.point.size();
+		int min = 8;
+		int index = 0;
+		for(int i=0;i<len;i++){
+			int tem = shape.point.get(i).getAngle();
+			if(tem < min){
+				min = tem;
+				index = i;
+			}
+		}
+		for(int i=0;i<len;i++){
+			if(index > len-1){
+				index = 0;
+			}
+			angleSet.add(shape.point.get(index).getAngle());
+			index++;
+		}
+		return angleSet;
+	}
+
 	private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
 		Shape result = new Shape();
 		// calculate the results and store it into set.*****

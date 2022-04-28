@@ -7,7 +7,7 @@ public class Shape {
     CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList();
     Queue<String> orderSet = new LinkedList();
-
+    
     public Shape() {
     }
 
