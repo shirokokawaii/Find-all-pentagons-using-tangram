@@ -1,20 +1,53 @@
 package LIAO;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Shape {
-	ArrayList<Point> point;
-	Queue<Shape> shapesSet = new LinkedList<Shape>();
-	Queue<String> orderSet = new LinkedList<String>();
+    CircleList<Point> points = new CircleList<>();
+    Queue<Shape> shapesSet = new LinkedList();
+    Queue<String> orderSet = new LinkedList();
+    
+    public Shape() {
+    }
 
-	public boolean contains(Shape shape) {
-		if(shapesSet.contains(shape)) {
-			return true;
-		}
-		return false;
-	}
-	public void add(Shape shape, String edge) {
-		shapesSet.add(shape);
-		orderSet.add(edge);
-	}
+    public Shape(CircleList<Point> point) {
+        this.points = point;
+    }
+
+    public int size() {
+        return points.size();
+    }
+
+    public Point getPoint(int n) {
+        return points.get(n);
+    }
+
+    public void addPoint(Point point) {
+        this.points.add(point);
+    }
+
+    public Double getLength(int n) {
+        return points.get(n).getLength();
+    }
+
+    public int getAngel(int n) {
+        return points.get(n).getAngle();
+    }
+
+    public boolean contains(Shape shape) {
+        return this.shapesSet.contains(shape);
+    }
+
+    public void add(Shape shape, String edge) {
+        this.shapesSet.add(shape);
+        this.orderSet.add(edge);
+    }
+
+    @Override
+    public String toString() {
+        return "Shape{" +
+                "points=" + points +
+                "}\n";
+    }
 }

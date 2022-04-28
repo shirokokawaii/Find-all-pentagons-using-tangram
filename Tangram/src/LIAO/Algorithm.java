@@ -1,5 +1,7 @@
 package LIAO;
 
+import LIAO.utils.Connector;
+
 import java.util.*;
 
 public class Algorithm {
@@ -17,7 +19,7 @@ public class Algorithm {
 	ArrayList<Shape> answerSet = new ArrayList<Shape>(); 
 	
 	private void displayAnswer(Shape shape) {
-		if(shape.point.size()==5) {//This shape is a pentagon, draw and display it
+		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
 			//here needs to draw and display the answer shape*****
 		}
 		else {//This shape is not a pentagon, only output its angleSet on the terminal
@@ -27,10 +29,10 @@ public class Algorithm {
 	}
 
 	public int[] checkAngle(Shape shape) {
-		int len = shape.point.size();
+		int len = shape.points.size();
 		int[] angleSet = new int[len];
 		for(int i=0;i<len;i++) {
-			angleSet[i] = shape.point.get(i).getAngle();
+			angleSet[i] = shape.points.get(i).getAngle();
 		}
 		return angleSet;
 	}
@@ -113,7 +115,7 @@ public class Algorithm {
 				set = connectAll(shape, s[i]);
 				while(!set.isEmpty()) {
 					Shape shapeTem = set.poll();
-					int cost = 5 - shapeTem.point.size();
+					int cost = 5 - shapeTem.points.size();
 					if(cost > 5){
 						costSet.get(6).add(shapeTem);
 					}
@@ -181,8 +183,8 @@ public class Algorithm {
 	private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
 		Shape result = new Shape();
 		// calculate the results and store it into set.*****
-		return result;
-		
+		return Connector.connect(shape1, shape2, 0, 0, true);
+
 	}
 	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
@@ -191,9 +193,11 @@ public class Algorithm {
 		return edgeSet;
 	}
 	
-	private Queue<Shape> connectAll(Shape order, Shape shape ) {
+
+	private Queue<Shape> connectAll(Shape order, Shape shape) {
 		Queue<Shape> resultSet = new LinkedList<Shape>();
 		//calculate the results and store them into set.*****
-		return resultSet;
+		return Connector.connectAll(order, shape);
 	}
 }
+
