@@ -16,6 +16,9 @@ public class Point {
 	public double getLength() {
 		return length;
 	}
+	public void addLength(double length) {
+		this.length += length;
+	}
 
 	@Override
 	public String toString() {

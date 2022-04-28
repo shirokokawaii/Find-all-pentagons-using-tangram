@@ -10,7 +10,7 @@ public class Test {
 //        System.out.println(S0.getPoint(1));
 //        System.out.println(S0.getPoint(2));
 //        System.out.println(S0.getPoint(5));
-        System.out.println(Connector.connect(S0, S1, 2, 0, true));
-        System.out.println(Connector.connectAll(S0, S1));System.out.println(Connector.connect(S0, S1, 2, 0, true));
+        System.out.println(Connector.connect(S0, S1, 1, 1, true));
+        System.out.println(Connector.connectAll(S2, S1));
     }
 }

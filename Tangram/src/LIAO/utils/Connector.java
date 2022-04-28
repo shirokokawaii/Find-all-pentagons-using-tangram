@@ -13,7 +13,7 @@ public class Connector {
         //for temporary use:
         //System.out.println(shapeA.getLength(pointA) + "+" + shapeB.getLength(pointB + shapeB.size() - 1));
         double abs = Math.abs(shapeA.getLength(pointA) - shapeB.getLength(pointB + shapeB.size() - 1));
-        if (direction && (abs <= 0.00001d)) {
+        if (direction && (abs <= 0.0000001d)) {
             for (int i = pointA; i < shapeA.size() + pointA; i++) {
 
                     //at the pointA
@@ -22,16 +22,23 @@ public class Connector {
                     if (added > 8) {
                         flag = "failed";
                         break;
-                    } else if (added == 4 || added == 8) {
-                        flag = "deleted";
                     } else {
-                        flag = "connect";
+                        if (added == 4) {
+                            flag = "out4";
+                            result.addPoint(new Point(shapeA.getAngel(pointA + shapeA.size() - 1), shapeA.getLength(pointA + shapeA.size() - 1) + shapeB.getLength(pointB)));
+                        } else if (added == 8){
+                            flag = "deleted";
+                        }
+                        //flag = "connect";
                         for (int j = pointB; j < shapeB.size() + pointB; j++) {
                             // add the pointB
+                            if (j == pointB)
+                                if(flag.equals("out4"))
+                                    j++;
                             if (j == pointB) {
                                 result.addPoint(new Point(added, shapeB.getLength(j)));
                             // add the last point
-                            } else if (j == shapeB.size() + pointB - 1) {
+                            } else if (j == shapeB.size() + pointB - 1 ) {
                                 int addedEnd = shapeB.getAngel(j) + shapeA.getAngel(i + 1);
                                 if (addedEnd > 8) {
                                     flag = "failed";
@@ -48,7 +55,9 @@ public class Connector {
                             }
                         }
                     }
-                // at the rest points
+                // add the rest shapeA points
+                } else if (flag.equals("out4") && i == shapeA.size() + pointA - 1){
+                    break;
                 } else {
                     result.addPoint(shapeA.getPoint(i));
                 }
@@ -71,12 +80,7 @@ public class Connector {
                 for (int k = 0; k <= 1; k++){
                     boolean b = k == 1 ? true : false;
                     Shape newShape = connect(shapeA, shapeB, i, j, b);
-//                    for (Shape s : shapes) {
-//                        if (!IsSame.IsSameAll(newShape, shapes)) {
-//                            shapes.add(newShape);
-//                        }
-//                    }
-                    if (newShape != null)
+//                    if (newShape != null)
                         shapes.add(newShape);
                 }
             }
