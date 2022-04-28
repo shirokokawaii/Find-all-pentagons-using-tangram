@@ -36,7 +36,7 @@ public class Connector {
                                 if (addedEnd > 8) {
                                     flag = "failed";
                                     break;
-                                } else if (added == 4 || added == 8) {
+                                } else if (addedEnd == 4 || addedEnd == 8) {
                                     flag = "deleted";
                                 } else {
                                     i++;
@@ -60,6 +60,7 @@ public class Connector {
         if (flag.equals("failed") || flag.equals("deleted"))
             return null;
         else
+            System.out.println("pointA:"+pointA+"  pointB:"+pointB);
             return result;
     }
     public static LinkedList<Shape> connectAll(Shape shapeA, Shape shapeB) {
@@ -75,7 +76,8 @@ public class Connector {
 //                            shapes.add(newShape);
 //                        }
 //                    }
-                    shapes.add(newShape);
+                    if (newShape != null)
+                        shapes.add(newShape);
                 }
             }
         }
