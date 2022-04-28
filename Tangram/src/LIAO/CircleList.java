@@ -20,6 +20,9 @@ public class CircleList<E> extends ArrayList<E> {
         return super.remove(index%size());
     }
 
+    public boolean addAll(int index, Collection<? extends E> c) {
+        return super.addAll(index%size(), c);
+    }
 
 
 }

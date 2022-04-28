@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Shape {
-    CircleList<Point> points;
+    CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList();
     Queue<String> orderSet = new LinkedList();
 
@@ -31,6 +31,10 @@ public class Shape {
         return points.get(n).getLength();
     }
 
+    public int getAngel(int n) {
+        return points.get(n).getAngle();
+    }
+
     public boolean contains(Shape shape) {
         return this.shapesSet.contains(shape);
     }
@@ -40,4 +44,10 @@ public class Shape {
         this.orderSet.add(edge);
     }
 
+    @Override
+    public String toString() {
+        return "Shape{" +
+                "points=" + points +
+                "}\n";
+    }
 }
