@@ -1,19 +1,26 @@
 package LIAO.utils;
 
-import LIAO.Point;
+import LIAO.entity.Point;
 import LIAO.Shape;
 
 import java.util.LinkedList;
 
 public class Connector {
 
-    public static Shape connect(Shape shapeA, Shape shapeB, int pointA, int pointB, Boolean direction) {
+    public static Shape connect(Shape shape, Shape shapeB, int point, int pointB, Boolean direction) {
         Shape result = new Shape();
+        Shape shapeA = (Shape) shape.clone();
+        int pointA = point;
         String flag = "";
         //for temporary use:
         //System.out.println(shapeA.getLength(pointA) + "+" + shapeB.getLength(pointB + shapeB.size() - 1));
+        if(!direction) {
+            shapeA.reverse();
+            pointA = shape.size() - point - 1;
+        }
+
         double abs = Math.abs(shapeA.getLength(pointA) - shapeB.getLength(pointB + shapeB.size() - 1));
-        if (direction && (abs <= 0.0000001d)) {
+        if (abs <= 0.0000001d) {
             for (int i = pointA; i < shapeA.size() + pointA; i++) {
 
                     //at the pointA
@@ -68,23 +75,63 @@ public class Connector {
 
         if (flag.equals("failed") || flag.equals("deleted"))
             return null;
-        else
-            // System.out.println("pointA:"+pointA+"  pointB:"+pointB);
+        if (!direction){
+            result.reverse();
+            shapeA.reverse();
+        }
+        System.out.println("pointA:"+pointA+"  pointB:"+pointB+"  direction:"+direction);
             return result;
     }
+
+    private static int symDectect(Shape shape) {
+        int result = 2;
+        if (shape.size() == 4) {
+            result = 1;
+        }
+        return shape.size();
+    }
     public static LinkedList<Shape> connectAll(Shape shapeA, Shape shapeB) {
+        LinkedList<Shape> shapes = new LinkedList<>();
+        boolean b = true;
+        for (int i = 0; i < shapeA.size(); i++) {
+            for (int j = 0; j < symDectect(shapeB); j++) {
+                for (int k = 0; k <= 1; k++){
+                    Shape newShape = null;
+                    if(k == 0){
+                        newShape = connect(shapeA, shapeB, i, j, true);
+                    }
+                    shapes.add(newShape);
+                    System.out.println(shapes.size());
+                    System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction");
+                    //System.out.println(shapeA);
+                    //System.out.println(shapeB);
+                }
+            }
+        }
+        return shapes;
+    }
+
+    public static LinkedList<Shape> connectAllRe(Shape shapeA, Shape shapeB) {
         LinkedList<Shape> shapes = new LinkedList<>();
 
         for (int i = 0; i < shapeA.size(); i++) {
             for (int j = 0; j < shapeB.size(); j++) {
                 for (int k = 0; k <= 1; k++){
-                    boolean b = k == 1 ? true : false;
+                    boolean b = k == 0;
                     Shape newShape = connect(shapeA, shapeB, i, j, b);
-//                    if (newShape != null)
-                        shapes.add(newShape);
+                    shapes.add(newShape);
+                    System.out.println(shapes.size());
+                    System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction"+b);
+                    System.out.println(shapeA);
+                    System.out.println(shapeB);
+
+
+
+
                 }
             }
         }
+
         return shapes;
     }
 }

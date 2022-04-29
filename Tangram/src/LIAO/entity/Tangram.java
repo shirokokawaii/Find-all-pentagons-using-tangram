@@ -1,6 +1,7 @@
-package LIAO;
+package LIAO.entity;
 
 
+import LIAO.Shape;
 import LIAO.entity.CircleList;
 import LIAO.entity.Point;
 

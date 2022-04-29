@@ -1,9 +1,13 @@
 package LIAO;
 
+import LIAO.entity.CircleList;
+import LIAO.entity.Point;
+
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Shape {
+public class Shape implements Cloneable{
     CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList<Shape>();
     Queue<Integer> pointOrder1 = new LinkedList<Integer>();
@@ -41,12 +45,28 @@ public class Shape {
         return this.shapesSet.contains(shape);
     }
 
+    public CircleList<Point> reverse() {
+        Collections.reverse(points);
+        return points;
+    }
+
     public void add(Shape shape, int pointA, int pointB, Boolean direction) {
         this.shapesSet.add(shape);
         this.pointOrder1.add(pointA);
         this.pointOrder2.add(pointA);
         orderDirection.add(direction);
 
+    }
+
+    @Override
+    public Object clone() {
+        Shape stu = null;
+        try{
+            stu = (Shape) super.clone();
+        }catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return stu;
     }
 
     @Override

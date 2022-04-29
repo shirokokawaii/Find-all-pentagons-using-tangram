@@ -1,4 +1,4 @@
-package LIAO;
+package LIAO.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;

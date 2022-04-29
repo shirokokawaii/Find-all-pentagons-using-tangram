@@ -1,4 +1,4 @@
-package LIAO;
+package LIAO.entity;
 
 
 public class Point {
