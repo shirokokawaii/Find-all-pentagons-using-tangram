@@ -21,6 +21,7 @@ public class Algorithm {
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
+			answerSet.add(shape);
 			System.out.println("hit:" + shape.size());
 			System.out.println(angleSet);
 			//here needs to draw and display the answer shape*****
@@ -40,7 +41,7 @@ public class Algorithm {
 		return angleSet;
 	}
 	
-	public void bfsSearch() {
+	public ArrayList<Shape> bfsSearch() {
 		Queue<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(s[6]);
 		set1.offer(s[7]);
@@ -72,6 +73,7 @@ public class Algorithm {
 		while(!set1.isEmpty()) {
 			displayAnswer(set1.poll());
 		}
+		return answerSet;
 	}
 
 	public void dfsSearch() {
