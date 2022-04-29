@@ -52,7 +52,8 @@ public class Shape {
     @Override
     public String toString() {
         return "Shape{" +
+                "size=" + size() + "\n" +
                 "points=" + points +
-                "}\n";
+                "}";
     }
 }

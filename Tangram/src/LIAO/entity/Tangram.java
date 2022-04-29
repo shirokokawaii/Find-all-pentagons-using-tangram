@@ -1,6 +1,9 @@
 package LIAO;
 
 
+import LIAO.entity.CircleList;
+import LIAO.entity.Point;
+
 public class Tangram {
     public static final Point s = new Point(2, 1d);
 

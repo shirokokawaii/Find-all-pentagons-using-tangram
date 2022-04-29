@@ -25,7 +25,7 @@ public class Point {
 		return "Point{" +
 				"angle=" + angle +
 				", length=" + length +
-				'}';
+				"}\n";
 	}
 }
 
