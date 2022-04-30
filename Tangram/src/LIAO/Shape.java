@@ -13,6 +13,7 @@ public class Shape {
     Queue<Integer> pointOrder1 = new LinkedList<Integer>();
     Queue<Integer> pointOrder2 = new LinkedList<Integer>();
     Queue<Boolean> orderDirection = new LinkedList<Boolean>();
+    Queue<Shape> resultsSet = new LinkedList<>();
 
     public Shape() {
     }
@@ -44,6 +45,10 @@ public class Shape {
     public int getAngel(int n) {
         return points.get(n).getAngle();
     }
+
+//    public String getName(int n){
+//        return points.get(n).getName();
+//    }
 
     public void delete(int i) {
         points.remove(i);
