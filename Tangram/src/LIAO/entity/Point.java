@@ -10,6 +10,11 @@ public class Point {
 		this.length = length;
 	}
 
+	public Point(Point point) {
+		this.angle = point.angle;
+		this.length = point.length;
+	}
+
 	public int getAngle(){
 		return angle;
 	}

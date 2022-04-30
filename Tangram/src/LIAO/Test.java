@@ -1,10 +1,5 @@
 package LIAO;
 
-import LIAO.utils.Connector;
-
-import java.util.Collections;
-import java.util.List;
-
 import static LIAO.entity.Tangram.*;
 
 

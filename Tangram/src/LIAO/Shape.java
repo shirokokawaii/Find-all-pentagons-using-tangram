@@ -41,6 +41,10 @@ public class Shape implements Cloneable{
         return points.get(n).getAngle();
     }
 
+    public void delect(int i) {
+        points.remove(i);
+    }
+
     public boolean contains(Shape shape) {
         return this.shapesSet.contains(shape);
     }
@@ -59,21 +63,12 @@ public class Shape implements Cloneable{
     }
 
     @Override
-    public Object clone() {
-        Shape stu = null;
-        try{
-            stu = (Shape) super.clone();
-        }catch(CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return stu;
-    }
-
-    @Override
     public String toString() {
         return "Shape{" +
                 "size=" + size() + "\n" +
                 "points=" + points +
                 "}";
     }
+
+
 }
