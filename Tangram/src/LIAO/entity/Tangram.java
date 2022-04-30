@@ -59,13 +59,13 @@ public class Tangram {
         }
     };
 
-    public static Shape S0 = new Shape(p0);
-    public static Shape S1 = new Shape(p0);
-    public static Shape S2 = new Shape(p2);
-    public static Shape S3 = new Shape(p3);
-    public static Shape S4 = new Shape(p3);
-    public static Shape S5 = new Shape(p5);
-    public static Shape S6 = new Shape(p6);
-    public static Shape S7 = new Shape(p7);
+    public static final Shape S0 = new Shape(p0);
+    public static final Shape S1 = new Shape(p0);
+    public static final Shape S2 = new Shape(p2);
+    public static final Shape S3 = new Shape(p3);
+    public static final Shape S4 = new Shape(p3);
+    public static final Shape S5 = new Shape(p5);
+    public static final Shape S6 = new Shape(p6);
+    public static final Shape S7 = new Shape(p7);
 
 }
