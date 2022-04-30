@@ -16,10 +16,12 @@ public class Algorithm {
 	}
 	Shape[] s = new Shape[8];
 	ArrayList<Shape> answerSet = new ArrayList<Shape>(); 
+	int count = 0;
 
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
+			count ++;
 			answerSet.add(shape);
 			System.out.println(shape.size());
 			System.out.println(angleSet);
@@ -37,7 +39,6 @@ public class Algorithm {
 		for(int i=0;i<len;i++) {
 			angleSet.add(shape.points.get(i).getAngle());
 		}
-		System.out.println(len + " answers");
 		return angleSet;
 	}
 	
@@ -86,6 +87,7 @@ public class Algorithm {
 		while(!set1.isEmpty()) {
 			displayAnswer(set1.poll());
 		}
+		System.out.println(count + " answers");
 		return answerSet;
 	}
 
