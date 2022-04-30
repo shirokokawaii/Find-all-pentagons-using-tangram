@@ -37,6 +37,7 @@ public class Algorithm {
 		for(int i=0;i<len;i++) {
 			angleSet.add(shape.points.get(i).getAngle());
 		}
+		System.out.println(len + " answers");
 		return angleSet;
 	}
 	
