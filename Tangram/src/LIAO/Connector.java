@@ -1,11 +1,11 @@
 package LIAO;
 
 import LIAO.entity.*;
+import LIAO.entity.DrawOutline;
 
 
 import javax.swing.*;
 import java.util.LinkedList;
-import java.util.Queue;
 
 import static LIAO.entity.Tangram.*;
 
@@ -28,6 +28,7 @@ public class Connector {
         if (checkAngle > 8)
             flag = "failed";
         else if (checkAngle == 8) {
+            System.out.println("A: "+ A + "B: "+ B + "\n");
             flag = "absorb";
             boolean square = false;
             if (shapeB.size() == 4) {
@@ -197,19 +198,22 @@ public class Connector {
         jf.setSize(1000, 1000); //设置窗口大小
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//意思就是设置一个默认的关闭操作，也就是你的JFrame窗口的关闭按钮，点击它时，退出程序。
         jf.setVisible(true);// 可视化 显示在屏幕上
-        Pen pen = new Pen(jpanel);
 
+        DrawOutline p = new DrawOutline(jpanel);
 
-        LinkedList<Shape> shape = connectAll(S6, S2);
-        LinkedList<Shape> shape3 = connectAll(shape.get(3), S3);
-        Shape test2 = shape3.get(4);
-        Shape test = shape.get(3);
+        LinkedList<Shape> shape = connectAll(S0, S1);
+        LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
+        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
+        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S5);
+
+        //Shape test = shape3.get(6);
+        Shape test = shape3.get(19);
         System.out.println(test);
         //System.out.println("ShapeSet:  " + test.shapesSet);
         System.out.println("order1:  " + test.pointOrder1);
         System.out.println("order2:  " + test.pointOrder2);
         System.out.println("Direction:  " + test.orderDirection);
-        pen.draw(test);
+        p.draw(test);
 
     }
 

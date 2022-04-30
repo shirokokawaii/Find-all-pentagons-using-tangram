@@ -4,10 +4,17 @@ package LIAO.entity;
 public class Point {
 	int angle;
 	double length;
+	String name;
 
 	public Point(int angle, double length) {
 		this.angle = angle;
 		this.length = length;
+	}
+
+	public Point(int angle, double length, String name) {
+		this.angle = angle;
+		this.length = length;
+		this.name = name;
 	}
 
 	public Point(Point point) {

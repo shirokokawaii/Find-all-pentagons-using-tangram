@@ -8,7 +8,18 @@ import LIAO.entity.Point;
 public class Tangram {
     public static final Point s = new Point(2, 1d);
 
+
+
+
     public static final CircleList<Point> p0 = new CircleList<Point>(){
+        {
+            add(new Point(1, 2d));
+            add(new Point(2, 2d));
+            add(new Point(1, 2*Math.sqrt(2)));
+        }
+    };
+
+    public static final CircleList<Point> p1 = new CircleList<Point>(){
         {
             add(new Point(1, 2d));
             add(new Point(2, 2d));
@@ -25,6 +36,14 @@ public class Tangram {
     };
 
     public static final CircleList<Point> p3 = new CircleList<Point>(){
+        {
+            add(new Point(1, 1d));
+            add(new Point(2, 1d));
+            add(new Point(1, Math.sqrt(2)));
+        }
+    };
+
+    public static final CircleList<Point> p4 = new CircleList<Point>(){
         {
             add(new Point(1, 1d));
             add(new Point(2, 1d));
