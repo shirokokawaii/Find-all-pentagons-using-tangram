@@ -5,6 +5,7 @@ import LIAO.entity.DrawOutline;
 
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static LIAO.entity.Tangram.*;
@@ -145,7 +146,7 @@ public class Connector {
         }
         else
             named(result);
-            result.shapesSet.offer(result);
+            //result.shapesSet.offer(result);
             return delete4(result);
     }
 
@@ -206,22 +207,22 @@ public class Connector {
 //            result.orderDirection.offer(b);
 //        }
 
+//        if(result.shapesSet.size() == 0) {
+//            Shape s = new Shape();
+//            for (Point point : shape.points) {
+//                s.addPoint(point);
+//            }
+//            result.shapesSet.offer(s);
+////            result.pointOrder.offer(0);
+//            named(result);
+//            result.shapesSet.offer(result);
+//        }
         if(result.shapesSet.size() == 0) {
-            Shape s = new Shape();
-            for (Point point : shape.points) {
-                s.addPoint(point);
-            }
-            result.shapesSet.offer(s);
-//            result.pointOrder.offer(0);
-            named(result);
-            result.shapesSet.offer(result);
+            result.shapesSet.offer(shape);
         }
 
-        Shape s1 = new Shape();
-        for (Point point : shapeB.points) {
-            s1.addPoint(point);
-        }
-        result.shapesSet.offer(s1);
+
+        result.shapesSet.offer(shapeB);
         return result;
     }
 
@@ -257,17 +258,39 @@ public class Connector {
 //        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
 //        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S4);
         LinkedList<Shape> shape = connectAll(S0, S1);
-        LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
-        LinkedList<Shape> shape2 = connectAll(shape1.get(3), S5);
-        LinkedList<Shape> shape3 = connectAll(shape2.get(19), S2);
-        LinkedList<Shape> shape4 = connectAll(shape3.get(19), S6);
-        LinkedList<Shape> shape5 = connectAll(shape4.get(19), S4);
-        //Shape test = shape3.get(19);
-        //Shape test = shape5.get(20);
-
-        Shape test = shape5.get(8);
-
-        System.out.println(test);
+        System.out.println("Shapeset"+shape.get(1).shapesSet);
+//        LinkedList<Shape> shape1 = connectAll(shape.get(7), S3);
+//        LinkedList<Shape> shape2 = connectAll(shape1.get(3), S5);
+//        LinkedList<Shape> shape3 = connectAll(shape2.get(7), S2);
+//        LinkedList<Shape> shape4 = connectAll(shape3.get(2), S6);
+//        //LinkedList<Shape> shape5 = connectAll(shape4.get(1), S4);
+//        //Shape test = shape3.get(19);
+//        //Shape test = shape5.get(20);
+        Shape test = new Shape();
+//        LinkedList<LinkedList<Shape>> all = new LinkedList<>();
+//        for (int j = 0; j < shape4.size(); j++) {
+//            LinkedList<Shape> con = new LinkedList<>();
+//            con = connectAll(shape4.get(j), S4);
+//            if(con!=null)
+//                all.add(con);
+//        }
+//        for (LinkedList<Shape> list: all ) {
+//            for (Shape s : list) {
+//                if (s.size() == 5) {
+//                    test = s;
+//                    break;
+//                }
+//            }
+//        }
+//        for (int i = 0; i < shape5.size(); i++){
+//            if(shape5.get(i).size() == 5) {
+//                test = shape5.get(i);
+//                break;
+//            }
+//
+//                    test = shape4.get(4);
+//
+//        System.out.println(shape2.get(4));
         //System.out.println("ShapeSet:  " + test.shapesSet);
         System.out.println("order1:  " + test.pointOrder);
         for (Point point:test.points){

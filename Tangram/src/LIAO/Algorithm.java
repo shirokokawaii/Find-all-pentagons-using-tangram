@@ -2,6 +2,7 @@ package LIAO;
 
 import java.util.*;
 
+
 public class Algorithm {
 	public Algorithm(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
 		this.s[0] = s0;
