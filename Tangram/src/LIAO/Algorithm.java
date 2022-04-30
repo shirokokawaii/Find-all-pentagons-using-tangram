@@ -41,34 +41,44 @@ public class Algorithm {
 	}
 	
 	public ArrayList<Shape> bfsSearch() {
-		Queue<Shape> set1 = new LinkedList<Shape>();
+		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(s[6]);
 		set1.offer(s[7]);
 		for(int i=0;i<6;i++) {
-			HashMap<ArrayList<Integer>,Integer> angleSetMap = new HashMap<>();
+			HashMap<String,Integer> angleSetMap = new HashMap<>();
 			System.out.println("Adding "+(i+1)+"st shape");
-			Queue<Shape> set2 = new LinkedList<Shape>();
+			LinkedList<Shape> set2 = new LinkedList<Shape>();
+			Long time1 = System.currentTimeMillis();
 			while(!set1.isEmpty()) {
 				Shape order = new Shape();
 				order = set1.poll();
 				for(int j=0;j<6;j++) {
 					if(!order.contains(s[j])) {
 						set2.addAll(Connector.connectAll(order,s[j]));
-						// set2 = Connector.connectAll(order,s[j]);
 					}
 				}
 			}
+			Long time2 = System.currentTimeMillis();
+			System.out.print("Connect time:" + (time2-time1) +"ms");
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
-				if(shape == null || shape.points.size()>=9){
+				if(shape == null){
 					continue;
 				}
-				ArrayList<Integer> angleSetTem = getAngleList(shape);
+				if(i ==4 && shape.points.size()>12){
+					continue;
+				}
+				if(i ==5 && shape.points.size()>9){
+					continue;
+				}
+				String angleSetTem = getAngleList(shape);
 				if(!angleSetMap.containsKey(angleSetTem)){
 					angleSetMap.put(angleSetTem, 1);
 					set1.offer(shape);
 				}
 			}
+			Long time3 = System.currentTimeMillis();
+			System.out.print("Reshape time:" + (time3-time2) +"ms");
 		}
 		while(!set1.isEmpty()) {
 			displayAnswer(set1.poll());
@@ -140,33 +150,10 @@ public class Algorithm {
 			}
 		}
 	}
-	
-	// private boolean isAngleSetEquals(Shape shape1, Shape shape2){
-	// 	int len = shape1.point.size();
-	// 	int first = shape1.point.get(0).getAngle();
-	// 	int index = -1;
-	// 	for(int i=0;i<len;i++){
-	// 		if(shape2.point.get(i).getAngle()==first){
-	// 			index = i;
-	// 		}
-	// 	}
-	// 	if(index == -1){
-	// 		return false;
-	// 	}
-	// 	for( int i=1;i<5;i++){
-	// 		index++;
-	// 		if(index > len){
-	// 			index = 0;
-	// 		}
-	// 		if(shape1.point.get(i).getAngle() != shape2.point.get(index).getAngle()){
-	// 			return false;
-	// 		}
-	// 	}
-	// 	return true;
-	// }
 
-		private ArrayList<Integer> getAngleList(Shape shape){
+		private String getAngleList(Shape shape){
 		ArrayList<Integer> angleSet = new ArrayList<Integer>();
+		String answer = new String();
 		int len = shape.size();
 		int min = 8;
 		int index = 0;
@@ -182,9 +169,11 @@ public class Algorithm {
 				index = 0;
 			}
 			angleSet.add(shape.points.get(index).getAngle());
+			answer += Integer.toString(shape.points.get(index).getAngle());
 			index++;
 		}
-		return angleSet;
+
+		return answer;
 	}
 
 	// private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
