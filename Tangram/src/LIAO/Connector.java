@@ -175,7 +175,7 @@ public class Connector {
     public static LinkedList<Shape> connectAll(Shape shapeA, Shape shapeB) {
         LinkedList<Shape> shapes = new LinkedList<>();
         for (int i = 0; i < shapeA.size(); i++) {
-            for (int j = 0; j < shapeB.size(); j++) {
+            for (int j = 0; j < symCheck(shapeB); j++) {
                 for (int k = 0; k < 2; k++){
                     Shape newShape = null;
                     newShape = connect(shapeA, shapeB, i, j, k == 0);
@@ -190,6 +190,13 @@ public class Connector {
         }
         return shapes;
 
+    }
+
+    private static int symCheck(Shape shape) {
+        if (shape.size()==4)
+            return 1;
+        else
+            return 2;
     }
 
     private static Shape clone(Shape shape, Shape shapeB) {

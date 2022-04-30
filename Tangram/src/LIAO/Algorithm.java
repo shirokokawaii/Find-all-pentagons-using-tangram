@@ -60,7 +60,7 @@ public class Algorithm {
 			}
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
-				if(shape == null || shape.points.size()>=12){
+				if(shape == null || shape.points.size()>=9){
 					continue;
 				}
 				ArrayList<Integer> angleSetTem = getAngleList(shape);
