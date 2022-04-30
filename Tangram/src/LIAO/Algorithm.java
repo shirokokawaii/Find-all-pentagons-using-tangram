@@ -59,26 +59,29 @@ public class Algorithm {
 				}
 			}
 			Long time2 = System.currentTimeMillis();
-			System.out.print("Connect time:" + (time2-time1) +"ms");
+			System.out.println("Connect time:" + (time2-time1) +"ms");
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
 				if(shape == null){
 					continue;
 				}
-				if(i ==4 && shape.points.size()>12){
+				if(i ==3 && shape.points.size()>12){
 					continue;
 				}
-				if(i ==5 && shape.points.size()>9){
+				if(i ==4 && shape.points.size()>9){
+					continue;
+				}
+				if(i ==5 && shape.points.size()>5){
 					continue;
 				}
 				String angleSetTem = getAngleList(shape);
 				if(!angleSetMap.containsKey(angleSetTem)){
-					angleSetMap.put(angleSetTem, 1);
+					angleSetMap.put(angleSetTem, 0);
 					set1.offer(shape);
 				}
 			}
 			Long time3 = System.currentTimeMillis();
-			System.out.print("Reshape time:" + (time3-time2) +"ms");
+			System.out.println("Prune time:" + (time3-time2) +"ms");
 		}
 		while(!set1.isEmpty()) {
 			displayAnswer(set1.poll());
