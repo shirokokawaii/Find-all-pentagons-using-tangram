@@ -26,7 +26,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
         int originalPoint = 0;
         int direction = 1;
         int nextDirectionInt = 1;
-        double originalAngle = -180;
+        double originalAngle = 0;
         Shape shapeFirst = shape.shapesSet.poll();
         Shape shapeSecond;
         double nextPoint = 0;
@@ -38,13 +38,13 @@ public class Pen {// usage:First create an object of pen, then call the method "
             int len = shapeFirst.size();
             ArrayList<Double> x = new ArrayList<>();
             ArrayList<Double> y = new ArrayList<>();
+            originalAngle -= 180;
             direction = nextDirectionInt;
             for (int i = 0; i < len; i++) {
                 originalAngle += 180;
                 double length = shapeFirst.getLength(originalPoint) * size;
                 double diffAngle = 45 * shapeFirst.getAngel(originalPoint);
                 originalAngle -= diffAngle*direction;
-                System.out.println(originalAngle);
                 if (i == nextPoint) {
                     nextX = originalX;
                     nextY = originalY;

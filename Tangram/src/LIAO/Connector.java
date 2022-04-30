@@ -209,7 +209,7 @@ public class Connector {
         System.out.println("order1:  " + test.pointOrder1);
         System.out.println("order2:  " + test.pointOrder2);
         System.out.println("Direction:  " + test.orderDirection);
-        pen.draw(test);
+        pen.draw(test2);
 
     }
 
