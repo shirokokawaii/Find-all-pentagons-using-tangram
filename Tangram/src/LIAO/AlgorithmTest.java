@@ -109,6 +109,7 @@ public class AlgorithmTest {
 
 		algorithm.bfsSearch(1);
 
+		System.out.println(algorithm.answerSet);
 
 
 	}

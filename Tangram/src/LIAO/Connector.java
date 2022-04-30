@@ -91,7 +91,7 @@ public class Connector {
                 firstSize = shapeA.size();
                 int n = (A-2+2*shapeA.size())%shapeA.size();
 //                result.pointOrder.offer(n);
-                System.out.println(n+"!!!!!!!!!!");
+                //System.out.println(n+"!!!!!!!!!!");
             } else {
                 checkList = add(shapeB, shapeA, B, A);
                 firstSize = shapeB.size();
@@ -178,7 +178,9 @@ public class Connector {
                 for (int k = 0; k < 2; k++){
                     Shape newShape = null;
                     newShape = connect(shapeA, shapeB, i, j, k == 0);
-                    shapes.add(newShape);
+                    if (newShape!=null){
+                        shapes.add(newShape);
+                    }
                     //序号
                     System.out.println("-------"+(shapes.size()-1)+"-------");
                     System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);
@@ -233,10 +235,6 @@ public class Connector {
 
     }
 
-    public void additself(Shape shape) {
-        shape.shapesSet.offer(shape);
-    }
-
     public static void main(String[] args) throws CloneNotSupportedException {
 
         //Shape s = AnotherConnector.connect(S0, S1, 1, 2, false);
@@ -254,15 +252,20 @@ public class Connector {
 
         DrawOutline p = new DrawOutline(jpanel);
 
+//        LinkedList<Shape> shape = connectAll(S0, S1);
+//        LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
+//        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
+//        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S4);
         LinkedList<Shape> shape = connectAll(S0, S1);
         LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
-        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
-        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S4);
-
+        LinkedList<Shape> shape2 = connectAll(shape1.get(3), S5);
+        LinkedList<Shape> shape3 = connectAll(shape2.get(19), S2);
+        LinkedList<Shape> shape4 = connectAll(shape3.get(19), S6);
+        LinkedList<Shape> shape5 = connectAll(shape4.get(19), S4);
         //Shape test = shape3.get(19);
         //Shape test = shape5.get(20);
 
-        Shape test = shape5.get(0);
+        Shape test = shape5.get(8);
 
         System.out.println(test);
         //System.out.println("ShapeSet:  " + test.shapesSet);

@@ -4,17 +4,23 @@ import LIAO.entity.DrawOutline;
 import LIAO.entity.Point;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static LIAO.entity.Tangram.S0;
 import static LIAO.entity.Tangram.S1;
 
 public class Testy {
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public static void main(String[] args) {
 
         //Shape s = AnotherConnector.connect(S0, S1, 1, 2, false);
         //System.out.println(s);
+        ArrayList<ArrayList<Shape>> all = new ArrayList<ArrayList<Shape>>();
+        ArrayList<Shape> connect = new ArrayList<>();
+        for (int i = 0; i < 6; i++){
+            ArrayList<Shape> connectNow = new ArrayList<>();
 
+        }
 
         JFrame jf = new JFrame("图形可视化工具");
         JPanel jpanel = new JPanel();
