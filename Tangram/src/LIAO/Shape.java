@@ -11,7 +11,7 @@ public class Shape {
     CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList<Shape>();
     Queue<Character> pointOrder = new LinkedList<Character>();
-    Queue<Shape> resultsSet = new LinkedList<>();
+    Queue<Shape> shapeList = new LinkedList<>();
 
     public Shape() {
     }
@@ -53,7 +53,7 @@ public class Shape {
     }
 
     public boolean contains(Shape shape) {
-        return this.shapesSet.contains(shape);
+        return this.shapeList.contains(shape);
     }
 
     public CircleList<Point> reverse() {
