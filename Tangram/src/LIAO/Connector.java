@@ -217,12 +217,12 @@ public class Connector {
 //            named(result);
 //            result.shapesSet.offer(result);
 //        }
-        if(result.shapesSet.size() == 0) {
-            result.shapesSet.offer(shape);
+        if(result.shapeList.size() == 0) {
+            result.shapeList.offer(shape);
         }
 
 
-        result.shapesSet.offer(shapeB);
+        result.shapeList.offer(shapeB);
         return result;
     }
 
@@ -258,7 +258,7 @@ public class Connector {
 //        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
 //        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S4);
         LinkedList<Shape> shape = connectAll(S0, S1);
-        System.out.println("Shapeset"+shape.get(1).shapesSet);
+        System.out.println("Shapeset"+shape.get(1).shapeList);
 //        LinkedList<Shape> shape1 = connectAll(shape.get(7), S3);
 //        LinkedList<Shape> shape2 = connectAll(shape1.get(3), S5);
 //        LinkedList<Shape> shape3 = connectAll(shape2.get(7), S2);
@@ -298,7 +298,7 @@ public class Connector {
 
         }
 //        System.out.println("Direction:  " + test.orderDirection);
-        p.draw(test);
+       // p.draw(test);
 
 
     }
