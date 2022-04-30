@@ -21,14 +21,14 @@ public class Algorithm {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
 			answerSet.add(shape);
-			System.out.println("hit:" + shape.size());
+			System.out.println(shape.size());
 			System.out.println(angleSet);
 			//here needs to draw and display the answer shape*****
 		}
-		else {//This shape is not a pentagon, only output its angleSet on the terminal
-			System.out.print(angleSet.size() );
-			System.out.println(angleSet);
-		}
+		// else {//This shape is not a pentagon, only output its angleSet on the terminal
+		// 	System.out.print(angleSet.size() );
+		// 	System.out.println(angleSet);
+		// }
 	}
 
 	public ArrayList<Integer> checkAngle(Shape shape) {
@@ -53,13 +53,14 @@ public class Algorithm {
 				order = set1.poll();
 				for(int j=0;j<6;j++) {
 					if(!order.contains(s[j])) {
-						set2 = Connector.connectAll(order,s[j]);
+						set2.addAll(Connector.connectAll(order,s[j]));
+						// set2 = Connector.connectAll(order,s[j]);
 					}
 				}
 			}
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
-				if(shape == null){
+				if(shape == null || shape.points.size()>=12){
 					continue;
 				}
 				ArrayList<Integer> angleSetTem = getAngleList(shape);

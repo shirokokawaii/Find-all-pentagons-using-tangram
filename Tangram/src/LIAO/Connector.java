@@ -22,15 +22,15 @@ public class Connector {
 //        result.pointOrder2.offer(B);
 //        result.orderDirection.offer(!d);
         //result.shapesSet.offer(shapeB);
-        System.out.println("\nShapeSetSize:"+result.shapesSet.size());
+        // System.out.println("\nShapeSetSize:"+result.shapesSet.size());
         int checkAngle = shapeA.getAngel(A) + shapeB.getAngel(B);
-        System.out.println("angle:!!!!!" + checkAngle);
+        // System.out.println("angle:!!!!!" + checkAngle);
         if (checkAngle > 8)
             flag = "failed";
         else if (checkAngle == 8) {
-            System.out.println("A: " + A + "B: "+ B + "\n");
+            // System.out.println("A: " + A + "B: "+ B + "\n");
             flag = "absorb";
-            System.out.println("angle:!!!!!" + checkAngle + "!!!!!!!!angle:!!!!!");
+            // System.out.println("angle:!!!!!" + checkAngle + "!!!!!!!!angle:!!!!!");
 
             boolean square = false;
             if (shapeB.size() == 4) {
@@ -183,8 +183,8 @@ public class Connector {
                         shapes.add(newShape);
                     }
                     //序号
-                    System.out.println("-------"+(shapes.size()-1)+"-------");
-                    System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);
+                    // System.out.println("-------"+(shapes.size()-1)+"-------");
+                    // System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);
                 }
             }
         }
@@ -258,7 +258,7 @@ public class Connector {
 //        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
 //        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S4);
         LinkedList<Shape> shape = connectAll(S0, S1);
-        System.out.println("Shapeset"+shape.get(1).shapeList);
+        // System.out.println("Shapeset"+shape.get(1).shapeList);
 //        LinkedList<Shape> shape1 = connectAll(shape.get(7), S3);
 //        LinkedList<Shape> shape2 = connectAll(shape1.get(3), S5);
 //        LinkedList<Shape> shape3 = connectAll(shape2.get(7), S2);
@@ -292,9 +292,9 @@ public class Connector {
 //
 //        System.out.println(shape2.get(4));
         //System.out.println("ShapeSet:  " + test.shapesSet);
-        System.out.println("order1:  " + test.pointOrder);
+        // System.out.println("order1:  " + test.pointOrder);
         for (Point point:test.points){
-            System.out.println("\nname:  " + point.getName());
+            // System.out.println("\nname:  " + point.getName());
 
         }
 //        System.out.println("Direction:  " + test.orderDirection);
