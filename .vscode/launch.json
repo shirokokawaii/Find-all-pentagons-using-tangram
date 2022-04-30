@@ -31,6 +31,7 @@
             "request": "launch",
             "mainClass": "LIAO.Test",
             "projectName": "Find-all-pentagons-using-tangram_c4091959",
+            "args=": "-Xms1024m -Xmx20480m"
         },
         {
             "type": "java",

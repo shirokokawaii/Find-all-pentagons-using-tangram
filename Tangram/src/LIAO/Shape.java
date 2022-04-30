@@ -63,14 +63,7 @@ public class Shape {
 
     public void add(Shape shape, int pointA, int pointB, Boolean direction) {
         this.shapesSet.add(shape);
-//        this.pointOrder1.add(pointA);
-//        this.pointOrder2.add(pointA);
-//        orderDirection.add(direction);
 
-    }
-
-    public void add(Shape shape){
-        
     }
 
     @Override

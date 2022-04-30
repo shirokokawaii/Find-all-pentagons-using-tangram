@@ -24,6 +24,7 @@ public class Test {
 //        Pen pen = new Pen(jpanel);
 //        pen.draw(shape);
         Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
-        algorithm.bfsSearch();
+        algorithm.bfsSearch(S6);
+        algorithm.bfsSearch(S7);
     }
 }

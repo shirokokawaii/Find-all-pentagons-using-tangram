@@ -40,10 +40,9 @@ public class Algorithm {
 		return angleSet;
 	}
 	
-	public ArrayList<Shape> bfsSearch() {
+	public ArrayList<Shape> bfsSearch(Shape shapeIn) {
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
-		set1.offer(s[6]);
-		set1.offer(s[7]);
+		set1.offer(shapeIn);
 		for(int i=0;i<6;i++) {
 			HashMap<String,Integer> angleSetMap = new HashMap<>();
 			System.out.println("Adding "+(i+1)+"st shape");
