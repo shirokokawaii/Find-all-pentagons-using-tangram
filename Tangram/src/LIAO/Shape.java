@@ -10,7 +10,7 @@ import java.util.Queue;
 public class Shape {
     CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList<Shape>();
-    Queue<Integer> pointOrder = new LinkedList<Integer>();
+    Queue<Character> pointOrder = new LinkedList<Character>();
     Queue<Shape> resultsSet = new LinkedList<>();
 
     public Shape() {

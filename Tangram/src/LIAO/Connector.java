@@ -37,29 +37,44 @@ public class Connector {
             }
             double[] length1 = new double[2];
             double[] length2 = new double[2];
+            //A左 A-1 A
             length1[0] = shapeA.getLength(A - 1);
+            //B左 B B+1
             length1[1] = shapeB.getLength(B);
+            //A右 A A+1
             length2[0] = shapeA.getLength(A);
+            //B右 B-1 B
             length2[1] = shapeB.getLength(B - 1);
             for (int i = A + 2; i < A + shapeA.size() + 2; i++) {
                 Point p = new Point(shapeA.getPoint(i));
+                //检查被加图形A左侧顶点A+n-1
                 if(i == (A + shapeA.size() - 1)){
                     if(Math.abs(length1[0] - length1[1]) < THRESHOLD){
-
+                        result.addPoint(new Point(shapeA.getAngel(i)+shapeB.getAngel(B + 1), shapeB.getLength(B + 1)));
                     } else if (length1[0] > length1 [1]) {
-
+                        result.addPoint(new Point(shapeA.getAngel(i), length1[0] - length1[1]));
+                        result.addPoint(new Point(shapeB.getAngel(B + 1) + 4, shapeB.getLength(B + 1)));
                     } else {
-
+                        result.addPoint(new Point(shapeA.getAngel(i) + 4, length1[1] - length1[0]));
+                        result.addPoint(new Point(shapeB.getAngel(B + 1), shapeB.getLength(B + 1)));
                     }
 
+                    if (square)
+                        result.addPoint(new Point(shapeB.getPoint(B + 2)));
+
+                    //检查B+n-1
                     if(Math.abs(length2[0] - length2[1]) < THRESHOLD){
-
-                    } else if (length2[0] > length2 [1]) {
-
+                        int k = result.size();
+                        result.addPoint(new Point(result.getAngel(k - 1) + shapeA.getAngel(A + 1),
+                                shapeA.getLength(A + 1)));
+                    } else if (length2[0] > length2[1]) {
+                        result.addPoint(new Point(shapeA.getAngel(A) + 4, length2[0] - length2[1]));
+                        result.addPoint(new Point(shapeA.getAngel(A + 1), shapeA.getLength(A + 1)));
                     } else {
-
+                        result.addPoint(new Point(shapeB.getAngel(B - 1), length2[1] - length2[0]));
+                        result.addPoint(new Point(shapeA.getAngel(A + 1) + 4, shapeA.getLength(A + 1)));
                     }
-
+                    break;
                 }  else {
                     result.addPoint(p);
 
@@ -75,12 +90,12 @@ public class Connector {
                 checkList = add(shapeA, shapeB, A, B);
                 firstSize = shapeA.size();
                 int n = (A-2+2*shapeA.size())%shapeA.size();
-                result.pointOrder.offer(n);
+//                result.pointOrder.offer(n);
                 System.out.println(n+"!!!!!!!!!!");
             } else {
                 checkList = add(shapeB, shapeA, B, A);
                 firstSize = shapeB.size();
-                result.pointOrder.offer((A+2)%shapeA.size());
+//                result.pointOrder.offer((A+2)%shapeA.size());
             }
 
             double length1 = checkList.get(firstSize - 1).getLength();
@@ -121,6 +136,7 @@ public class Connector {
                 }
             }
         }
+
         if (flag.equals("failed")){
 
         //if (flag.equals("failed") || flag.equals("absorb")){
@@ -176,10 +192,10 @@ public class Connector {
     private static Shape clone(Shape shape, Shape shapeB) {
         Shape result = new Shape();
         for (Shape s : shape.shapesSet) {
-            result.shapesSet.offer(s);
+//            result.shapesSet.offer(s);
         }
         for (int i : shape.pointOrder) {
-            result.pointOrder.offer(i);
+//            result.pointOrder.offer(i);
         }
 //        for (int i : shape.pointOrder2) {
 //            result.pointOrder2.offer(i);
@@ -194,7 +210,7 @@ public class Connector {
                 s.addPoint(point);
             }
             result.shapesSet.offer(s);
-            result.pointOrder.offer(0);
+//            result.pointOrder.offer(0);
             named(result);
             result.shapesSet.offer(result);
         }
@@ -246,7 +262,7 @@ public class Connector {
         //Shape test = shape3.get(19);
         //Shape test = shape5.get(20);
 
-        Shape test = shape5.get(21);
+        Shape test = shape5.get(0);
 
         System.out.println(test);
         //System.out.println("ShapeSet:  " + test.shapesSet);
