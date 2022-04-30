@@ -20,6 +20,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
         ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
         HashMap<String, Double> xHashMapList = new HashMap<>();
         HashMap<String, Double> yHashMapList = new HashMap<>();
+        HashMap<String, Double> directionTrue = new HashMap<>();
         double originalX = 500;
         double originalY = 500;
         int originalPoint = 0;
@@ -44,6 +45,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
                 originalAngle -= diffAngle;
                 xHashMapList.put(shapeFirst.getName(i), originalX);
                 yHashMapList.put(shapeFirst.getName(i), originalY);
+                directionTrue.put(shapeFirst.getName(i), originalAngle);
                 double diffX = length * Math.cos(Math.PI * originalAngle / 180);
                 double diffY = length * Math.sin(Math.PI * originalAngle / 180);
                 originalX += diffX;
@@ -59,6 +61,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
             yList.add(y);
             originalX = xHashMapList.get(nextPoint);
             originalY = yHashMapList.get(nextPoint);
+            originalAngle = directionTrue.get(nextPoint);
         }
         drawLine(xList, yList);
     }
