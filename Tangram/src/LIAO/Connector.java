@@ -41,7 +41,7 @@ public class Connector {
                     result.addPoint(new Point(checkAngle, checkList.get(i).getLength()));
                 } else if (i == firstSize - 1) {
                     if (Math.abs(length1 - length2) < THRESHOLD) {
-                        System.out.println("\nChecked:");
+                        //System.out.println("\nChecked:");
                         int checkAngleEnd = checkList.get(firstSize - 1).getAngle() + checkList.get(firstSize).getAngle();
                         if (checkAngleEnd >= 8) {
                             flag = "failed";
@@ -70,8 +70,10 @@ public class Connector {
                 }
             }
         }
-        if (flag.equals("failed") || flag.equals("absorb"))
+        if (flag.equals("failed") || flag.equals("absorb")){
+            flag = "";
             return null;
+        }
         else
             return delete4(result);
     }
@@ -120,9 +122,11 @@ public class Connector {
     }
 
     public static void main(String[] args) {
-        LinkedList<Shape> shape = connectAll(S0, S1);
+        LinkedList<Shape> shape = connectAll(S1, S6);
+        LinkedList<Shape> shape2 = connectAll(S1, S3);
         //Shape s = AnotherConnector.connect(S0, S1, 1, 2, false);
         //System.out.println(s);
+
     }
 
 }
