@@ -1,29 +1,63 @@
 package LIAO;
 
-import LIAO.Shape;
 import LIAO.entity.*;
 
 
+import javax.swing.*;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import static LIAO.entity.Tangram.*;
 
 public class Connector {
     public static Shape connect(Shape shapeA, Shape shapeB, int A, int B, Boolean d) {
-        Shape result = new Shape();
+        CircleList<Point> checkList;
         String flag = "";
-
         final double THRESHOLD = .0001;
 
+        Shape result = new Shape();
+        result = clone(shapeA, shapeB);
+
+        result.pointOrder1.offer(A);
+        result.pointOrder2.offer(B);
+        result.orderDirection.offer(!d);
+        //result.shapesSet.offer(shapeB);
+        System.out.println("\nShapeSetSize:"+result.shapesSet.size());
         int checkAngle = shapeA.getAngel(A) + shapeB.getAngel(B);
 
         if (checkAngle > 8)
             flag = "failed";
-        else if (checkAngle == 8)
+        else if (checkAngle == 8) {
             flag = "absorb";
+            boolean square = false;
+            if (shapeB.size() == 4) {
+                square = true;
+            }
+            double[] length1 = new double[2];
+            double[] length2 = new double[2];
+            length1[0] = shapeA.getLength(A - 1);
+            length1[1] = shapeB.getLength(B);
+            length2[0] = shapeA.getLength(A);
+            length2[1] = shapeB.getLength(B - 1);
+            for (int i = A + 2; i < A + shapeA.size() + 2; i++) {
+                Point p = new Point(shapeA.getPoint(i));
+                result.addPoint(p);
+                if(i == (A + shapeA.size() - 1)){
+                    if(Math.abs(length1[0] - length1[1]) < THRESHOLD){
+
+                    } else if (length1[0] > length1 [1]) {
+
+                    } else {
+
+                    }
+                }
+
+            }
+
+        }
         else {
             int firstSize;
-            CircleList<Point> checkList;
+
             if (d) {
                 checkList = add(shapeA, shapeB, A, B);
                 firstSize = shapeA.size();
@@ -94,7 +128,7 @@ public class Connector {
             if(shape.getAngel(i) == 4) {
                 double tempL = shape.getLength(i);
                 shape.getPoint(i - 1).addLength(tempL);
-                shape.delect(i);
+                shape.delete(i);
             }
         }
         return shape;
@@ -110,10 +144,7 @@ public class Connector {
                     shapes.add(newShape);
                     //序号
                     System.out.println("-------"+shapes.size()+"-------");
-
                     System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);
-
-
                 }
             }
         }
@@ -121,11 +152,56 @@ public class Connector {
 
     }
 
-    public static void main(String[] args) {
-        LinkedList<Shape> shape = connectAll(S1, S6);
-        LinkedList<Shape> shape2 = connectAll(S1, S3);
+    private static Shape clone(Shape shape, Shape shapeB) {
+        Shape result = new Shape();
+        for (Shape s : shape.shapesSet) {
+            result.shapesSet.offer(s);
+        }
+        for (int i : shape.pointOrder1) {
+            result.pointOrder1.offer(i);
+        }
+        for (int i : shape.pointOrder2) {
+            result.pointOrder2.offer(i);
+        }
+        for (boolean b : shape.orderDirection) {
+            result.orderDirection.offer(b);
+        }
+
+        if(result.shapesSet.size() == 0) {
+            Shape s = new Shape();
+            for (Point point : shape.points) {
+                s.addPoint(point);
+            }
+            result.shapesSet.offer(s);
+        }
+
+        Shape s1 = new Shape();
+        for (Point point : shapeB.points) {
+            s1.addPoint(point);
+        }
+        result.shapesSet.offer(s1);
+        return result;
+    }
+
+    public static void main(String[] args) throws CloneNotSupportedException {
+        LinkedList<Shape> shape = connectAll(S6, S2);
+
+        //LinkedList<Shape> shape2 = connectAll(S2, S3);
+        LinkedList<Shape> shape3 = connectAll(shape.get(4), S3);
         //Shape s = AnotherConnector.connect(S0, S1, 1, 2, false);
         //System.out.println(s);
+        JFrame jf = new JFrame("图形可视化工具");
+        JPanel jpanel = new JPanel();
+        jf.add(jpanel);
+        jpanel.setSize(1000, 1000);
+        jf.setResizable(false);
+        jf.setSize(1000, 1000); //设置窗口大小
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//意思就是设置一个默认的关闭操作，也就是你的JFrame窗口的关闭按钮，点击它时，退出程序。
+        jf.setVisible(true);// 可视化 显示在屏幕上
+        Pen pen = new Pen(jpanel);
+        System.out.println(shape3.get(4));
+        System.out.println(shape3.get(4).pointOrder2);
+        pen.draw(shape3.get(2));
 
     }
 

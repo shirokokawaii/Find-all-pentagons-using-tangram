@@ -46,7 +46,7 @@ public class AlgorithmTest {
 		return angleSet;
 	}
 	
-	public ArrayList<Shape> bfsSearch(int n) {
+	public ArrayList<Shape> bfsSearch(int n) throws CloneNotSupportedException {
 		Queue<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(s[6]);
 		set1.offer(s[7]);
@@ -104,7 +104,7 @@ public class AlgorithmTest {
 		return angleSet;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException {
 		AlgorithmTest algorithm = new AlgorithmTest(S0, S1, S2, S3, S4, S5, S6, S7);
 
 		algorithm.bfsSearch(1);

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Shape implements Cloneable{
+public class Shape {
     CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList<Shape>();
     Queue<Integer> pointOrder1 = new LinkedList<Integer>();
@@ -19,6 +19,10 @@ public class Shape implements Cloneable{
 
     public Shape(CircleList<Point> point) {
         this.points = point;
+    }
+
+    public void addShape(Shape shape) {
+        shapesSet.offer(shape);
     }
 
     public int size() {
@@ -41,7 +45,7 @@ public class Shape implements Cloneable{
         return points.get(n).getAngle();
     }
 
-    public void delect(int i) {
+    public void delete(int i) {
         points.remove(i);
     }
 
