@@ -10,9 +10,7 @@ import java.util.Queue;
 public class Shape {
     CircleList<Point> points = new CircleList<>();
     Queue<Shape> shapesSet = new LinkedList<Shape>();
-    Queue<Integer> pointOrder1 = new LinkedList<Integer>();
-    Queue<Integer> pointOrder2 = new LinkedList<Integer>();
-    Queue<Boolean> orderDirection = new LinkedList<Boolean>();
+    Queue<Integer> pointOrder = new LinkedList<Integer>();
     Queue<Shape> resultsSet = new LinkedList<>();
 
     public Shape() {
@@ -46,9 +44,9 @@ public class Shape {
         return points.get(n).getAngle();
     }
 
-//    public String getName(int n){
-//        return points.get(n).getName();
-//    }
+    public char getName(int n){
+        return points.get(n).getName();
+    }
 
     public void delete(int i) {
         points.remove(i);
@@ -65,9 +63,9 @@ public class Shape {
 
     public void add(Shape shape, int pointA, int pointB, Boolean direction) {
         this.shapesSet.add(shape);
-        this.pointOrder1.add(pointA);
-        this.pointOrder2.add(pointA);
-        orderDirection.add(direction);
+//        this.pointOrder1.add(pointA);
+//        this.pointOrder2.add(pointA);
+//        orderDirection.add(direction);
 
     }
 

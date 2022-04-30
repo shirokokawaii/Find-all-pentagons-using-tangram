@@ -18,9 +18,8 @@ public class Connector {
         Shape result = new Shape();
         result = clone(shapeA, shapeB);
 
-        result.pointOrder1.offer(A);
-        result.pointOrder2.offer(B);
-        result.orderDirection.offer(!d);
+//        result.pointOrder2.offer(B);
+//        result.orderDirection.offer(!d);
         //result.shapesSet.offer(shapeB);
         System.out.println("\nShapeSetSize:"+result.shapesSet.size());
         int checkAngle = shapeA.getAngel(A) + shapeB.getAngel(B);
@@ -62,9 +61,13 @@ public class Connector {
             if (d) {
                 checkList = add(shapeA, shapeB, A, B);
                 firstSize = shapeA.size();
+                int n = (A-2+2*shapeA.size())%shapeA.size();
+                result.pointOrder.offer(n);
+                System.out.println(n+"!!!!!!!!!!");
             } else {
                 checkList = add(shapeB, shapeA, B, A);
                 firstSize = shapeB.size();
+                result.pointOrder.offer((A+2)%shapeA.size());
             }
 
             double length1 = checkList.get(firstSize - 1).getLength();
@@ -110,6 +113,8 @@ public class Connector {
             return null;
         }
         else
+            named(result);
+            result.shapesSet.offer(result);
             return delete4(result);
     }
 
@@ -158,15 +163,15 @@ public class Connector {
         for (Shape s : shape.shapesSet) {
             result.shapesSet.offer(s);
         }
-        for (int i : shape.pointOrder1) {
-            result.pointOrder1.offer(i);
+        for (int i : shape.pointOrder) {
+            result.pointOrder.offer(i);
         }
-        for (int i : shape.pointOrder2) {
-            result.pointOrder2.offer(i);
-        }
-        for (boolean b : shape.orderDirection) {
-            result.orderDirection.offer(b);
-        }
+//        for (int i : shape.pointOrder2) {
+//            result.pointOrder2.offer(i);
+//        }
+//        for (boolean b : shape.orderDirection) {
+//            result.orderDirection.offer(b);
+//        }
 
         if(result.shapesSet.size() == 0) {
             Shape s = new Shape();
@@ -174,6 +179,9 @@ public class Connector {
                 s.addPoint(point);
             }
             result.shapesSet.offer(s);
+            result.pointOrder.offer(0);
+            named(result);
+            result.shapesSet.offer(result);
         }
 
         Shape s1 = new Shape();
@@ -182,6 +190,20 @@ public class Connector {
         }
         result.shapesSet.offer(s1);
         return result;
+    }
+
+    public static void named(Shape shape) {
+        char name = 65;
+        for(Point point : shape.points) {
+            point.setName(name);
+            name++;
+        }
+        name = 65;
+
+    }
+
+    public void additself(Shape shape) {
+        shape.shapesSet.offer(shape);
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
@@ -202,17 +224,21 @@ public class Connector {
         DrawOutline p = new DrawOutline(jpanel);
 
         LinkedList<Shape> shape = connectAll(S0, S1);
-        LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
-        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
-        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S5);
+//        LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
+//        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
+//        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S5);
 
-        //Shape test = shape3.get(6);
-        Shape test = shape3.get(19);
+//        Shape test = shape3.get(19);
+        Shape test = shape.get(11);
+
         System.out.println(test);
         //System.out.println("ShapeSet:  " + test.shapesSet);
-        System.out.println("order1:  " + test.pointOrder1);
-        System.out.println("order2:  " + test.pointOrder2);
-        System.out.println("Direction:  " + test.orderDirection);
+        System.out.println("order1:  " + test.pointOrder);
+        for (Point point:test.points){
+            System.out.println("\nname:  " + point.getName());
+
+        }
+//        System.out.println("Direction:  " + test.orderDirection);
         p.draw(test);
 
 

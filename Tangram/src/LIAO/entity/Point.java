@@ -4,14 +4,14 @@ package LIAO.entity;
 public class Point {
 	int angle;
 	double length;
-	String name;
+	char name;
 
 	public Point(int angle, double length) {
 		this.angle = angle;
 		this.length = length;
 	}
 
-	public Point(int angle, double length, String name) {
+	public Point(int angle, double length, char name) {
 		this.angle = angle;
 		this.length = length;
 		this.name = name;
@@ -38,6 +38,14 @@ public class Point {
 				"angle=" + angle +
 				", length=" + length +
 				"}\n";
+	}
+
+	public char getName() {
+		return name;
+	}
+
+	public void setName(char name) {
+		this.name = name;
 	}
 }
 

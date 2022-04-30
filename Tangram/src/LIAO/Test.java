@@ -20,11 +20,11 @@ public class Test {
         Shape shape = S6;
         shape.shapesSet.offer(S6);
         shape.shapesSet.offer(S3);
-        shape.pointOrder1.offer(3);
-        shape.pointOrder2.offer(1);
-        shape.orderDirection.offer(true);
-        Pen pen = new Pen(jpanel);
-        pen.draw(shape);
+//        shape.pointOrder1.offer(3);
+//        shape.pointOrder2.offer(1);
+//        shape.orderDirection.offer(true);
+//        Pen pen = new Pen(jpanel);
+//        pen.draw(shape);
 
     }
 }
