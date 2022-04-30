@@ -62,6 +62,10 @@ public class Shape implements Cloneable{
 
     }
 
+    public void add(Shape shape){
+        
+    }
+
     @Override
     public String toString() {
         return "Shape{" +
