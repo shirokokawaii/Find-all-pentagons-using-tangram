@@ -290,7 +290,7 @@ public class AlgorithmTest {
 
 		Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
 
-		//algorithm.bfsSearch(S6);
+		algorithm.bfsSearch(S6);
 		//algorithm.bfsSearch(S7);
 
 		//algorithm.bfsSearch(4, 9);
@@ -298,7 +298,7 @@ public class AlgorithmTest {
 		System.out.println("----------------" + algorithm.answerSet.size() + "----------------");
 		//int size = algorithm.answerSet.size() - 119;
 		//Shape test = algorithm.answerSet.get(3);
-		Shape test = S8;
+		Shape test = algorithm.answerSet.get(3);
 
 		Shape s1 = Connector.connect(S6, S0, 0, 0, false);
 		Shape s2 = Connector.connect(s1, S1, 1, 1, false);
@@ -308,8 +308,8 @@ public class AlgorithmTest {
 		Shape s6 = Connector.connect(s3, S4, 4, 1, true);
 
 
-		String jsonOutput= JSON.toJSONString(s4.getPoints());
-		System.out.println(jsonOutput);
+		//String jsonOutput= JSON.toJSONString(s4.getPoints());
+		//System.out.println(jsonOutput);
 
 //		Shape test = JSON.parseObject(jsonOutput, Shape.class);
 		//Shape test = new Shape();
@@ -320,7 +320,7 @@ public class AlgorithmTest {
 		System.out.println("order1:  " + test.debugPointOrderA);
 		System.out.println("order2:  " + test.debugPointOrderB);
 		System.out.println("direction:  " + test.debugDirection);
-		p.draw(S8);
+		p.draw(test);
 	}
 
 }
