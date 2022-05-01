@@ -98,10 +98,13 @@ public class Algorithm {
 					boolean flag = false;
 					for (int j = 0; j < len; j++) {
 						if (elementsEquals(shape, tem.get(j))) {
+							if(i==5 && len ==1) {
+								flag = true;
+							}
 							if (shape.skip != tem.get(j).skip) {
 								flag = true;
 							}
-							if (shape.skip == 0 && tem.get(j).skip == 0) {
+							if (shape.skip == 0) {
 								flag = true;
 							}
 						}
