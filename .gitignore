@@ -2,9 +2,11 @@
 target/
 out/
 bin/
+.vscode/
 
 .classpath
 .settings
 .project
+
 
 *.class
