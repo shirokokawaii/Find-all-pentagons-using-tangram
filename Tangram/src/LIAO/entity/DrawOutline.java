@@ -33,8 +33,8 @@ public class DrawOutline {// usage:First create an object of pen, then call the 
             int len = shapeFirst.size();
             ArrayList<Double> x = new ArrayList<>();
             ArrayList<Double> y = new ArrayList<>();
-            x.add(0.0);
-            y.add(0.0);
+            x.add(originalX);
+            y.add(originalY);
             for (int i = 0; i < len; i++) {
                 originalAngle += 180;
                 double length = shapeFirst.getLength(originalPoint) * size;

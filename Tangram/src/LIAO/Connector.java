@@ -163,8 +163,9 @@ public class Connector {
         }
         else
             //named(result);
-            //result.shapesSet.offer(result);
-            return delete4(result);
+            delete4(result);
+            result.shapesSet.offer(result);
+            return result;
     }
 
     private static CircleList<Point> add(Shape shapeA, Shape shapeB, int A, int B) {
@@ -199,10 +200,10 @@ public class Connector {
                     if (newShape!=null){
                         shapes.add(newShape);
                     }
-                    if(shapeA.skip)
-                        newShape.skip = true;
-                    else
-                        newShape.skip = false;
+                    //if(shapeA.skip)
+                        //newShape.skip = true;
+                    //else
+                        //newShape.skip = false;
                     //序号
                     // System.out.println("-------"+(shapes.size()-1)+"-------");
                     // System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);
@@ -223,7 +224,7 @@ public class Connector {
     private static Shape clone(Shape shape, Shape shapeB) {
         Shape result = new Shape();
         for (Shape s : shape.shapesSet) {
-//            result.shapesSet.offer(s);
+            result.shapesSet.offer(s);
         }
 
         for (int i : shape.pointOrder) {
@@ -260,6 +261,7 @@ public class Connector {
 //        }
         if(result.shapeList.size() == 0) {
             result.shapeList.offer(shape);
+            result.shapesSet.offer(shape);
             result.debugShapeSet.offer(shape);
         }
 
