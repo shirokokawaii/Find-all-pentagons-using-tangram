@@ -67,7 +67,7 @@ public class Algorithm {
 				if(shape == null){
 					continue;
 				}
-				if(i ==3 && shape.points.size()>10){
+				if(i ==3 && shape.points.size()>13){
 					continue;
 				}
 				if(i ==4 && shape.points.size()>9){
