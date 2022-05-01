@@ -64,10 +64,10 @@ public class Algorithm {
 					continue;
 				}
 				if (i == 3) {
-					if (shape.contains(s[5]) && shape.points.size() > 10) {
+					if (shape.contains(s[5]) && shape.points.size() > 9) {
 						continue;
 					}
-					if (!shape.contains(s[5]) && shape.points.size() > 11) {
+					if (!shape.contains(s[5]) && shape.points.size() > 10) {
 						continue;
 					}
 				}
@@ -88,16 +88,17 @@ public class Algorithm {
 					tem.add(shape);
 					angleSetMap.put(angleSetTem, tem);
 					set1.offer(shape);
-				} else {
+				} 
+				if(angleSetMap.containsKey(angleSetTem)) {
 					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
 					int len = tem.size();
 					boolean flag = false;
-					for (i = 0; i < len; i++) {
-						if (elementsEquals(shape, tem.get(i))) {
-							if (shape.skip != tem.get(i).skip) {
+					for (int j = 0; j < len; j++) {
+						if (elementsEquals(shape, tem.get(j))) {
+							if (shape.skip != tem.get(j).skip) {
 								flag = true;
 							}
-							if (shape.skip == 0 && tem.get(i).skip == 0) {
+							if (shape.skip == 0 && tem.get(j).skip == 0) {
 								flag = true;
 							}
 						}
