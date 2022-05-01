@@ -1,6 +1,7 @@
 package LIAO.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONCreator;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class Point {
@@ -15,12 +16,12 @@ public class Point {
 	@JSONField(serialize = false)
 	char name;
 
+	@JSONCreator
 	public Point(int angle, double length) {
 		this.angle = angle;
 		this.length = length;
 		this.flag = false;
 	}
-
 
 
 	public Point(int angle, double length, boolean flag) {
@@ -40,12 +41,20 @@ public class Point {
 		this.flag = flag;
 	}
 
+
+	@JSONField(name = "ANGLE")
 	public int getAngle(){
 		return angle;
 	}
+	@JSONField(name = "ANGLE")
+	public void setAngle(int angle) {this.angle = angle;}
+	@JSONField(name = "LENGTH")
 	public double getLength() {
 		return length;
 	}
+	@JSONField(name = "LENGTH")
+	public void setLength(double length) {this.length = length;}
+
 	public void addLength(double length) {
 		this.length += length;
 	}

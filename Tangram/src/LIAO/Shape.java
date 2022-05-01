@@ -26,12 +26,15 @@ public class Shape {
     }
 
 
+    @JSONField(name = "POINTS")
     public ArrayList<Point> getPoints() {
         return (ArrayList<Point>) points;
     }
-
+    @JSONField(name = "POINTS")
     public void setPoints(ArrayList<Point> points) {
-        this.points = (CircleList<Point>) points;
+        for (Point p: points){
+            this.points.add(p);
+        }
     }
 
     private void initOwnershipList(int number){
