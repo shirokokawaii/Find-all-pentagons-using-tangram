@@ -16,10 +16,12 @@ public class Algorithm {
 	}
 	Shape[] s = new Shape[8];
 	ArrayList<Shape> answerSet = new ArrayList<Shape>(); 
+	int count = 0;
 
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
+			count ++;
 			answerSet.add(shape);
 			System.out.println(shape.size());
 			System.out.println(angleSet);
@@ -40,39 +42,65 @@ public class Algorithm {
 		return angleSet;
 	}
 	
-	public ArrayList<Shape> bfsSearch() {
-		Queue<Shape> set1 = new LinkedList<Shape>();
-		set1.offer(s[6]);
-		set1.offer(s[7]);
+	public ArrayList<Shape> bfsSearch(Shape shapeIn) {
+		LinkedList<Shape> set1 = new LinkedList<Shape>();
+		set1.offer(shapeIn);
 		for(int i=0;i<6;i++) {
-			HashMap<ArrayList<Integer>,Integer> angleSetMap = new HashMap<>();
+			HashMap<String,Integer> angleSetMap = new HashMap<>();
+			HashMap<String,Integer> OwnerShipSetMap = new HashMap<>();
 			System.out.println("Adding "+(i+1)+"st shape");
-			Queue<Shape> set2 = new LinkedList<Shape>();
+			LinkedList<Shape> set2 = new LinkedList<Shape>();
+			Long time1 = System.currentTimeMillis();
 			while(!set1.isEmpty()) {
 				Shape order = new Shape();
 				order = set1.poll();
 				for(int j=0;j<6;j++) {
 					if(!order.contains(s[j])) {
 						set2.addAll(Connector.connectAll(order,s[j]));
-						// set2 = Connector.connectAll(order,s[j]);
 					}
 				}
 			}
+			Long time2 = System.currentTimeMillis();
+			System.out.println("Connect time:" + (time2-time1) +"ms");
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
-				if(shape == null || shape.points.size()>=9){
+				if(shape == null){
 					continue;
 				}
-				ArrayList<Integer> angleSetTem = getAngleList(shape);
-				if(!angleSetMap.containsKey(angleSetTem)){
-					angleSetMap.put(angleSetTem, 1);
+				if(i ==3 && shape.points.size()>10){
+					continue;
+				}
+				if(i ==4 && shape.points.size()>9){
+					continue;
+				}
+				if(i ==5 && shape.points.size()>5){
+					continue;
+				}
+				String angleSetTem = getAngleList(shape);
+				// if(angleSetMap.containsKey(angleSetTem) && !shape.skip){//angle list is same
+				// 	String  ownerShipSetTem = getOwnershipList(shape, i);
+				// 	if(!OwnerShipSetMap.containsKey(ownerShipSetTem)){//edge list is not same
+				// 		angleSetMap.put(angleSetTem, 0);
+				// 		OwnerShipSetMap.put(ownerShipSetTem, 0);
+				// 		shape.skip = true;
+				// 		set1.offer(shape);
+				// 		continue;
+				// 	}
+				// }
+				// String  ownerShipSetTem = getOwnershipList(shape, i);
+				if(!angleSetMap.containsKey(angleSetTem)){//angle list is not same
+					angleSetMap.put(angleSetTem, 0);
+					// OwnerShipSetMap.put(ownerShipSetTem, 0);
 					set1.offer(shape);
 				}
 			}
+			Long time3 = System.currentTimeMillis();
+			System.out.println("Prune time:" + (time3-time2) +"ms");
 		}
 		while(!set1.isEmpty()) {
 			displayAnswer(set1.poll());
 		}
+		System.out.println(count + " answers");
 		return answerSet;
 	}
 
@@ -140,33 +168,10 @@ public class Algorithm {
 			}
 		}
 	}
-	
-	// private boolean isAngleSetEquals(Shape shape1, Shape shape2){
-	// 	int len = shape1.point.size();
-	// 	int first = shape1.point.get(0).getAngle();
-	// 	int index = -1;
-	// 	for(int i=0;i<len;i++){
-	// 		if(shape2.point.get(i).getAngle()==first){
-	// 			index = i;
-	// 		}
-	// 	}
-	// 	if(index == -1){
-	// 		return false;
-	// 	}
-	// 	for( int i=1;i<5;i++){
-	// 		index++;
-	// 		if(index > len){
-	// 			index = 0;
-	// 		}
-	// 		if(shape1.point.get(i).getAngle() != shape2.point.get(index).getAngle()){
-	// 			return false;
-	// 		}
-	// 	}
-	// 	return true;
-	// }
 
-		private ArrayList<Integer> getAngleList(Shape shape){
+		private String getAngleList(Shape shape){
 		ArrayList<Integer> angleSet = new ArrayList<Integer>();
+		String answer = new String();
 		int len = shape.size();
 		int min = 8;
 		int index = 0;
@@ -182,28 +187,64 @@ public class Algorithm {
 				index = 0;
 			}
 			angleSet.add(shape.points.get(index).getAngle());
+			answer += Integer.toString(shape.points.get(index).getAngle());
 			index++;
 		}
-		return angleSet;
+
+		return answer;
 	}
 
-	// private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
-	// 	Shape result = new Shape();
-	// 	// calculate the results and store it into set.*****
-	// 	return Connector.connect(shape1, shape2, 0, 0, true);
-	// }
+	private String getOwnershipList(Shape shape, int index){
+		LinkedList<Integer> OwnershipList = new LinkedList<>();
+			Shape shapeTem = shape.shapeList.get(index);
+			int number = 0;
+			for(int i=0;i<6;i++){
+				if(shapeTem.equals(s[i])){
+					number = i;
+				}
+			}
+			Shape shapeNow = shape.shapesSet.get(index+1);
+			char originalPoint = shapeNow.pointOrder.get(index);
+			int startPoint = 0;
+			for(int i=0;i<shapeNow.size();i++){
+				if(shapeNow.getName(i)==originalPoint){
+					startPoint = i;
+				}
+			}
+			int previousNumber = shape.OwnershipList.get(originalPoint);
+			Character previousName = ' ';
+			boolean flag = false;
+			for(int i=0;i<shapeNow.size()+1;i++){
+				char name = shapeNow.getName(startPoint);
+				if(shape.OwnershipList.containsKey(name)){
+					if(flag){
+						shape.OwnershipList.put(previousName, number);
+						flag = false;
+						OwnershipList.removeLast();
+						OwnershipList.add(previousNumber);
+						continue;
+					}
+					OwnershipList.add(shape.OwnershipList.get(name));
+				}
+				else{
+					shape.OwnershipList.put(name, number);
+					OwnershipList.add(number);
+					previousName = name;
+					flag = true;
+				}
+			}
+			String result = new String();
+			for(int i:OwnershipList){
+				result+= Integer.toString(i);
+			}
+			return result;
+
+	}
 	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
 		Queue<String> edgeSet = new LinkedList<String>();
 		//here calculate all the possible edge combination and store them into edgeSet.*****
 		return edgeSet;
 	}
-	
-
-	// private Queue<Shape> connectAll(Shape order, Shape shape) {
-	// 	Queue<Shape> resultSet = new LinkedList<Shape>();
-	// 	//calculate the results and store them into set.*****
-	// 	return Connector.connectAll(order, shape);
-	// }
 }
 

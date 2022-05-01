@@ -1,0 +1,57 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Test",
+            "request": "launch",
+            "mainClass": "LIAO.Test",
+            "projectName": "Find-all-pentagons-using-tangram"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch AlgorithmTest",
+            "request": "launch",
+            "mainClass": "LIAO.AlgorithmTest",
+            "projectName": "Find-all-pentagons-using-tangram_c4091959"
+        },
+        {
+            "type": "java",
+            "name": "Launch Connector",
+            "request": "launch",
+            "mainClass": "LIAO.Connector",
+            "projectName": "Find-all-pentagons-using-tangram_c4091959"
+        },
+        {
+            "type": "java",
+            "name": "Launch Test",
+            "request": "launch",
+            "mainClass": "LIAO.Test",
+            "projectName": "Find-all-pentagons-using-tangram_c4091959",
+            "vmArgs=": "-Xmx20480m"
+        },
+        {
+            "type": "java",
+            "name": "Launch Testy",
+            "request": "launch",
+            "mainClass": "LIAO.Testy",
+            "projectName": "Find-all-pentagons-using-tangram_c4091959"
+        },
+        {
+            "type": "java",
+            "name": "Launch DrawOutline",
+            "request": "launch",
+            "mainClass": "LIAO.entity.DrawOutline",
+            "projectName": "Find-all-pentagons-using-tangram_c4091959"
+        }
+    ]
+}
