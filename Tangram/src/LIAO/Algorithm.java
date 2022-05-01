@@ -65,18 +65,18 @@ public class Algorithm {
 					continue;
 				}
 				if (i == 3) {
-					if (shape.contains(s[5]) && shape.points.size() > 12) {
+					if (shape.contains(s[5]) && shape.points.size() > 10) {
 						continue;
 					}
-					if (!shape.contains(s[5]) && shape.points.size() > 13) {
+					if (!shape.contains(s[5]) && shape.points.size() > 11) {
 						continue;
 					}
 				}
 				if (i == 4) {
-					if (shape.contains(s[5]) && shape.points.size() > 9) {
+					if (shape.contains(s[5]) && shape.points.size() > 8) {
 						continue;
 					}
-					if (!shape.contains(s[5]) && shape.points.size() > 10) {
+					if (!shape.contains(s[5]) && shape.points.size() > 9) {
 						continue;
 					}
 				}
@@ -92,34 +92,34 @@ public class Algorithm {
 					continue;
 				}
 				else{
-					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);
-					int len = tem.size();
-					boolean flag = false;
-					for(i=0;i<len;i++){
-						if(elementsEquals(shape, tem.get(i))){
-							if(shape.skip != tem.get(i).skip){
-								flag = true;
-							}
-							if(shape.skip == 0 && tem.get(i).skip == 0){
-								flag = true;
-							}
-						}
-					}
-					if(flag){
-						continue;
-					}
-					if(len == 1){
-						shape.skip = index;
-						tem.get(0).skip = index;
-						index++;
-					}
-					if(len > 1){
-						shape.skip = tem.get(0).skip;
-					}
-					index++;
-					tem.add(shape);
-					angleSetMap.put(angleSetTem, tem);
-					set1.offer(shape);
+//					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);
+//					int len = tem.size();
+//					boolean flag = false;
+//					for(i=0;i<len;i++){
+//						if(elementsEquals(shape, tem.get(i))){
+//							if(shape.skip != tem.get(i).skip){
+//								flag = true;
+//							}
+//							if(shape.skip == 0 && tem.get(i).skip == 0){
+//								flag = true;
+//							}
+//						}
+//					}
+//					if(flag){
+//						continue;
+//					}
+//					if(len == 1){
+//						shape.skip = index;
+//						tem.get(0).skip = index;
+//						index++;
+//					}
+//					if(len > 1){
+//						shape.skip = tem.get(0).skip;
+//					}
+//					index++;
+//					tem.add(shape);
+//					angleSetMap.put(angleSetTem, tem);
+//					set1.offer(shape);
 				}
 
 			}
