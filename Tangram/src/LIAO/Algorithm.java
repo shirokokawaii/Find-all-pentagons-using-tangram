@@ -62,8 +62,9 @@ public class Algorithm {
 				}
 			}
 			Long time2 = System.currentTimeMillis();
-			System.out.println("Connect time:" + (time2 - time1) + "ms");
-			while (!set2.isEmpty()) {
+			System.out.println("Connect time:" + (time2-time1) +"ms");
+
+				while(!set2.isEmpty()){
 				Shape shape = set2.poll();
 				if (shape == null) {
 					continue;
@@ -136,6 +137,7 @@ public class Algorithm {
 		System.out.println(count + " answers");
 		return answerSet;
 	}
+	
 
 	public void dfsSearch() {
 		HashMap<ArrayList<Integer>, Integer> angleSetMap = new HashMap<>();
