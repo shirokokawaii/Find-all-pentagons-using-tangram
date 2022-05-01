@@ -9,8 +9,10 @@ public class Point {
 	@JSONField(name = "LENGTH")
 	double length;
 
+	@JSONField(serialize = false)
 	boolean flag;
 
+	@JSONField(serialize = false)
 	char name;
 
 	public Point(int angle, double length) {
