@@ -48,8 +48,7 @@ public class Algorithm {
 			LinkedList<Shape> set2 = new LinkedList<Shape>();
 			Long time1 = System.currentTimeMillis();
 			while (!set1.isEmpty()) {
-				Shape order = new Shape();
-				order = set1.poll();
+				Shape order = set1.poll();
 				for (int j = 0; j < 6; j++) {
 					if (!order.contains(s[j])) {
 						set2.addAll(Connector.connectAll(order, s[j]));
@@ -57,9 +56,9 @@ public class Algorithm {
 				}
 			}
 			Long time2 = System.currentTimeMillis();
-			System.out.println("Connect time:" + (time2-time1) +"ms");
+			System.out.println("Connect time:" + (time2 - time1) + "ms");
 
-				while(!set2.isEmpty()){
+			while (!set2.isEmpty()) {
 				Shape shape = set2.poll();
 				if (shape == null) {
 					continue;
@@ -89,39 +88,35 @@ public class Algorithm {
 					tem.add(shape);
 					angleSetMap.put(angleSetTem, tem);
 					set1.offer(shape);
-					continue;
+				} else {
+					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
+					int len = tem.size();
+					boolean flag = false;
+					for (i = 0; i < len; i++) {
+						if (elementsEquals(shape, tem.get(i))) {
+							if (shape.skip != tem.get(i).skip) {
+								flag = true;
+							}
+							if (shape.skip == 0 && tem.get(i).skip == 0) {
+								flag = true;
+							}
+						}
+					}
+					if (flag) {
+						continue;
+					}
+					if (len == 1) {
+						shape.skip = index;
+						tem.get(0).skip = index;
+						index++;
+					}
+					if (len > 1) {
+						shape.skip = tem.get(0).skip;
+					}
+					tem.add(shape);
+					angleSetMap.put(angleSetTem, tem);
+					set1.offer(shape);
 				}
-				else{
-//					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);
-//					int len = tem.size();
-//					boolean flag = false;
-//					for(i=0;i<len;i++){
-//						if(elementsEquals(shape, tem.get(i))){
-//							if(shape.skip != tem.get(i).skip){
-//								flag = true;
-//							}
-//							if(shape.skip == 0 && tem.get(i).skip == 0){
-//								flag = true;
-//							}
-//						}
-//					}
-//					if(flag){
-//						continue;
-//					}
-//					if(len == 1){
-//						shape.skip = index;
-//						tem.get(0).skip = index;
-//						index++;
-//					}
-//					if(len > 1){
-//						shape.skip = tem.get(0).skip;
-//					}
-//					index++;
-//					tem.add(shape);
-//					angleSetMap.put(angleSetTem, tem);
-//					set1.offer(shape);
-				}
-
 			}
 			Long time3 = System.currentTimeMillis();
 			System.out.println("Prune time:" + (time3 - time2) + "ms");
@@ -132,7 +127,6 @@ public class Algorithm {
 		System.out.println(count + " answers");
 		return answerSet;
 	}
-	
 
 	public void dfsSearch() {
 		HashMap<ArrayList<Integer>, Integer> angleSetMap = new HashMap<>();

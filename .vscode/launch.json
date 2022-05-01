@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "LIAO.Test",
             "projectName": "Find-all-pentagons-using-tangram",
-            "vmArgs=": "-Xmx20480m"
+            "jvmArgs=": "-Xmx20480m"
         },
         {
             "type": "java",
