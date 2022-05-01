@@ -17,13 +17,19 @@ public class Algorithm {
 	Shape[] s = new Shape[8];
 	ArrayList<Shape> answerSet = new ArrayList<Shape>();
 	int count = 0;
-
+	int countSame = 0;
+	HashMap<Integer, Integer> hs = new HashMap<>();
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if (shape.points.size() == 5) {// This shape is a pentagon, draw and display it
+			if(!hs.containsKey(shape.skip) && shape.skip!=0){
+				hs.put(shape.skip, 0);
+			}
+			if(hs.containsKey(shape.skip) && shape.skip!=0){
+				countSame++;
+			}
 			count++;
 			answerSet.add(shape);
-			System.out.println(shape.size());
 			System.out.println(angleSet);
 			// here needs to draw and display the answer shape*****
 		}
@@ -79,9 +85,6 @@ public class Algorithm {
 						continue;
 					}
 				}
-				if (i == 5 && shape.points.size() != 5) {
-					continue;
-				}
 				String angleSetTem = getAngleList(shape);
 				if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
 					LinkedList<Shape> tem = new LinkedList<>();
@@ -89,7 +92,7 @@ public class Algorithm {
 					angleSetMap.put(angleSetTem, tem);
 					set1.offer(shape);
 				} 
-				if(angleSetMap.containsKey(angleSetTem)) {
+				else {
 					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
 					int len = tem.size();
 					boolean flag = false;
@@ -125,7 +128,8 @@ public class Algorithm {
 		while (!set1.isEmpty()) {
 			displayAnswer(set1.poll());
 		}
-		System.out.println(count + " answers");
+		System.out.println(count + "different answers");
+		System.out.println(countSame+ "same shape answers");
 		return answerSet;
 	}
 
