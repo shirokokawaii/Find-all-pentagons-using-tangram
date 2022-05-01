@@ -27,11 +27,6 @@ public class Algorithm {
 			System.out.println(angleSet);
 			// here needs to draw and display the answer shape*****
 		}
-		// else {//This shape is not a pentagon, only output its angleSet on the
-		// terminal
-		// System.out.print(angleSet.size() );
-		// System.out.println(angleSet);
-		// }
 	}
 
 	public ArrayList<Integer> checkAngle(Shape shape) {
