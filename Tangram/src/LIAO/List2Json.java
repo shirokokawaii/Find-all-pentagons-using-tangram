@@ -20,17 +20,16 @@ public class List2Json {
         shapes.add(S2);
 
 
-         //AlgorithmTest algorithm = new AlgorithmTest(S0, S1, S2, S3, S4, S5, S6, S7);
-
-         //algorithm.bfsSearch(S6);
-         //algorithm.bfsSearch(S7);
+        //Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
+        //algorithm.bfsSearch(S6);
+        //algorithm.bfsSearch(S7);
 
         JSONArray shapeJsonArray = new JSONArray();
-        shapeJsonArray = JSONArray.parseArray(JSON.toJSONString(shapes));
+        //shapeJsonArray = JSONArray.parseArray(JSON.toJSONString(algorithm.answerSet));
         System.out.println("\n方式 6: " + shapeJsonArray.toJSONString());
 
         String pathFile="X:/javaProject/Find-all-pentagons-using-tangram/Tangram/";
-        String fileName = pathFile + "test.json";
+        String fileName = pathFile + "result.json";
 
         try {
             writeFile(fileName, shapeJsonArray.toString());
