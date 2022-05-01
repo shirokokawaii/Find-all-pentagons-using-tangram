@@ -13,6 +13,7 @@ public class DrawOutline {// usage:First create an object of pen, then call the 
     public DrawOutline(JPanel jpanel) {
         this.graphics = jpanel.getGraphics();
         //this.graphics.setColor(Color.red);
+
     }
 
     public void draw(LIAO.Shape shape) {

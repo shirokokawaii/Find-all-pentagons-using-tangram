@@ -1,13 +1,13 @@
 package LIAO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import LIAO.entity.DrawOutline;
 
-import static LIAO.Connector.connectAll;
+import javax.swing.*;
+import java.util.*;
+
 import static LIAO.entity.Tangram.*;
 import static LIAO.entity.Tangram.S7;
+
 
 public class AlgorithmTest {
 	public AlgorithmTest(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
@@ -21,36 +21,36 @@ public class AlgorithmTest {
 		this.s[7] = s7;//s7 is another base
 	}
 	Shape[] s = new Shape[8];
-	ArrayList<Shape> answerSet = new ArrayList<Shape>(); 
+	ArrayList<Shape> answerSet = new ArrayList<Shape>();
 
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
-		if(shape.size() == 5) {//This shape is a pentagon, draw and display it
+		if(shape.points.size()==5) {//This shape is a pentagon, draw and display it
 			answerSet.add(shape);
-			System.out.println("hit:" + shape.size());
+			System.out.println(shape.size());
 			System.out.println(angleSet);
 			//here needs to draw and display the answer shape*****
 		}
-		else {//This shape is not a pentagon, only output its angleSet on the terminal
-			System.out.print(angleSet.size() );
-			System.out.println(angleSet);
-		}
+		// else {//This shape is not a pentagon, only output its angleSet on the terminal
+		// 	System.out.print(angleSet.size() );
+		// 	System.out.println(angleSet);
+		// }
 	}
 
 	public ArrayList<Integer> checkAngle(Shape shape) {
 		int len = shape.size();
-		ArrayList<Integer> angleSet = new ArrayList<Integer>(); 
+		ArrayList<Integer> angleSet = new ArrayList<Integer>();
 		for(int i=0;i<len;i++) {
 			angleSet.add(shape.points.get(i).getAngle());
 		}
 		return angleSet;
 	}
-	
-	public ArrayList<Shape> bfsSearch(int n) throws CloneNotSupportedException {
+
+	public ArrayList<Shape> bfsSearch(int level, int max) {
 		Queue<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(s[6]);
 		set1.offer(s[7]);
-		for(int i=0;i<n;i++) {
+		for(int i=0;i<level;i++) {
 			HashMap<ArrayList<Integer>,Integer> angleSetMap = new HashMap<>();
 			System.out.println("Adding "+(i+1)+"st shape");
 			Queue<Shape> set2 = new LinkedList<Shape>();
@@ -59,13 +59,14 @@ public class AlgorithmTest {
 				order = set1.poll();
 				for(int j=0;j<6;j++) {
 					if(!order.contains(s[j])) {
-						set2 = connectAll(order,s[j]);
+						set2.addAll(Connector.connectAll(order,s[j]));
+						// set2 = Connector.connectAll(order,s[j]);
 					}
 				}
 			}
 			while(!set2.isEmpty()){
 				Shape shape = set2.poll();
-				if(shape == null){
+				if(shape == null || shape.points.size()>=max){
 					continue;
 				}
 				ArrayList<Integer> angleSetTem = getAngleList(shape);
@@ -80,7 +81,8 @@ public class AlgorithmTest {
 		}
 		return answerSet;
 	}
-	
+
+
 
 	private ArrayList<Integer> getAngleList(Shape shape){
 		ArrayList<Integer> angleSet = new ArrayList<Integer>();
@@ -104,14 +106,45 @@ public class AlgorithmTest {
 		return angleSet;
 	}
 
-	public static void main(String[] args) throws CloneNotSupportedException {
+	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
+		Queue<String> edgeSet = new LinkedList<String>();
+		//here calculate all the possible edge combination and store them into edgeSet.*****
+		return edgeSet;
+	}
+
+	public static void main(String[] args) {
+		JFrame jf = new JFrame("图形可视化工具");
+		JPanel jpanel = new JPanel();
+		jf.add(jpanel);
+		jpanel.setSize(1000, 1000);
+		jf.setResizable(false);
+		jf.setSize(1000, 1000); //设置窗口大小
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//意思就是设置一个默认的关闭操作，也就是你的JFrame窗口的关闭按钮，点击它时，退出程序。
+		jf.setVisible(true);// 可视化 显示在屏幕上
+		DrawOutline p = new DrawOutline(jpanel);
+
 		AlgorithmTest algorithm = new AlgorithmTest(S0, S1, S2, S3, S4, S5, S6, S7);
+		//algorithm.bfsSearch(4, 9);
+		//System.out.println(algorithm.answerSet);
+		//System.out.println("aaaaAAaaaaa"+algorithm.answerSet.size());
+		//int size = algorithm.answerSet.size() - 119;
+		//Shape test = algorithm.answerSet.get(size);
 
-		algorithm.bfsSearch(1);
+		Shape s1 = Connector.connect(S6, S0, 0, 1, false);
+		Shape s2 = Connector.connect(s1, S3, 0, 0, false);
+		Shape s3 = Connector.connect(s2, S4, 4, 0, false);
+//		Shape s3 = Connector.connect(s2, S4, 4, 0, true);
 
-		System.out.println(algorithm.answerSet);
+		Shape s4 = Connector.connect(s3, S1, 4, 1, false);
 
+		Shape test = s3;
 
+		System.out.println("---------" + test + "----------");
+		System.out.println("ShapeSet:  " + test.shapeList);
+		System.out.println("order1:  " + test.debugPointOrderA);
+		System.out.println("order2:  " + test.debugPointOrderB);
+		System.out.println("direction:  " + test.debugDirection);
+		p.draw(test);
 	}
 
 }

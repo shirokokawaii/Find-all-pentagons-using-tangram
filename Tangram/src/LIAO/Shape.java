@@ -13,6 +13,11 @@ public class Shape {
     Queue<Character> pointOrder = new LinkedList<Character>();
     Queue<Shape> shapeList = new LinkedList<>();
 
+    Queue<Shape> debugShapeSet = new LinkedList<>();
+    Queue<Integer> debugPointOrderA = new LinkedList<>();
+    Queue<Integer> debugPointOrderB = new LinkedList<>();
+    Queue<Boolean> debugDirection = new LinkedList<>();
+
     public Shape() {
     }
 

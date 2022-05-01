@@ -19,9 +19,12 @@ public class Connector {
         Shape result = new Shape();
         result = clone(shapeA, shapeB);
 
-//        result.pointOrder2.offer(B);
-//        result.orderDirection.offer(!d);
-        //result.shapesSet.offer(shapeB);
+        //for test
+        result.debugPointOrderA.offer(A);
+        result.debugPointOrderB.offer(B);
+        result.debugDirection.offer(!d);
+        result.shapesSet.offer(shapeB);
+
         // System.out.println("\nShapeSetSize:"+result.shapesSet.size());
         int checkAngle = shapeA.getAngel(A) + shapeB.getAngel(B);
         // System.out.println("angle:!!!!!" + checkAngle);
@@ -61,12 +64,12 @@ public class Connector {
                     }
 
                     if (square)
-                        result.addPoint(new Point(shapeB.getPoint(B + 2)));
+                        result.addPoint(new Point(2, 1));
 
                     //检查B+n-1
                     if(Math.abs(length2[0] - length2[1]) < THRESHOLD){
-                        int k = result.size();
-                        result.addPoint(new Point(result.getAngel(k - 1) + shapeA.getAngel(A + 1),
+                        //int k = result.size();
+                        result.addPoint(new Point(shapeB.getAngel(B - 1) + shapeA.getAngel(A + 1),
                                 shapeA.getLength(A + 1)));
                     } else if (length2[0] > length2[1]) {
                         result.addPoint(new Point(shapeA.getAngel(A) + 4, length2[0] - length2[1]));
@@ -138,6 +141,12 @@ public class Connector {
             }
         }
 
+        for (int i = 0; i < result.size(); i++) {
+                if(result.getAngel(i) >= 8) {
+                    return null;
+                }
+        }
+
         if (flag.equals("failed")){
 
         //if (flag.equals("failed") || flag.equals("absorb")){
@@ -204,15 +213,28 @@ public class Connector {
         for (Shape s : shape.shapesSet) {
 //            result.shapesSet.offer(s);
         }
+
         for (int i : shape.pointOrder) {
 //            result.pointOrder.offer(i);
         }
-//        for (int i : shape.pointOrder2) {
-//            result.pointOrder2.offer(i);
-//        }
-//        for (boolean b : shape.orderDirection) {
-//            result.orderDirection.offer(b);
-//        }
+
+        for (Shape b : shape.shapeList) {
+            result.shapeList.offer(b);
+        }
+
+
+        for (Shape s : shape.debugShapeSet) {
+            result.debugShapeSet.offer(s);
+        }
+        for (int i : shape.debugPointOrderA) {
+            result.debugPointOrderA.offer(i);
+        }
+        for (int i : shape.debugPointOrderB) {
+            result.debugPointOrderB.offer(i);
+        }
+        for (boolean b : shape.debugDirection) {
+            result.debugDirection.offer(b);
+        }
 
 //        if(result.shapesSet.size() == 0) {
 //            Shape s = new Shape();
@@ -226,6 +248,7 @@ public class Connector {
 //        }
         if(result.shapeList.size() == 0) {
             result.shapeList.offer(shape);
+            result.debugShapeSet.offer(shape);
         }
 
 
@@ -305,8 +328,12 @@ public class Connector {
 
         }
 //        System.out.println("Direction:  " + test.orderDirection);
-       // p.draw(test);
-
+       //
+        Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
+        algorithm.bfsSearch();
+        System.out.println(algorithm.answerSet);
+        int size = algorithm.answerSet.size() - 9;
+        p.draw(algorithm.answerSet.get(size));
 
     }
 
