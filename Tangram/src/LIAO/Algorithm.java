@@ -62,7 +62,9 @@ public class Algorithm {
 			}
 			Long time2 = System.currentTimeMillis();
 			System.out.println("Connect time:" + (time2-time1) +"ms");
-			while(!set2.isEmpty()){
+
+			if(i == 0 || i == 1) {
+				while(!set2.isEmpty()){
 				Shape shape = set2.poll();
 				if(shape == null){
 					continue;
@@ -93,7 +95,45 @@ public class Algorithm {
 					// OwnerShipSetMap.put(ownerShipSetTem, 0);
 					set1.offer(shape);
 				}
+				}
+			} else {
+				set1 = set2;
+
 			}
+//			while(!set2.isEmpty()){
+//				Shape shape = set2.poll();
+//				if(shape == null){
+//					continue;
+//				}
+//				if(i ==3 && shape.points.size()>10){
+//					continue;
+//				}
+//				if(i ==4 && shape.points.size()>9){
+//					continue;
+//				}
+//				if(i ==5 && shape.points.size()>5){
+//					continue;
+//				}
+//				String angleSetTem = getAngleList(shape);
+//				// if(angleSetMap.containsKey(angleSetTem) && !shape.skip){//angle list is same
+//				// 	String  ownerShipSetTem = getOwnershipList(shape, i);
+//				// 	if(!OwnerShipSetMap.containsKey(ownerShipSetTem)){//edge list is not same
+//				// 		angleSetMap.put(angleSetTem, 0);
+//				// 		OwnerShipSetMap.put(ownerShipSetTem, 0);
+//				// 		shape.skip = true;
+//				// 		set1.offer(shape);
+//				// 		continue;
+//				// 	}
+//				// }
+//				// String  ownerShipSetTem = getOwnershipList(shape, i);
+//				if(!angleSetMap.containsKey(angleSetTem)){//angle list is not same
+//					angleSetMap.put(angleSetTem, 0);
+//					// OwnerShipSetMap.put(ownerShipSetTem, 0);
+//					set1.offer(shape);
+//				}
+//			}
+
+			//set1 = set2;
 			Long time3 = System.currentTimeMillis();
 			System.out.println("Prune time:" + (time3-time2) +"ms");
 		}

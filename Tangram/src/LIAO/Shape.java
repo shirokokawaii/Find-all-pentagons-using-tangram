@@ -2,13 +2,17 @@ package LIAO;
 
 import LIAO.entity.CircleList;
 import LIAO.entity.Point;
+import com.alibaba.fastjson2.annotation.JSONField;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Shape {
+    @JSONField(name = "POINTS")
     CircleList<Point> points = new CircleList<>();
+
     LinkedList<Shape> shapesSet = new LinkedList<Shape>();
     LinkedList<Character> pointOrder = new LinkedList<Character>();
     LinkedList<Shape> shapeList = new LinkedList<>();
@@ -22,7 +26,15 @@ public class Shape {
 
     public Shape() {
     }
-    
+
+    public ArrayList<Point> getPoints() {
+        return (ArrayList<Point>) points;
+    }
+
+    public void setPoints(ArrayList<Point> points) {
+        this.points = (CircleList<Point>) points;
+    }
+
     private void initOwnershipList(int number){
         for(int i=0;i<this.size();i++){
             this.OwnershipList.put(this.getName(i), number);

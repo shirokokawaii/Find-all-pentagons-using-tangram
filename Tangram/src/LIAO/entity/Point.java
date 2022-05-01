@@ -1,25 +1,41 @@
 package LIAO.entity;
 
 
+import com.alibaba.fastjson2.annotation.JSONField;
+
 public class Point {
+	@JSONField(name = "ANGLE")
 	int angle;
+	@JSONField(name = "LENGTH")
 	double length;
+
+	boolean flag;
+
 	char name;
 
 	public Point(int angle, double length) {
 		this.angle = angle;
 		this.length = length;
+		this.flag = false;
 	}
 
-	public Point(int angle, double length, char name) {
+
+
+	public Point(int angle, double length, boolean flag) {
 		this.angle = angle;
 		this.length = length;
-		this.name = name;
+		this.flag = flag;
 	}
 
 	public Point(Point point) {
 		this.angle = point.angle;
 		this.length = point.length;
+	}
+
+	public Point(Point point, boolean flag) {
+		this.angle = point.angle;
+		this.length = point.length;
+		this.flag = flag;
 	}
 
 	public int getAngle(){
@@ -38,6 +54,10 @@ public class Point {
 				"angle=" + angle +
 				", length=" + length +
 				"}\n";
+	}
+
+	public void setFlag(){
+		flag = true;
 	}
 
 	public char getName() {

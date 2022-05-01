@@ -19,6 +19,8 @@ public class Connector {
         Shape result = new Shape();
         result = clone(shapeA, shapeB);
 
+        named(shapeA);
+
         //for test
         result.debugPointOrderA.offer(A);
         result.debugPointOrderB.offer(B);
@@ -50,7 +52,7 @@ public class Connector {
             //B右 B-1 B
             length2[1] = shapeB.getLength(B - 1);
             for (int i = A + 2; i < A + shapeA.size() + 2; i++) {
-                Point p = new Point(shapeA.getPoint(i));
+                Point p = new Point(shapeA.getPoint(i), true);
                 //检查被加图形A左侧顶点A+n-1
                 if(i == (A + shapeA.size() - 1)){
                     if(Math.abs(length1[0] - length1[1]) < THRESHOLD){
@@ -73,7 +75,7 @@ public class Connector {
                                 shapeA.getLength(A + 1)));
                     } else if (length2[0] > length2[1]) {
                         result.addPoint(new Point(shapeA.getAngel(A) + 4, length2[0] - length2[1]));
-                        result.addPoint(new Point(shapeA.getAngel(A + 1), shapeA.getLength(A + 1)));
+                        result.addPoint(new Point(shapeA.getAngel(A + 1), shapeA.getLength(A + 1), true));
                     } else {
                         result.addPoint(new Point(shapeB.getAngel(B - 1), length2[1] - length2[0]));
                         result.addPoint(new Point(shapeA.getAngel(A + 1) + 4, shapeA.getLength(A + 1)));
@@ -131,11 +133,17 @@ public class Connector {
                         if (checkList.get(firstSize - 1).getAngle() + 4 >= 8) {
                             flag = "failed";
                         }
-                        result.addPoint(new Point(checkList.get(firstSize)));
+                        if (checkList.get(firstSize).getName()=='A')
+                            result.addPoint(new Point(checkList.get(firstSize), true));
+                        else
+                            result.addPoint(new Point(checkList.get(firstSize)));
+
                     }
                     i++;
                 } else {
                     Point p = new Point(checkList.get(i));
+                    if(checkList.get(i).getName() == 'A')
+                       p.setFlag();
                     result.addPoint(p);
                 }
             }
@@ -154,7 +162,7 @@ public class Connector {
             return null;
         }
         else
-            named(result);
+            //named(result);
             //result.shapesSet.offer(result);
             return delete4(result);
     }
@@ -256,15 +264,26 @@ public class Connector {
         return result;
     }
 
+//    public static void named(Shape shape) {
+//        char name = 65;
+//        for(Point point : shape.points) {
+//            point.setName(name);
+//            name++;
+//        }
+//        name = 65;
+//
+//    }
+
     public static void named(Shape shape) {
         char name = 65;
         for(Point point : shape.points) {
             point.setName(name);
-            name++;
+            //name++;
         }
-        name = 65;
+        //name = 65;
 
     }
+
 
     public static void main(String[] args) throws CloneNotSupportedException {
 
