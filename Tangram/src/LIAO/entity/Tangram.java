@@ -78,6 +78,15 @@ public class Tangram {
         }
     };
 
+    public static final CircleList<Point> p8 = new CircleList<Point>(){
+        {
+            add(new Point(3, 1d));
+            add(new Point(1, Math.sqrt(2)));
+            add(new Point(3, 1d));
+            add(new Point(2, Math.sqrt(2)));
+        }
+    };
+
     public static final Shape S0 = new Shape(p0);
     public static final Shape S1 = new Shape(p0);
     public static final Shape S2 = new Shape(p2);
@@ -86,5 +95,5 @@ public class Tangram {
     public static final Shape S5 = new Shape(p5);
     public static final Shape S6 = new Shape(p6);
     public static final Shape S7 = new Shape(p7);
-
+    public static final Shape S8 = new Shape(p8);
 }

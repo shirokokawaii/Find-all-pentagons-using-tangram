@@ -2,7 +2,7 @@ package LIAO;
 
 import LIAO.entity.CircleList;
 import LIAO.entity.Point;
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.ArrayList;
 import java.util.Collections;

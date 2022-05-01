@@ -2,7 +2,7 @@ package LIAO;
 
 import LIAO.entity.DrawOutline;
 import LIAO.entity.Point;
-import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson.JSON;
 
 import javax.swing.*;
 import java.util.*;
@@ -26,14 +26,15 @@ public class AlgorithmTest {
 
 		Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
 
-		algorithm.bfsSearch(S6);
+		//algorithm.bfsSearch(S6);
 		//algorithm.bfsSearch(S7);
 
 		//algorithm.bfsSearch(4, 9);
 		System.out.println(algorithm.answerSet);
 		System.out.println("----------------" + algorithm.answerSet.size() + "----------------");
 		//int size = algorithm.answerSet.size() - 119;
-		Shape test = algorithm.answerSet.get(3);
+		//Shape test = algorithm.answerSet.get(3);
+		Shape test = S8;
 
 		Shape s1 = Connector.connect(S6, S0, 0, 0, false);
 		Shape s2 = Connector.connect(s1, S1, 1, 1, false);
@@ -55,7 +56,7 @@ public class AlgorithmTest {
 		System.out.println("order1:  " + test.debugPointOrderA);
 		System.out.println("order2:  " + test.debugPointOrderB);
 		System.out.println("direction:  " + test.debugDirection);
-		p.draw(test);
+		p.draw(S8);
 	}
 
 }

@@ -1,7 +1,7 @@
 package LIAO.entity;
 
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class Point {
 	@JSONField(name = "ANGLE")
