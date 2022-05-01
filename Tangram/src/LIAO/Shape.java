@@ -4,16 +4,24 @@ import LIAO.entity.CircleList;
 import LIAO.entity.Point;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Shape {
     CircleList<Point> points = new CircleList<>();
-    Queue<Shape> shapesSet = new LinkedList<Shape>();
-    Queue<Character> pointOrder = new LinkedList<Character>();
-    Queue<Shape> shapeList = new LinkedList<>();
+    LinkedList<Shape> shapesSet = new LinkedList<Shape>();
+    LinkedList<Character> pointOrder = new LinkedList<Character>();
+    LinkedList<Shape> shapeList = new LinkedList<>();
+    HashMap<Character, Integer> OwnershipList = new HashMap<>();
+    boolean skip = false;
 
     public Shape() {
+    }
+    
+    private void initOwnershipList(int number){
+        for(int i=0;i<this.size();i++){
+            this.OwnershipList.put(this.getName(i), number);
+        }
     }
 
     public Shape(CircleList<Point> point) {

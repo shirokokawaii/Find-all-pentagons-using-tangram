@@ -47,6 +47,7 @@ public class Algorithm {
 		set1.offer(shapeIn);
 		for(int i=0;i<6;i++) {
 			HashMap<String,Integer> angleSetMap = new HashMap<>();
+			HashMap<String,Integer> OwnerShipSetMap = new HashMap<>();
 			System.out.println("Adding "+(i+1)+"st shape");
 			LinkedList<Shape> set2 = new LinkedList<Shape>();
 			Long time1 = System.currentTimeMillis();
@@ -76,8 +77,20 @@ public class Algorithm {
 					continue;
 				}
 				String angleSetTem = getAngleList(shape);
-				if(!angleSetMap.containsKey(angleSetTem)){
+				// if(angleSetMap.containsKey(angleSetTem) && !shape.skip){//angle list is same
+				// 	String  ownerShipSetTem = getOwnershipList(shape, i);
+				// 	if(!OwnerShipSetMap.containsKey(ownerShipSetTem)){//edge list is not same
+				// 		angleSetMap.put(angleSetTem, 0);
+				// 		OwnerShipSetMap.put(ownerShipSetTem, 0);
+				// 		shape.skip = true;
+				// 		set1.offer(shape);
+				// 		continue;
+				// 	}
+				// }
+				// String  ownerShipSetTem = getOwnershipList(shape, i);
+				if(!angleSetMap.containsKey(angleSetTem)){//angle list is not same
 					angleSetMap.put(angleSetTem, 0);
+					// OwnerShipSetMap.put(ownerShipSetTem, 0);
 					set1.offer(shape);
 				}
 			}
@@ -181,23 +194,57 @@ public class Algorithm {
 		return answer;
 	}
 
-	// private Shape connect(Shape shape1, Shape shape2, Point originalPoint, Point laterPoint, int direction) {//connect shape1 and shape2 with specified edge
-	// 	Shape result = new Shape();
-	// 	// calculate the results and store it into set.*****
-	// 	return Connector.connect(shape1, shape2, 0, 0, true);
-	// }
+	private String getOwnershipList(Shape shape, int index){
+		LinkedList<Integer> OwnershipList = new LinkedList<>();
+			Shape shapeTem = shape.shapeList.get(index);
+			int number = 0;
+			for(int i=0;i<6;i++){
+				if(shapeTem.equals(s[i])){
+					number = i;
+				}
+			}
+			Shape shapeNow = shape.shapesSet.get(index+1);
+			char originalPoint = shapeNow.pointOrder.get(index);
+			int startPoint = 0;
+			for(int i=0;i<shapeNow.size();i++){
+				if(shapeNow.getName(i)==originalPoint){
+					startPoint = i;
+				}
+			}
+			int previousNumber = shape.OwnershipList.get(originalPoint);
+			Character previousName = ' ';
+			boolean flag = false;
+			for(int i=0;i<shapeNow.size()+1;i++){
+				char name = shapeNow.getName(startPoint);
+				if(shape.OwnershipList.containsKey(name)){
+					if(flag){
+						shape.OwnershipList.put(previousName, number);
+						flag = false;
+						OwnershipList.removeLast();
+						OwnershipList.add(previousNumber);
+						continue;
+					}
+					OwnershipList.add(shape.OwnershipList.get(name));
+				}
+				else{
+					shape.OwnershipList.put(name, number);
+					OwnershipList.add(number);
+					previousName = name;
+					flag = true;
+				}
+			}
+			String result = new String();
+			for(int i:OwnershipList){
+				result+= Integer.toString(i);
+			}
+			return result;
+
+	}
 	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
 		Queue<String> edgeSet = new LinkedList<String>();
 		//here calculate all the possible edge combination and store them into edgeSet.*****
 		return edgeSet;
 	}
-	
-
-	// private Queue<Shape> connectAll(Shape order, Shape shape) {
-	// 	Queue<Shape> resultSet = new LinkedList<Shape>();
-	// 	//calculate the results and store them into set.*****
-	// 	return Connector.connectAll(order, shape);
-	// }
 }
 
