@@ -16,7 +16,6 @@ public class Shape {
     LinkedList<Shape> shapesSet = new LinkedList<Shape>();
     LinkedList<Character> pointOrder = new LinkedList<Character>();
     LinkedList<Shape> shapeList = new LinkedList<>();
-    HashMap<Character, Integer> OwnershipList = new HashMap<>();
     boolean skip = false;
 
     LinkedList<Shape> debugShapeSet = new LinkedList<>();
@@ -40,6 +39,7 @@ public class Shape {
             this.OwnershipList.put(this.getName(i), number);
         }
     }
+
 
     public Shape(CircleList<Point> point) {
         this.points = point;
