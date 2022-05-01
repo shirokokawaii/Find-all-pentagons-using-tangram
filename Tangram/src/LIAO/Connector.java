@@ -198,8 +198,8 @@ public class Connector {
                     Shape newShape = null;
                     newShape = connect(shapeA, shapeB, i, j, k == 0);
                     if (newShape!=null){
-                        shapes.add(newShape);
                         newShape.skip = shapeA.skip;
+                        shapes.add(newShape);
                     }
 
 
