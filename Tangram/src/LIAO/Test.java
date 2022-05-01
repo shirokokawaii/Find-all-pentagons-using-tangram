@@ -43,7 +43,7 @@ public class Test {
 
         shape.shapesSet.offer(S6);
         shape.shapesSet.offer(S3);
-       shape.pointOrder.offer(3);
+       shape.pointOrder.offer((char) 3);
        Pen pen = new Pen(jpanel);
        pen.draw(shape);
         // Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);

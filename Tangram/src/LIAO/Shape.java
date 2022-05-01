@@ -26,6 +26,7 @@ public class Shape {
     public Shape() {
     }
 
+
     public ArrayList<Point> getPoints() {
         return (ArrayList<Point>) points;
     }
@@ -36,7 +37,7 @@ public class Shape {
 
     private void initOwnershipList(int number){
         for(int i=0;i<this.size();i++){
-            this.OwnershipList.put(this.getName(i), number);
+            //this.OwnershipList.put(this.getName(i), number);
         }
     }
 
