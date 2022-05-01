@@ -199,11 +199,10 @@ public class Connector {
                     newShape = connect(shapeA, shapeB, i, j, k == 0);
                     if (newShape!=null){
                         shapes.add(newShape);
+                        newShape.skip = shapeA.skip;
                     }
-                    //if(shapeA.skip)
-                        //newShape.skip = true;
-                    //else
-                        //newShape.skip = false;
+
+
                     //序号
                     // System.out.println("-------"+(shapes.size()-1)+"-------");
                     // System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);

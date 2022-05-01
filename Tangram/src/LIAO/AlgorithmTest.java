@@ -105,36 +105,6 @@ public class AlgorithmTest {
 					set1.offer(shape);
 					continue;
 				}
-				else{
-					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);
-					int len = tem.size();
-					boolean flag = false;
-					for(i=0;i<len;i++){
-						if(elementsEquals(shape, tem.get(i))){
-							if(shape.skip != tem.get(i).skip){
-								flag = true;
-							}
-							if(shape.skip == 0 && tem.get(i).skip == 0){
-								flag = true;
-							}
-						}
-					}
-					if(flag){
-						continue;
-					}
-					if(len == 1){
-						shape.skip = index;
-						tem.get(0).skip = index;
-						index++;
-					}
-					if(len > 1){
-						shape.skip = tem.get(0).skip;
-					}
-					index++;
-					tem.add(shape);
-					angleSetMap.put(angleSetTem, tem);
-					set1.offer(shape);
-				}
 
 			}
 			Long time3 = System.currentTimeMillis();
