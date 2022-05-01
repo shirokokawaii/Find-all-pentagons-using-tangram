@@ -6,7 +6,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Shape {
@@ -16,7 +15,7 @@ public class Shape {
     LinkedList<Shape> shapesSet = new LinkedList<Shape>();
     LinkedList<Character> pointOrder = new LinkedList<Character>();
     LinkedList<Shape> shapeList = new LinkedList<>();
-    boolean skip = false;
+    int skip = 0;
 
     LinkedList<Shape> debugShapeSet = new LinkedList<>();
     LinkedList<Integer> debugPointOrderA = new LinkedList<>();
