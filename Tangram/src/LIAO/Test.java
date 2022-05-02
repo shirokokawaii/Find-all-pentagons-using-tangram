@@ -4,6 +4,7 @@ package LIAO;
 import static LIAO.entity.Tangram.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.*;
 
@@ -36,12 +37,23 @@ public class Test {
          jf.setVisible(true);// 可视化 显示在屏幕上
          
          Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
-         ArrayList<Shape> answerList = new ArrayList<>();
-         answerList.addAll(algorithm.bfsSearch(S6));
-         answerList.addAll(algorithm.bfsSearch(S7));
-         Pen pen = new Pen(jf, jpanel);
-         pen.beforeDraw(answerList.get(0), 500, 500, 50);
-         pen.draw("C:/Users/Public/Desktop/pic.jpg");
+         LinkedList<Shape> answerList = new LinkedList<>();
+         algorithm.bfsSearch(S6);
+         algorithm.bfsSearch(S7);
+         answerList = algorithm.getAnswerList();
+         for(int i=0;i<answerList.size();i++) {
+             Pen pen = new Pen(jf, jpanel);
+             pen.beforeDraw(answerList.get(i), 500, 500, 50);
+             pen.draw("C:/Users/Dalao/Desktop/pics/pic"+i+".jpg");
+             jpanel.repaint();
+             System.out.println(i);
+         }
+         System.out.println("skip4"+answerList.get(4).skip);
+         System.out.println(algorithm.getAngleList(answerList.get(4)));
+         System.out.println("skip5"+answerList.get(5).skip);
+         System.out.println(algorithm.getAngleList(answerList.get(5)));
+//       pen.beforeDraw(answerList.get(0), 500, 500, 50);
+//       pen.draw("C:/Users/Dalao/Desktop/pic.jpg");
          //pen.draw(true);
     }
 }
