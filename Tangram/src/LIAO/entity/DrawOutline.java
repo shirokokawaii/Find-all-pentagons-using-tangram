@@ -3,6 +3,7 @@ package LIAO.entity;
 import LIAO.Shape;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.*;
 
@@ -20,8 +21,8 @@ public class DrawOutline {// usage:First create an object of pen, then call the 
         int size = 50;
         ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
         ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
-        double originalX = 500;// start painting from x=0, y=0
-        double originalY = 500;
+        double originalX = 200;// start painting from x=0, y=0
+        double originalY = 200;
 
         int originalPoint = 0;
         int direction = 1;
@@ -88,6 +89,7 @@ public class DrawOutline {// usage:First create an object of pen, then call the 
     }
 
     public static void main(String[] args) {
+        BufferedImage image = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
 
     }
 }
