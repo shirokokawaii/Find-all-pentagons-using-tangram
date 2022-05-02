@@ -40,7 +40,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
             	nextPoint = shape.pointOrder.poll();
             }
             else {
-            	nextPoint = 'Z';
+            	nextPoint = 'A';
             }
             int len = shapeFirst.size();
             for(int i=0;i<len;i++){
@@ -106,7 +106,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
     
     public void draw(String path) {
         int index = 0;
-        for(int count=0;count<10;count++) {
+        for(int count=0;count<10000;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
@@ -134,6 +134,20 @@ public class Pen {// usage:First create an object of pen, then call the method "
 		} catch (AWTException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    
+    public void savePanelAsJpg(String path) {
+
+    	BufferedImage image = new BufferedImage(jpanel.getWidth(),jpanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+    	Graphics2D g2 = image.createGraphics();
+    	jpanel.print(g2);
+    	try {
+			ImageIO.write(image, "jpg", new File(path));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

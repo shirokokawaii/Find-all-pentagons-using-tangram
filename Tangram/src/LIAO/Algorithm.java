@@ -15,13 +15,13 @@ public class Algorithm {
 	}
 
 	Shape[] s = new Shape[8];
-	ArrayList<Shape> answerSet = new ArrayList<Shape>();
+	LinkedList<Shape> answerSet = new LinkedList<Shape>();
 	int count = 0;
 	int countSame = 0;
 	HashMap<String, Integer> hs = new HashMap<>();
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
-		if (shape.points.size() == 5) {// This shape is a pentagon, draw and display it\
+		if(shape.points.size() == 5) {
 			String angleSetTem=getAngleList(shape);
 			if (!hs.containsKey(angleSetTem)) {// angle list is not same
 				hs.put(angleSetTem, 0);
@@ -32,10 +32,12 @@ public class Algorithm {
 			count++;
 			answerSet.add(shape);
 			System.out.println(angleSet);
-			// here needs to draw and display the answer shape*****
 		}
+			// here needs to draw and display the answer shape*****
 	}
-
+	public LinkedList<Shape> getAnswerList() {
+		return answerSet;
+	}
 	public ArrayList<Integer> checkAngle(Shape shape) {
 		int len = shape.size();
 		ArrayList<Integer> angleSet = new ArrayList<Integer>();
@@ -45,11 +47,11 @@ public class Algorithm {
 		return angleSet;
 	}
 
-	public ArrayList<Shape> bfsSearch(Shape shapeIn) {
+	public LinkedList<Shape> bfsSearch(Shape shapeIn) {
 		int index = 1;
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 6; i++) {
 			HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 			System.out.println("Adding " + (i + 1) + "st shape");
 			LinkedList<Shape> set2 = new LinkedList<Shape>();
@@ -103,7 +105,7 @@ public class Algorithm {
 					int len = tem.size();
 					boolean flag = false;
 					for (int j = 0; j < len; j++) {
-						if (i==5 || elementsEquals(shape, tem.get(j))) {
+						if (elementsEquals(shape, tem.get(j))) {
 							if(i==5 && shape.skip == tem.get(j).skip){
 								flag = true;
 							}
@@ -273,7 +275,7 @@ public class Algorithm {
 
 	}
 
-	private String getAngleList(Shape shape) {
+	public String getAngleList(Shape shape) {
 		ArrayList<Integer> angleSet = new ArrayList<Integer>();
 		String answer = new String();
 		int len = shape.size();

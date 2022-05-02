@@ -366,7 +366,7 @@ public class Connector {
 //        System.out.println("Direction:  " + test.orderDirection);
        //
         Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
-        algorithm.bfsSearch(S7);
+//        algorithm.bfsSearch(S7);
         System.out.println(algorithm.answerSet);
         int size = algorithm.answerSet.size() - 9;
         p.draw(algorithm.answerSet.get(size));
