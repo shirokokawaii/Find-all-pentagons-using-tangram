@@ -27,6 +27,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
         double originalAngle = 0;
         int pointLen = shape.pointOrder.size();
         int count = 0;
+    	System.out.println(shape.pointOrder);
         while (!shape.shapesSet.isEmpty()) {
             char nextPoint;
             if(count < pointLen) {
@@ -39,6 +40,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
             Shape shapeFirst = shape.shapesSet.poll();
             int len = shapeFirst.size();
             for(int i=0;i<len;i++){
+            	System.out.println(shapeFirst.getName(i)+":"+shapeFirst.getAngel(i));
                 if(shapeFirst.getName(i) == 'A'){
                     originalPoint = i;
                 }
@@ -52,16 +54,16 @@ public class Pen {// usage:First create an object of pen, then call the method "
                 originalAngle += 180;
                 double length = shapeFirst.getLength(originalPoint) * size;
                 double diffAngle = 45 * shapeFirst.getAngel(originalPoint);
-                originalAngle -= diffAngle;
-                double diffX = length * Math.cos(Math.PI * originalAngle / 180);
-                double diffY = length * Math.sin(Math.PI * originalAngle / 180);
-                originalX += diffX;
-                originalY += diffY;
                 if(shapeFirst.getName(i) == nextPoint) {
                 	nextX = originalX;
                 	nextY = originalY;
                 	nextAngle = originalAngle;
                 }
+                originalAngle -= diffAngle;
+                double diffX = length * Math.cos(Math.PI * originalAngle / 180);
+                double diffY = length * Math.sin(Math.PI * originalAngle / 180);
+                originalX += diffX;
+                originalY += diffY;
                 x.add(originalX);
                 y.add(originalY);
                 originalPoint++;
