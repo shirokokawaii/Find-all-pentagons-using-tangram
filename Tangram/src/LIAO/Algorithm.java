@@ -13,7 +13,6 @@ public class Algorithm {
 		this.s[6] = s6;// s6 is the base
 		this.s[7] = s7;// s7 is another base
 	}
-
 	Shape[] s = new Shape[8];
 	LinkedList<Shape> answerSet = new LinkedList<Shape>();
 	int count = 0;
@@ -38,7 +37,7 @@ public class Algorithm {
 		return angleSet;
 	}
 
-	public LinkedList<Shape> bfsSearch(Shape shapeIn) {
+	public void bfsSearch(Shape shapeIn) {
 		int acuracy = 2;//0:highest
 		int index = 1;
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
@@ -137,32 +136,57 @@ public class Algorithm {
 			displayAnswer(set1.poll());
 		}
 		System.out.println(count + "different answers");
-		return answerSet;
 	}
 
 	public void dfsSearch() {
-		HashMap<ArrayList<Integer>, Integer> angleSetMap = new HashMap<>();
+		HashMap<String, Integer> angleSetMap = new HashMap<>();
 		dfsAlgorithm(s[6], angleSetMap);
+		System.out.println("50%");
 		dfsAlgorithm(s[7], angleSetMap);
 	}
 
-	private void dfsAlgorithm(Shape shape, HashMap<ArrayList<Integer>, Integer> angleSetMap) {
-		if (shape.shapesSet.size() == 7) {
-			displayAnswer(shape);
+	private void dfsAlgorithm(Shape shape, HashMap<String, Integer> angleSetMap) {
+		if(shape == null) {
 			return;
 		}
+		if (shape.shapeList.size() == 4) {
+			if (shape.contains(s[5]) && shape.points.size() > 11) {
+				return;
+			}
+			if (!shape.contains(s[5]) && shape.points.size() > 12) {
+				return;
+			}
+		}
+		if (shape.shapeList.size() == 5) {
+			if (shape.contains(s[5]) && shape.points.size() > 8) {
+				return;
+			}
+			if (!shape.contains(s[5]) && shape.points.size() > 9) {
+				return;
+			}
+		}
+
+		if (shape.shapeList.size() == 6) {
+			String angleList = getAngleList(shape);
+			if(!angleSetMap.containsKey(angleList)) {
+				angleSetMap.put(angleList, 0);
+				displayAnswer(shape);
+			}
+			return;
+		}
+
 		for (int j = 0; j < 6; j++) {
 			if (!shape.contains(s[j])) {
-				Queue<String> edgeSet = getAllEdgePossibility(shape, s[j]);
-				while (!edgeSet.isEmpty()) {
-					String edge = edgeSet.poll();
-					Shape result = new Shape();
-					// here needs to get all the possibility edge and connect shapes with specified
-					// edge*****
-					if (!angleSetMap.containsKey(getAngleList(result))) {
-						dfsAlgorithm(result, angleSetMap);
+					int len1 = shape.size();
+					int len2 = s[j].size();
+					for(int h=0;h<len1;h++) {
+						for(int k=0;k<len2;k++) {
+							Shape result1 = Connector.connect(shape, s[j], h, k, true);
+							dfsAlgorithm(result1, angleSetMap);
+							Shape result2 = Connector.connect(shape, s[j], h, k, false);
+							dfsAlgorithm(result2, angleSetMap);
+						}
 					}
-				}
 
 			}
 		}
@@ -174,8 +198,9 @@ public class Algorithm {
 	}
 
 	private void aStarAlgorithm(Shape shape) {
-		if (shape.shapesSet.size() == 7) {
+		if (shape.shapeList.size() == 6) {
 			displayAnswer(shape);
+			System.out.println(shape.size());
 			return;
 		}
 		ArrayList<ArrayList<Shape>> costSet = new ArrayList<ArrayList<Shape>>();
