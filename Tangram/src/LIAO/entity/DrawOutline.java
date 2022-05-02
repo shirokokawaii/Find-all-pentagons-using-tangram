@@ -17,7 +17,7 @@ public class DrawOutline {// usage:First create an object of pen, then call the 
 
     }
 
-    public void draw(LIAO.Shape shape) {
+    public void draw(LIAO.Shape shape, String path) {
         int size = 50;
         ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
         ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
@@ -61,6 +61,8 @@ public class DrawOutline {// usage:First create an object of pen, then call the 
         xList.add(x);
         yList.add(y);
         drawLine(xList, yList);
+
+
     }
 
     public void drawLine(ArrayList<ArrayList<Double>> xList, ArrayList<ArrayList<Double>> yList) {

@@ -369,7 +369,7 @@ public class Connector {
 //        algorithm.bfsSearch(S7);
         System.out.println(algorithm.answerSet);
         int size = algorithm.answerSet.size() - 9;
-        p.draw(algorithm.answerSet.get(size));
+        //p.draw(algorithm.answerSet.get(size));
 
     }
 

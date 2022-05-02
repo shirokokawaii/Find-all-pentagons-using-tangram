@@ -70,7 +70,12 @@ public class List2Json {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
         DrawOutline p = new DrawOutline(jpanel);
-        p.draw(list.get(44));
+        Pen pen = new Pen(jf, jpanel);
+        Shape shape = new Shape();
+        shape.shapesSet.offer(list.get(0));
+        pen.beforeDraw(shapes.get(2), 500, 500, 50);
+        pen.draw("X:/javaProject/Find-all-pentagons-using-tangram/Tangram/ima_output/pic.jpg");
+        //p.draw(list.get(44));
 
 
 
