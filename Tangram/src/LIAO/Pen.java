@@ -39,7 +39,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
             Shape shapeFirst = shape.shapesSet.poll();
             int len = shapeFirst.size();
             for(int i=0;i<len;i++){
-                if(shapeFirst.getName(i) == ('A')){
+                if(shapeFirst.getName(i) == 'A'){
                     originalPoint = i;
                 }
             }
