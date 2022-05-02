@@ -32,8 +32,8 @@ public class Test {
          JFrame jf = new JFrame("图形可视化工具");
          JPanel jpanel = new JPanel();
          jf.add(jpanel);
-         jpanel.setSize(800, 800);
-         jf.setSize(800, 800); //设置窗口大小
+         jpanel.setSize(600, 600);
+         jf.setSize(600, 600); //设置窗口大小
          jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//意思就是设置一个默认的关闭操作，也就是你的JFrame窗口的关闭按钮，点击它时，退出程序。
          jf.setVisible(true);// 可视化 显示在屏幕上
          
@@ -44,7 +44,7 @@ public class Test {
          answerList = algorithm.getAnswerList();
          for(int i=0;i<answerList.size();i++) {
              Pen pen = new Pen(jf, jpanel);
-             pen.beforeDraw(answerList.get(i), 400, 400, 50);
+             pen.beforeDraw(answerList.get(i), 300, 300, 50);
              pen.draw("C:/Users/Dalao/Desktop/pics/pic"+i+".jpg");
              jpanel.repaint();
              System.out.println(i);

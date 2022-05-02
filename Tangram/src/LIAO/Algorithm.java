@@ -17,18 +17,9 @@ public class Algorithm {
 	Shape[] s = new Shape[8];
 	LinkedList<Shape> answerSet = new LinkedList<Shape>();
 	int count = 0;
-	int countSame = 0;
-	HashMap<String, Integer> hs = new HashMap<>();
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if(shape.points.size() == 5) {
-			String angleSetTem=getAngleList(shape);
-			if (!hs.containsKey(angleSetTem)) {// angle list is not same
-				hs.put(angleSetTem, 0);
-			} 
-			else {
-				countSame++;
-			}
 			count++;
 			answerSet.add(shape);
 			System.out.println(angleSet);
@@ -145,7 +136,6 @@ public class Algorithm {
 			displayAnswer(set1.poll());
 		}
 		System.out.println(count + "different answers");
-		System.out.println(countSame+ "same shape answers");
 		return answerSet;
 	}
 
@@ -305,7 +295,7 @@ public class Algorithm {
 	int[] angleList = new int[len];
 	for(int i=0;i<len;i++) {
 		for(int j=i;j<len+i;j++) {
-			angleList[i] += shape.getAngel(j%len)*(5-j+i);
+			angleList[i] += shape.getAngel(j%len)*(len-j+i);
 			j++;
 		}
 	}
@@ -318,7 +308,8 @@ public class Algorithm {
 			}
 		}
 	}
-	for(int tem:angleList) {
+	for(int i=0;i<len;i++) {
+		int tem = angleList[i];
 		answer += Integer.toString(tem);
 	}
 	return answer;
