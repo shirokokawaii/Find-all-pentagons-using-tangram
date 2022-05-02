@@ -88,6 +88,7 @@ public class Point {
 		return "Point{" +
 				"angle=" + angle +
 				", length=" + length +
+				", NAME=" + name +
 				"}\n";
 	}
 

@@ -16,7 +16,7 @@ public class Connector {
         final double THRESHOLD = .0001;
 
         Shape result = new Shape();
-        result = clone(shapeA, shapeB);
+        result = clone(shapeA);
 
         labelA(shapeA);
 
@@ -24,7 +24,9 @@ public class Connector {
         result.debugPointOrderA.offer(A);
         result.debugPointOrderB.offer(B);
         result.debugDirection.offer(!d);
-        result.shapesSet.offer(shapeB);
+        result.shapeList.offer(shapeB);
+
+        //result.shapesSet.offer(shapeB);
 
         // System.out.println("\nShapeSetSize:"+result.shapesSet.size());
         int checkAngle = shapeA.getAngel(A) + shapeB.getAngel(B);
@@ -222,7 +224,7 @@ public class Connector {
             return 2;
     }
 
-    private static Shape clone(Shape shape, Shape shapeB) {
+    private static Shape clone(Shape shape) {
         Shape result = new Shape();
         for (Shape s : shape.shapesSet) {
             result.shapesSet.offer(s);
@@ -268,7 +270,6 @@ public class Connector {
         }
 
 
-        result.shapeList.offer(shapeB);
         return result;
     }
     private static void nameInit(Shape shape) {

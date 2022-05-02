@@ -12,7 +12,10 @@ public class Shape {
     @JSONField(name = "POINTS")
     CircleList<Point> points = new CircleList<>();
 
+    @JSONField(name = "SHAPESSET")
     LinkedList<Shape> shapesSet = new LinkedList<Shape>();
+
+    @JSONField(name = "POINTORDER")
     LinkedList<Character> pointOrder = new LinkedList<Character>();
     LinkedList<Shape> shapeList = new LinkedList<>();
     double skip = 0;
