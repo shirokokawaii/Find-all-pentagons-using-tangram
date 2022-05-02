@@ -39,7 +39,7 @@ public class Algorithm {
 	}
 
 	public LinkedList<Shape> bfsSearch(Shape shapeIn) {
-		int acuracy = 3;//0:highest
+		int acuracy = 2;//0:highest
 		int index = 1;
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
