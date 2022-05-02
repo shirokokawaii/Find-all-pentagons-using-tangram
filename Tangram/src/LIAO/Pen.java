@@ -13,14 +13,13 @@ public class Pen {// usage:First create an object of pen, then call the method "
         this.graphics = jpanel.getGraphics();
     }
 
-    public void draw(Shape shape) {
-        int size = 50;
+    public void draw(Shape shape, int X, int Y, int size) {
         ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
         ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
-        double originalX = 500;
-        double originalY = 500;
-        double nextX = 500;
-        double nextY = 500;
+        double originalX = X;
+        double originalY = Y;
+        double nextX = X;
+        double nextY = Y;
         double nextAngle = 0;
         int originalPoint = 0;
         double originalAngle = 0;
