@@ -39,8 +39,9 @@ public class Test {
          ArrayList<Shape> answerList = new ArrayList<>();
          answerList.addAll(algorithm.bfsSearch(S6));
          answerList.addAll(algorithm.bfsSearch(S7));
-         Pen pen = new Pen(jpanel);
+         Pen pen = new Pen(jf, jpanel);
          pen.beforeDraw(answerList.get(0), 500, 500, 50);
-         pen.draw(true);
+         pen.draw("C:/Users/Public/Desktop/pic.jpg");
+         //pen.draw(true);
     }
 }
