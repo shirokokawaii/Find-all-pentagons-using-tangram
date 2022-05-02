@@ -12,11 +12,13 @@ public class Shape {
     @JSONField(name = "POINTS")
     CircleList<Point> points = new CircleList<>();
 
-    @JSONField(name = "SHAPESSET")
+    //@JSONField(name = "SHAPESSET")
     LinkedList<Shape> shapesSet = new LinkedList<Shape>();
 
-    @JSONField(name = "POINTORDER")
+    //@JSONField(name = "POINTORDER")
     LinkedList<Character> pointOrder = new LinkedList<Character>();
+
+
     LinkedList<Shape> shapeList = new LinkedList<>();
     double skip = 0;
 
@@ -40,6 +42,19 @@ public class Shape {
         }
     }
 
+    //@JSONField(name = "SHAPESSET")
+    @JSONField(serialize = false)
+    public LinkedList<Shape> getShapesSet() {return shapesSet;}
+    //@JSONField(name = "SHAPESSET")
+    @JSONField(serialize = false)
+    public void setShapesSet(LinkedList<Shape> shapesSet){this.shapesSet = shapesSet;}
+
+
+
+    //@JSONField(name = "POINTORDER")
+    public LinkedList<Character> getPointOrder(){return pointOrder;}
+    //@JSONField(name = "POINTORDER")
+    public void setPointOrder(LinkedList<Character> pointOrder){this.pointOrder = pointOrder;}
 
     public Shape(CircleList<Point> point) {
         this.points = point;

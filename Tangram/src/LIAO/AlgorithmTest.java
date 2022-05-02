@@ -331,7 +331,7 @@ public class AlgorithmTest {
 		//Pen newP = new Pen(jpanel);
 		AlgorithmTest algorithm = new AlgorithmTest(S0, S1, S2, S3, S4, S5, S6, S7);
 
-		algorithm.bfsSearch(S6);
+		//algorithm.bfsSearch(S6);
 		//algorithm.bfsSearch(S7);
 
 		//algorithm.bfsSearch(4, 9);
@@ -368,8 +368,12 @@ public class AlgorithmTest {
 		System.out.println("order:  " + test.pointOrder);
 		//System.out.println("" + test.debugPointOrderB);
 		//System.out.println("direction:  " + test.debugDirection);
-		p.draw(test);
-		//newP.draw(test);
+		newP.beforeDraw(test, 500, 500, 50);
+		//         pen.draw(true);
+		//p.draw(test);
+		newP.draw(true);
+
+		newP.draw(false);
 
 	}
 
