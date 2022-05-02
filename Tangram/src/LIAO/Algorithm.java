@@ -139,9 +139,12 @@ public class Algorithm {
 	}
 
 	public void dfsSearch() {
+		Long time1 = System.currentTimeMillis();
 		HashMap<String, Integer> angleSetMap = new HashMap<>();
 		dfsAlgorithm(s[6], angleSetMap);
 		dfsAlgorithm(s[7], angleSetMap);
+		Long time2 = System.currentTimeMillis();
+		System.out.println("time"+(time2-time1));
 	}
 
 	public void dfsAlgorithm(Shape shape, HashMap<String, Integer> angleSetMap) {
