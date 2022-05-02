@@ -49,7 +49,7 @@ public class Algorithm {
 		int index = 1;
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 6; i++) {
 			HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 			System.out.println("Adding " + (i + 1) + "st shape");
 			LinkedList<Shape> set2 = new LinkedList<Shape>();

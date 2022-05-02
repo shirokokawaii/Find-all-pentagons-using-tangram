@@ -11,7 +11,6 @@ public class Pen {// usage:First create an object of pen, then call the method "
     boolean drawInfinitly = true;
     public Pen(JPanel jpanel) {
         this.graphics = jpanel.getGraphics();
-        //this.graphics.setColor(Color.red);
     }
 
     public void draw(Shape shape) {
@@ -25,22 +24,17 @@ public class Pen {// usage:First create an object of pen, then call the method "
         double nextAngle = 0;
         int originalPoint = 0;
         double originalAngle = 0;
-        int pointLen = shape.pointOrder.size();
-        int count = 0;
-    	System.out.println(shape.pointOrder);
+        char nextPoint;
         while (!shape.shapesSet.isEmpty()) {
-            char nextPoint;
-            if(count < pointLen) {
-            	nextPoint = shape.pointOrder.get(count);
-            	count++;
+            Shape shapeFirst = shape.shapesSet.poll();
+            if(!shape.pointOrder.isEmpty()) {
+            	nextPoint = shape.pointOrder.poll();
             }
             else {
-            	nextPoint = 'A';
+            	nextPoint = 'Z';
             }
-            Shape shapeFirst = shape.shapesSet.poll();
             int len = shapeFirst.size();
             for(int i=0;i<len;i++){
-            	System.out.println(shapeFirst.getName(i)+":"+shapeFirst.getAngel(i));
                 if(shapeFirst.getName(i) == 'A'){
                     originalPoint = i;
                 }
@@ -54,10 +48,11 @@ public class Pen {// usage:First create an object of pen, then call the method "
                 originalAngle += 180;
                 double length = shapeFirst.getLength(originalPoint) * size;
                 double diffAngle = 45 * shapeFirst.getAngel(originalPoint);
-                if(shapeFirst.getName(i) == nextPoint) {
+                if(shapeFirst.getName(originalPoint) == nextPoint) {
                 	nextX = originalX;
                 	nextY = originalY;
                 	nextAngle = originalAngle;
+                	
                 }
                 originalAngle -= diffAngle;
                 double diffX = length * Math.cos(Math.PI * originalAngle / 180);
@@ -84,6 +79,8 @@ public class Pen {// usage:First create an object of pen, then call the method "
         int index = 0;
         drawInfinitly = true;
         while(drawInfinitly==true) {
+            int count = 0;
+            this.graphics.setColor(Color.black);
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
@@ -97,6 +94,13 @@ public class Pen {// usage:First create an object of pen, then call the method "
             index++;
             if(index ==xList.size()){
                 index =0;
+            }
+            count++;
+            if(count == 1) {
+            	this.graphics.setColor(Color.red);
+            }
+            if(count ==2) {
+            	this.graphics.setColor(Color.blue);
             }
         }
     }
