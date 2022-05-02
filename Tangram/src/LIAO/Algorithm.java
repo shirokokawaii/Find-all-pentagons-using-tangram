@@ -141,11 +141,10 @@ public class Algorithm {
 	public void dfsSearch() {
 		HashMap<String, Integer> angleSetMap = new HashMap<>();
 		dfsAlgorithm(s[6], angleSetMap);
-		System.out.println("50%");
 		dfsAlgorithm(s[7], angleSetMap);
 	}
 
-	private void dfsAlgorithm(Shape shape, HashMap<String, Integer> angleSetMap) {
+	public void dfsAlgorithm(Shape shape, HashMap<String, Integer> angleSetMap) {
 		if(shape == null) {
 			return;
 		}
