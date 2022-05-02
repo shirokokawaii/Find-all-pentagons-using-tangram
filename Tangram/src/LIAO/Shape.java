@@ -15,7 +15,7 @@ public class Shape {
     LinkedList<Shape> shapesSet = new LinkedList<Shape>();
     LinkedList<Character> pointOrder = new LinkedList<Character>();
     LinkedList<Shape> shapeList = new LinkedList<>();
-    int skip = 0;
+    double skip = 0;
 
     LinkedList<Shape> debugShapeSet = new LinkedList<>();
     LinkedList<Integer> debugPointOrderA = new LinkedList<>();
@@ -34,12 +34,6 @@ public class Shape {
     public void setPoints(ArrayList<Point> points) {
         for (Point p: points){
             this.points.add(p);
-        }
-    }
-
-    private void initOwnershipList(int number){
-        for(int i=0;i<this.size();i++){
-            //this.OwnershipList.put(this.getName(i), number);
         }
     }
 

@@ -18,14 +18,15 @@ public class Algorithm {
 	ArrayList<Shape> answerSet = new ArrayList<Shape>();
 	int count = 0;
 	int countSame = 0;
-	HashMap<Integer, Integer> hs = new HashMap<>();
+	HashMap<Double, Integer> hs = new HashMap<>();
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
-		if (shape.points.size() == 5) {// This shape is a pentagon, draw and display it
-			if(!hs.containsKey(shape.skip) && shape.skip!=0){
+		if (shape.points.size() == 5) {// This shape is a pentagon, draw and display it\
+			double tem = (int)shape.skip;
+			if(!hs.containsKey(tem) && shape.skip!=0){
 				hs.put(shape.skip, 0);
 			}
-			if(hs.containsKey(shape.skip) && shape.skip!=0){
+			if(hs.containsKey(tem) && shape.skip!=0){
 				countSame++;
 			}
 			count++;
@@ -85,6 +86,11 @@ public class Algorithm {
 						continue;
 					}
 				}
+				if(i==5){
+					if (shape.points.size() !=5) {
+						continue;
+					}
+				}
 				String angleSetTem = getAngleList(shape);
 				if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
 					LinkedList<Shape> tem = new LinkedList<>();
@@ -97,11 +103,11 @@ public class Algorithm {
 					int len = tem.size();
 					boolean flag = false;
 					for (int j = 0; j < len; j++) {
-						if (elementsEquals(shape, tem.get(j))) {
-							if(i==5 && len ==1) {
+						if (i==5 || elementsEquals(shape, tem.get(j))) {
+							if(i==5 && shape.skip == tem.get(j).skip){
 								flag = true;
 							}
-							if (shape.skip != tem.get(j).skip) {
+							if ((int)shape.skip != (int)tem.get(j).skip) {
 								flag = true;
 							}
 							if (shape.skip == 0) {
@@ -118,7 +124,11 @@ public class Algorithm {
 						index++;
 					}
 					if (len > 1) {
-						shape.skip = tem.get(0).skip;
+						double indexTem = index;
+						while(indexTem >1){
+							indexTem *= 0.1;
+						}
+						shape.skip = tem.get(0).skip + indexTem;
 					}
 					tem.add(shape);
 					angleSetMap.put(angleSetTem, tem);
