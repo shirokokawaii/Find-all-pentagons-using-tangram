@@ -18,38 +18,50 @@ public class Pen {// usage:First create an object of pen, then call the method "
         int size = 50;
         ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
         ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
-        HashMap<Character, Double> xHashMapList = new HashMap<>();
-        HashMap<Character, Double> yHashMapList = new HashMap<>();
-        HashMap<Character, Double> directionTrue = new HashMap<>();
         double originalX = 500;
         double originalY = 500;
+        double nextX = 500;
+        double nextY = 500;
+        double nextAngle = 0;
         int originalPoint = 0;
         double originalAngle = 0;
-        char nextPoint = 'A';
+        int pointLen = shape.pointOrder.size();
+        int count = 0;
         while (!shape.shapesSet.isEmpty()) {
+            char nextPoint;
+            if(count < pointLen) {
+            	nextPoint = shape.pointOrder.get(count);
+            	count++;
+            }
+            else {
+            	nextPoint = 'A';
+            }
             Shape shapeFirst = shape.shapesSet.poll();
             int len = shapeFirst.size();
             for(int i=0;i<len;i++){
-                if(shapeFirst.getName(i) == (nextPoint)){
+                if(shapeFirst.getName(i) == ('A')){
                     originalPoint = i;
                 }
             }
-            nextPoint = shape.pointOrder.poll();
             ArrayList<Double> x = new ArrayList<>();
             ArrayList<Double> y = new ArrayList<>();
+            x.add(originalX);
+            y.add(originalY);
             originalAngle -= 180;
             for (int i = 0; i < len; i++) {
                 originalAngle += 180;
                 double length = shapeFirst.getLength(originalPoint) * size;
                 double diffAngle = 45 * shapeFirst.getAngel(originalPoint);
                 originalAngle -= diffAngle;
-                xHashMapList.put(shapeFirst.getName(i), originalX);
-                yHashMapList.put(shapeFirst.getName(i), originalY);
-                directionTrue.put(shapeFirst.getName(i), originalAngle);
                 double diffX = length * Math.cos(Math.PI * originalAngle / 180);
                 double diffY = length * Math.sin(Math.PI * originalAngle / 180);
                 originalX += diffX;
                 originalY += diffY;
+                if(shapeFirst.getName(i) == nextPoint) {
+                	nextX = originalX;
+                	nextY = originalY;
+                	nextAngle = originalAngle;
+                }
                 x.add(originalX);
                 y.add(originalY);
                 originalPoint++;
@@ -59,9 +71,9 @@ public class Pen {// usage:First create an object of pen, then call the method "
             }
             xList.add(x);
             yList.add(y);
-            originalX = xHashMapList.get(nextPoint);
-            originalY = yHashMapList.get(nextPoint);
-            originalAngle = directionTrue.get(nextPoint);
+            originalX = nextX;
+            originalY = nextY;
+            originalAngle = nextAngle;
         }
         drawLine(xList, yList);
     }
