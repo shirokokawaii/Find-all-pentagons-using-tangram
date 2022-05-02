@@ -39,9 +39,9 @@ public class Test {
          
          Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
          LinkedList<Shape> answerList = new LinkedList<>();
-//         algorithm.bfsSearch(S6);
+         algorithm.bfsSearch(S6);
 //         algorithm.bfsSearch(S7);
-         algorithm.dfsSearch();
+         //algorithm.dfsSearch();
          answerList = algorithm.getAnswerList();
          for(int i=0;i<answerList.size();i++) {
              Pen pen = new Pen(jf, jpanel);
