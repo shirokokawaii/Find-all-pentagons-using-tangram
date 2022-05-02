@@ -25,27 +25,28 @@ public class List2Json {
 //        shapeJsonArray = JSONArray.parseArray(JSON.toJSONString(algorithm.answerSet));
 
 //        Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
-//       algorithm.bfsSearch(S6);
+//        algorithm.bfsSearch(S6);
 //        algorithm.bfsSearch(S7);
 
 
 
         //JsonArray
-        //JSONArray shapeJsonArray = new JSONArray();
+        JSONArray shapeJsonArray = new JSONArray();
         //Shapes -> JsonString -> JsonArray
-        //shapeJsonArray = JSONArray.parseArray(JSON.toJSONString(shapes));
+        shapeJsonArray = JSONArray.parseArray(JSON.toJSONString(shapes));
 
 
-//        System.out.println("\nArraytoJson " + shapeJsonArray.toJSONString());
+        System.out.println("\nArraytoJson " + shapeJsonArray.toJSONString());
 
         String pathFile="X:/javaProject/Find-all-pentagons-using-tangram/Tangram/";
         String fileName = pathFile + "result.json";
 
 
-        //
+
         //ArrayList<Shape> list = (ArrayList<Shape>) JSON.parseArray(shapeJsonArray.toJSONString(), Shape.class);
         //System.out.println(list);
 
+        //写入
 //        try {
 //            writeFile(fileName, shapeJsonArray.toString());
 //            System.out.println();
@@ -69,7 +70,7 @@ public class List2Json {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
         DrawOutline p = new DrawOutline(jpanel);
-        p.draw(list.get(3));
+        p.draw(list.get(44));
 
 
 
