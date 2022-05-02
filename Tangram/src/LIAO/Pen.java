@@ -1,18 +1,26 @@
 package LIAO;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Pen {// usage:First create an object of pen, then call the method "draw".
     int x1, x2, y1, y2 = 0;
     Graphics graphics;
     JPanel jpanel = new JPanel();
+    JFrame jframe = new JFrame();
     boolean drawInfinitly;
     ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
     ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
-    public Pen(JPanel jpanel) {
+    public Pen(JFrame jframe, JPanel jpanel) {
         this.graphics = jpanel.getGraphics();
+        this.jpanel = jpanel;
+        this.jframe = jframe;
     }
 
     public void beforeDraw(Shape shape, int X, int Y, int size) {
@@ -78,9 +86,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
     public void draw(boolean drawInfinitly) {
     	this.drawInfinitly = drawInfinitly;
         int index = 0;
-        while(this.drawInfinitly==true) {
-            int count = 0;
-            this.graphics.setColor(Color.black);
+        for(int count=0;count<10;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
@@ -95,16 +101,43 @@ public class Pen {// usage:First create an object of pen, then call the method "
             if(index ==xList.size()){
                 index =0;
             }
-            count++;
-            if(count == 1) {
-            	this.graphics.setColor(Color.red);
-            }
-            if(count ==2) {
-            	this.graphics.setColor(Color.blue);
-            }
         }
     }
-
+    
+    public void draw(String path) {
+        int index = 0;
+        for(int count=0;count<10;count++) {
+            ArrayList<Double> x = xList.get(index);
+            ArrayList<Double> y = yList.get(index);
+            int len = x.size();
+            for (int i = 0; i < len-1; i++) {
+                int x1 = (int) Math.round(x.get(i));
+                int y1 = (int) Math.round(y.get(i));
+                int x2 = (int) Math.round(x.get(i + 1));
+                int y2 = (int) Math.round(y.get(i + 1));
+                graphics.drawLine(x1, y1, x2, y2);
+            }
+            index++;
+            if(index ==xList.size()){
+                index =0;
+            }
+        }
+        savePic(path);
+    }
+    
+    public void savePic(String path){
+		BufferedImage myImage = null;
+		try {
+			myImage = new Robot().createScreenCapture(
+					new Rectangle(jframe.getX()+8, jframe.getY()+31, jpanel.getWidth(), jpanel.getHeight()));
+			ImageIO.write(myImage, "jpg", new File(path));
+		} catch (AWTException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
     public void stop(){
         drawInfinitly = false;
     }
