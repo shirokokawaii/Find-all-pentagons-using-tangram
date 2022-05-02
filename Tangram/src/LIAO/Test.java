@@ -40,7 +40,7 @@ public class Test {
          answerList.addAll(algorithm.bfsSearch(S6));
          answerList.addAll(algorithm.bfsSearch(S7));
          Pen pen = new Pen(jpanel);
-         pen.draw(answerList.get(0), 500, 500, 50);
-
+         pen.beforeDraw(answerList.get(0), 500, 500, 50);
+         pen.draw(true);
     }
 }
