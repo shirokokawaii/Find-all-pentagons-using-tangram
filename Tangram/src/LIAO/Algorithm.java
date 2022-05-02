@@ -18,15 +18,15 @@ public class Algorithm {
 	ArrayList<Shape> answerSet = new ArrayList<Shape>();
 	int count = 0;
 	int countSame = 0;
-	HashMap<Double, Integer> hs = new HashMap<>();
+	HashMap<String, Integer> hs = new HashMap<>();
 	private void displayAnswer(Shape shape) {
 		ArrayList<Integer> angleSet = checkAngle(shape);
 		if (shape.points.size() == 5) {// This shape is a pentagon, draw and display it\
-			double tem = (int)shape.skip;
-			if(!hs.containsKey(tem) && shape.skip!=0){
-				hs.put(shape.skip, 0);
-			}
-			if(hs.containsKey(tem) && shape.skip!=0){
+			String angleSetTem=getAngleList(shape);
+			if (!hs.containsKey(angleSetTem)) {// angle list is not same
+				hs.put(angleSetTem, 0);
+			} 
+			else {
 				countSame++;
 			}
 			count++;
