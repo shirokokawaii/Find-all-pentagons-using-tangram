@@ -53,7 +53,7 @@ public class Connector {
             //B右 B-1 B
             length2[1] = shapeB.getLength(B - 1);
             for (int i = A + 2; i < A + shapeA.size() + 2; i++) {
-                Point p = new Point(shapeA.getPoint(i), true);
+                Point p = new Point(shapeA.getPoint(i), true, shapeA.getName(i));
                 //检查被加图形A左侧顶点A+n-1
                 if(i == (A + shapeA.size() - 1)){
                     if(Math.abs(length1[0] - length1[1]) < THRESHOLD){
@@ -76,7 +76,7 @@ public class Connector {
                                 shapeA.getLength(A + 1)));
                     } else if (length2[0] > length2[1]) {
                         result.addPoint(new Point(shapeA.getAngel(A) + 4, length2[0] - length2[1]));
-                        result.addPoint(new Point(shapeA.getAngel(A + 1), shapeA.getLength(A + 1), true));
+                        result.addPoint(new Point(shapeA.getAngel(A + 1), shapeA.getLength(A + 1), true, shapeA.getName(A + 1)));
                     } else {
                         result.addPoint(new Point(shapeB.getAngel(B - 1), length2[1] - length2[0]));
                         result.addPoint(new Point(shapeA.getAngel(A + 1) + 4, shapeA.getLength(A + 1)));
@@ -135,7 +135,7 @@ public class Connector {
                             flag = "failed";
                         }
                         if (checkList.get(firstSize).getLabel()=='A')
-                            result.addPoint(new Point(checkList.get(firstSize), true));
+                            result.addPoint(new Point(checkList.get(firstSize), true, checkList.get(firstSize).getName()));
                         else
                             result.addPoint(new Point(checkList.get(firstSize)));
 
@@ -143,8 +143,10 @@ public class Connector {
                     i++;
                 } else {
                     Point p = new Point(checkList.get(i));
-                    if(checkList.get(i).getLabel() == 'A')
-                       p.setFlag();
+                    if(checkList.get(i).getLabel() == 'A'){
+                        p.setFlag();
+                        p.setName(checkList.get(i).getName());
+                    }
                     result.addPoint(p);
                 }
             }
@@ -327,19 +329,9 @@ public class Connector {
 
         DrawOutline p = new DrawOutline(jpanel);
 
-//        LinkedList<Shape> shape = connectAll(S0, S1);
-//        LinkedList<Shape> shape1 = connectAll(shape.get(8), S3);
-//        LinkedList<Shape> shape3 = connectAll(shape1.get(3), S5);
-//        LinkedList<Shape> shape5 = connectAll(shape3.get(19), S4);
+
         LinkedList<Shape> shape = connectAll(S0, S1);
-        // System.out.println("Shapeset"+shape.get(1).shapeList);
-//        LinkedList<Shape> shape1 = connectAll(shape.get(7), S3);
-//        LinkedList<Shape> shape2 = connectAll(shape1.get(3), S5);
-//        LinkedList<Shape> shape3 = connectAll(shape2.get(7), S2);
-//        LinkedList<Shape> shape4 = connectAll(shape3.get(2), S6);
-//        //LinkedList<Shape> shape5 = connectAll(shape4.get(1), S4);
-//        //Shape test = shape3.get(19);
-//        //Shape test = shape5.get(20);
+
         Shape test = new Shape();
 //        LinkedList<LinkedList<Shape>> all = new LinkedList<>();
 //        for (int j = 0; j < shape4.size(); j++) {
