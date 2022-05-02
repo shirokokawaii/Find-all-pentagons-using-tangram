@@ -159,8 +159,6 @@ public class Connector {
         }
 
         if (flag.equals("failed")){
-
-        //if (flag.equals("failed") || flag.equals("absorb")){
             flag = "";
             return null;
         }
@@ -205,7 +203,9 @@ public class Connector {
                     newShape = connect(shapeA, shapeB, i, j, k == 0);
                     if (newShape!=null){
                         newShape.skip = shapeA.skip;
-                        shapes.add(newShape);
+
+                        shapes.add(delete4(newShape));
+
                     }
 
 
@@ -220,6 +220,8 @@ public class Connector {
     }
 
     private static int symCheck(Shape shape) {
+        if (shape.getAngel(0) == shape.getAngel(1))
+            return 3;
         if (shape.size()==4)
             return 1;
         else
