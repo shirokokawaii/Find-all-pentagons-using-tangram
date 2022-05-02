@@ -325,8 +325,8 @@ public class AlgorithmTest {
 		System.out.println("order:  " + test.pointOrder);
 		//System.out.println("" + test.debugPointOrderB);
 		//System.out.println("direction:  " + test.debugDirection);
-		p.draw(test);
-		//newP.draw(test);
+		//p.draw(test);
+		newP.draw(test);
 
 	}
 

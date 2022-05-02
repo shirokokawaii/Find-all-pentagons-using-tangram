@@ -295,7 +295,7 @@ public class Connector {
             }
         }
         char name = 65;
-        for(int j = 0; j < shape.size(); j++) {
+        for(int j = i; j < shape.size() + i; j++) {
             shape.getPoint(j).setName(name);
             name++;
         }
