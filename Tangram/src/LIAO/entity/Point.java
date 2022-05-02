@@ -14,6 +14,9 @@ public class Point {
 	boolean flag;
 
 	@JSONField(serialize = false)
+	char label;
+
+	@JSONField(serialize = false)
 	char name;
 
 	@JSONCreator
@@ -24,10 +27,24 @@ public class Point {
 	}
 
 
+	public Point(int angle, double length, char name) {
+		this.angle = angle;
+		this.length = length;
+		this.name = name;
+		this.flag = false;
+	}
+
 	public Point(int angle, double length, boolean flag) {
 		this.angle = angle;
 		this.length = length;
 		this.flag = flag;
+	}
+
+	public Point(int angle, double length, boolean flag, char name) {
+		this.angle = angle;
+		this.length = length;
+		this.flag = flag;
+		this.name = name;
 	}
 
 	public Point(Point point) {
@@ -39,6 +56,13 @@ public class Point {
 		this.angle = point.angle;
 		this.length = point.length;
 		this.flag = flag;
+	}
+
+	public Point(Point point, boolean flag, char name) {
+		this.angle = point.angle;
+		this.length = point.length;
+		this.flag = flag;
+		this.name = name;
 	}
 
 
@@ -70,13 +94,24 @@ public class Point {
 	public void setFlag(){
 		flag = true;
 	}
+	public boolean getFlag(){
+		return flag;
+	}
 
-	public char getName() {
-		return name;
+
+	public char getLabel() {
+		return label;
+	}
+
+	public void setLabel(char label) {
+		this.label = label;
 	}
 
 	public void setName(char name) {
 		this.name = name;
 	}
+
+	public char getName() {return name;}
+
 }
 

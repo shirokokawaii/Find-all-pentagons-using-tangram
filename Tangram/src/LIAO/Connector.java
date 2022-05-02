@@ -5,7 +5,6 @@ import LIAO.entity.DrawOutline;
 
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static LIAO.entity.Tangram.*;
@@ -19,7 +18,7 @@ public class Connector {
         Shape result = new Shape();
         result = clone(shapeA, shapeB);
 
-        named(shapeA);
+        labelA(shapeA);
 
         //for test
         result.debugPointOrderA.offer(A);
@@ -133,7 +132,7 @@ public class Connector {
                         if (checkList.get(firstSize - 1).getAngle() + 4 >= 8) {
                             flag = "failed";
                         }
-                        if (checkList.get(firstSize).getName()=='A')
+                        if (checkList.get(firstSize).getLabel()=='A')
                             result.addPoint(new Point(checkList.get(firstSize), true));
                         else
                             result.addPoint(new Point(checkList.get(firstSize)));
@@ -142,7 +141,7 @@ public class Connector {
                     i++;
                 } else {
                     Point p = new Point(checkList.get(i));
-                    if(checkList.get(i).getName() == 'A')
+                    if(checkList.get(i).getLabel() == 'A')
                        p.setFlag();
                     result.addPoint(p);
                 }
@@ -161,11 +160,14 @@ public class Connector {
             flag = "";
             return null;
         }
-        else
+        else{
             //named(result);
             delete4(result);
+            result.pointOrder.offer(named(result));
             result.shapesSet.offer(result);
             return result;
+        }
+
     }
 
     private static CircleList<Point> add(Shape shapeA, Shape shapeB, int A, int B) {
@@ -226,15 +228,15 @@ public class Connector {
             result.shapesSet.offer(s);
         }
 
-        for (int i : shape.pointOrder) {
-//            result.pointOrder.offer(i);
+        for (char i : shape.pointOrder) {
+            result.pointOrder.offer(i);
         }
 
         for (Shape b : shape.shapeList) {
             result.shapeList.offer(b);
         }
 
-
+        //debug
         for (Shape s : shape.debugShapeSet) {
             result.debugShapeSet.offer(s);
         }
@@ -260,6 +262,7 @@ public class Connector {
 //        }
         if(result.shapeList.size() == 0) {
             result.shapeList.offer(shape);
+            nameInit(shape);
             result.shapesSet.offer(shape);
             result.debugShapeSet.offer(shape);
         }
@@ -268,25 +271,41 @@ public class Connector {
         result.shapeList.offer(shapeB);
         return result;
     }
+    private static void nameInit(Shape shape) {
+        char newName = 65;
+        for (int j = 0; j < shape.size(); j++){
+            shape.getPoint(j).setName(newName);
+            newName++;
+        }
+        newName = 65;
+    }
 
-//    public static void named(Shape shape) {
-//        char name = 65;
-//        for(Point point : shape.points) {
-//            point.setName(name);
-//            name++;
-//        }
-//        name = 65;
-//
-//    }
 
-    public static void named(Shape shape) {
+    private static char named(Shape shape) {
+        int i = 0;
+        char oldName = 'A';
+        for (int j = 0; j < shape.size(); j++) {
+            if (shape.getPoint(j).getFlag()){
+                i = j;
+                oldName = shape.getName(j);
+                break;
+            }
+        }
         char name = 65;
+        for(int j = 0; j < shape.size(); j++) {
+            shape.getPoint(j).setName(name);
+            name++;
+        }
+        name = 65;
+        return oldName;
+    }
+
+    public static void labelA(Shape shape) {
+        char label = 'A';
         for(Point point : shape.points) {
-            point.setName(name);
+            point.setLabel(label);
             //name++;
         }
-        //name = 65;
-
     }
 
 
