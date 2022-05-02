@@ -39,7 +39,7 @@ public class Pen {// usage:First create an object of pen, then call the method "
             Shape shapeFirst = shape.shapesSet.poll();
             int len = shapeFirst.size();
             for(int i=0;i<len;i++){
-                if(shapeFirst.getName(i) == ('A')){
+                if(shapeFirst.getName(i) == 'A'){
                     originalPoint = i;
                 }
             }
@@ -85,20 +85,12 @@ public class Pen {// usage:First create an object of pen, then call the method "
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
-            boolean flag = false;
-            for (int i = 0; i < len; i++) {
+            for (int i = 0; i < len-1; i++) {
                 int x1 = (int) Math.round(x.get(i));
                 int y1 = (int) Math.round(y.get(i));
-                if (i + 1 == len) {
-                    i = -1;
-                    flag = true;
-                }
                 int x2 = (int) Math.round(x.get(i + 1));
                 int y2 = (int) Math.round(y.get(i + 1));
                 graphics.drawLine(x1, y1, x2, y2);
-                if (flag == true) {
-                    break;
-                }
             }
             index++;
             if(index ==xList.size()){
