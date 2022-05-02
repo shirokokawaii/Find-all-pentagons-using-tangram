@@ -48,11 +48,11 @@ public class Algorithm {
 	}
 
 	public LinkedList<Shape> bfsSearch(Shape shapeIn) {
-		int index = 1;
+//		int index = 1;
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
 		for (int i = 0; i < 6; i++) {
-			HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
+			HashMap<String, Integer> angleSetMap = new HashMap<>();
 			System.out.println("Adding " + (i + 1) + "st shape");
 			LinkedList<Shape> set2 = new LinkedList<Shape>();
 			Long time1 = System.currentTimeMillis();
@@ -73,10 +73,10 @@ public class Algorithm {
 					continue;
 				}
 				if (i == 3) {
-					if (shape.contains(s[5]) && shape.points.size() > 9) {
+					if (shape.contains(s[5]) && shape.points.size() > 11) {
 						continue;
 					}
-					if (!shape.contains(s[5]) && shape.points.size() > 10) {
+					if (!shape.contains(s[5]) && shape.points.size() > 12) {
 						continue;
 					}
 				}
@@ -88,54 +88,55 @@ public class Algorithm {
 						continue;
 					}
 				}
-				if(i==5){
-					if (shape.points.size() !=5) {
-						continue;
-					}
-				}
+//				if(i==5){
+//					if (shape.points.size() !=5) {
+//						continue;
+//					}
+//				}
 				String angleSetTem = getAngleList(shape);
 				if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
-					LinkedList<Shape> tem = new LinkedList<>();
-					tem.add(shape);
-					angleSetMap.put(angleSetTem, tem);
+////					LinkedList<Shape> tem = new LinkedList<>();
+//					tem.add(shape);
+//					angleSetMap.put(angleSetTem, tem);
+					angleSetMap.put(angleSetTem, 0);
 					set1.offer(shape);
 				} 
-				else {
-					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
-					int len = tem.size();
-					boolean flag = false;
-					for (int j = 0; j < len; j++) {
-						if (elementsEquals(shape, tem.get(j))) {
-							if(i==5 && shape.skip == tem.get(j).skip){
-								flag = true;
-							}
-							if ((int)shape.skip != (int)tem.get(j).skip) {
-								flag = true;
-							}
-							if (shape.skip == 0) {
-								flag = true;
-							}
-						}
-					}
-					if (flag) {
-						continue;
-					}
-					if (len == 1) {
-						shape.skip = index;
-						tem.get(0).skip = index;
-						index++;
-					}
-					if (len > 1) {
-						double indexTem = index;
-						while(indexTem >1){
-							indexTem *= 0.1;
-						}
-						shape.skip = tem.get(0).skip + indexTem;
-					}
-					tem.add(shape);
-					angleSetMap.put(angleSetTem, tem);
-					set1.offer(shape);
-				}
+//				else {
+//					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
+//					int len = tem.size();
+//					boolean flag = false;
+//					for (int j = 0; j < len; j++) {
+//						if (elementsEquals(shape, tem.get(j))) {
+//							if(i==5 && shape.skip == tem.get(j).skip){
+//								flag = true;
+//							}
+//							if ((int)shape.skip != (int)tem.get(j).skip) {
+//								flag = true;
+//							}
+//							if (shape.skip == 0) {
+//								flag = true;
+//							}
+//						}
+//					}
+//					if (flag) {
+//						continue;
+//					}
+//					if (len == 1) {
+//						shape.skip = index;
+//						tem.get(0).skip = index;
+//						index++;
+//					}
+//					if (len > 1) {
+//						double indexTem = index;
+//						while(indexTem >1){
+//							indexTem *= 0.1;
+//						}
+//						shape.skip = tem.get(0).skip + indexTem;
+//					}
+//					tem.add(shape);
+//					angleSetMap.put(angleSetTem, tem);
+//					set1.offer(shape);
+//				}
 			}
 			Long time3 = System.currentTimeMillis();
 			System.out.println("Prune time:" + (time3 - time2) + "ms");
@@ -214,91 +215,114 @@ public class Algorithm {
 		}
 	}
 
-	private boolean elementsEquals(Shape shape1, Shape shape2) {
-		int count1 = 0;
-		int count2 = 0;
-		if (shape1.contains(s[0])) {
-			count1++;
-		}
-		if (shape1.contains(s[1])) {
-			count1++;
-		}
-		if (shape2.contains(s[0])) {
-			count2++;
-		}
-		if (shape2.contains(s[1])) {
-			count2++;
-		}
-		if (count1 != count2) {
-			return false;
-		}
-		count1 = 0;
-		count2 = 0;
-		if (shape1.contains(s[2])) {
-			count1++;
-		}
-		if (shape2.contains(s[2])) {
-			count2++;
-		}
-		if (count1 != count2) {
-			return false;
-		}
-		count1 = 0;
-		count2 = 0;
-		if (shape1.contains(s[3])) {
-			count1++;
-		}
-		if (shape1.contains(s[4])) {
-			count1++;
-		}
-		if (shape2.contains(s[3])) {
-			count2++;
-		}
-		if (shape2.contains(s[4])) {
-			count2++;
-		}
-		if (count1 != count2) {
-			return false;
-		}
-		count1 = 0;
-		count2 = 0;
-		if (shape1.contains(s[5])) {
-			count1++;
-		}
-		if (shape2.contains(s[5])) {
-			count2++;
-		}
-		if (count1 != count2) {
-			return false;
-		}
-		return true;
+//	private boolean elementsEquals(Shape shape1, Shape shape2) {
+//		int count1 = 0;
+//		int count2 = 0;
+//		if (shape1.contains(s[0])) {
+//			count1++;
+//		}
+//		if (shape1.contains(s[1])) {
+//			count1++;
+//		}
+//		if (shape2.contains(s[0])) {
+//			count2++;
+//		}
+//		if (shape2.contains(s[1])) {
+//			count2++;
+//		}
+//		if (count1 != count2) {
+//			return false;
+//		}
+//		count1 = 0;
+//		count2 = 0;
+//		if (shape1.contains(s[2])) {
+//			count1++;
+//		}
+//		if (shape2.contains(s[2])) {
+//			count2++;
+//		}
+//		if (count1 != count2) {
+//			return false;
+//		}
+//		count1 = 0;
+//		count2 = 0;
+//		if (shape1.contains(s[3])) {
+//			count1++;
+//		}
+//		if (shape1.contains(s[4])) {
+//			count1++;
+//		}
+//		if (shape2.contains(s[3])) {
+//			count2++;
+//		}
+//		if (shape2.contains(s[4])) {
+//			count2++;
+//		}
+//		if (count1 != count2) {
+//			return false;
+//		}
+//		count1 = 0;
+//		count2 = 0;
+//		if (shape1.contains(s[5])) {
+//			count1++;
+//		}
+//		if (shape2.contains(s[5])) {
+//			count2++;
+//		}
+//		if (count1 != count2) {
+//			return false;
+//		}
+//		return true;
+//
+//	}
 
-	}
-
+//	public String getAngleList(Shape shape) {
+//		String answer = new String();
+//		int len = shape.size();
+//		int min = 8;
+//		int index = 0;
+//		for (int i = 0; i < len; i++) {
+//			int tem = shape.points.get(i).getAngle();
+//			if (tem <= min) {
+//				min = tem;
+//				index = i;
+//			}
+//		}
+//		for (int i = 0; i < len; i++) {
+//			if (index > len - 1) {
+//				index = 0;
+//			}
+//			answer += Integer.toString(shape.points.get(index).getAngle());
+//			index++;
+//		}
+//
+//		return answer;
+//	}
+	
 	public String getAngleList(Shape shape) {
-		ArrayList<Integer> angleSet = new ArrayList<Integer>();
-		String answer = new String();
-		int len = shape.size();
-		int min = 8;
-		int index = 0;
-		for (int i = 0; i < len; i++) {
-			int tem = shape.points.get(i).getAngle();
-			if (tem <= min) {
-				min = tem;
-				index = i;
-			}
+	String answer = new String();
+	int len = shape.size();
+	int[] angleList = new int[len];
+	for(int i=0;i<len;i++) {
+		for(int j=i;j<len+i;j++) {
+			angleList[i] += shape.getAngel(j%len)*(5-j+i);
+			j++;
 		}
-		for (int i = 0; i < len; i++) {
-			if (index > len - 1) {
-				index = 0;
-			}
-			angleSet.add(shape.points.get(index).getAngle());
-			answer += Integer.toString(shape.points.get(index).getAngle());
-			index++;
-		}
-
-		return answer;
 	}
+	for(int i=0;i<len-1;i++) {
+		for(int j=0;j<len-i-1;j++) {
+			if(angleList[j]>angleList[j+1]) {
+				int tem = angleList[j+1];
+				angleList[j+1] = angleList[j];
+				angleList[j] = tem;
+			}
+		}
+	}
+	for(int tem:angleList) {
+		answer += Integer.toString(tem);
+	}
+	return answer;
+}
 
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
 		Queue<String> edgeSet = new LinkedList<String>();
