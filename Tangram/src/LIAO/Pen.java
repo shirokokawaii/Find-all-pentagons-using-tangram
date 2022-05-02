@@ -8,14 +8,16 @@ public class Pen {// usage:First create an object of pen, then call the method "
     int x1, x2, y1, y2 = 0;
     Graphics graphics;
     JPanel jpanel = new JPanel();
-    boolean drawInfinitly = true;
+    boolean drawInfinitly;
+    ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
+    ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
     public Pen(JPanel jpanel) {
         this.graphics = jpanel.getGraphics();
     }
 
-    public void draw(Shape shape, int X, int Y, int size) {
-        ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
-        ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
+    public void beforeDraw(Shape shape, int X, int Y, int size) {
+    	xList.clear();
+    	yList.clear();
         double originalX = X;
         double originalY = Y;
         double nextX = X;
@@ -71,13 +73,12 @@ public class Pen {// usage:First create an object of pen, then call the method "
             originalY = nextY;
             originalAngle = nextAngle;
         }
-        drawLine(xList, yList);
     }
 
-    public void drawLine(ArrayList<ArrayList<Double>> xList, ArrayList<ArrayList<Double>> yList) {
+    public void draw(boolean drawInfinitly) {
+    	this.drawInfinitly = drawInfinitly;
         int index = 0;
-        drawInfinitly = true;
-        while(drawInfinitly==true) {
+        while(this.drawInfinitly==true) {
             int count = 0;
             this.graphics.setColor(Color.black);
             ArrayList<Double> x = xList.get(index);
