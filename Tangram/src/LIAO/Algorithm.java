@@ -5,7 +5,7 @@ import static LIAO.entity.Tangram.S7;
 
 import java.util.*;
 
-public class Algorithm {
+public class Algorithm{
 	public Algorithm(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
 		this.s[0] = s0;
 		this.s[1] = s1;
@@ -20,10 +20,11 @@ public class Algorithm {
 	Shape[] s = new Shape[8];
 	int answerIndex = 0;
 	LinkedList<LinkedList<Shape>> answerSet = new LinkedList<>();
+	HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
 	HashMap<String, Integer> hs = new HashMap<>();
 	int count = 0;
 	int different = 0;
-
+	
 	private void displayAnswer(Shape shape) {
 		if (shape.points.size() == 5) {
 			String angleList = getAngleList(shape);
@@ -64,7 +65,7 @@ public class Algorithm {
         bfsAlgorithm(S6);
         System.out.println("50%");
         bfsAlgorithm(S7);
-        System.out.println("End:"+(System.currentTimeMillis()-time));
+        System.out.println("End:"+((System.currentTimeMillis()-time)/1000)+"s");
 	}
 	
 	public void bfsAlgorithm(Shape shapeIn) {
@@ -172,7 +173,7 @@ public class Algorithm {
 		dfsAlgorithm(s[6], answerSetNotEqual);
 		System.out.println("50%");
 		dfsAlgorithm(s[7], answerSetNotEqual);
-        System.out.println("End:"+(System.currentTimeMillis()-time));
+        System.out.println("End:"+(System.currentTimeMillis()-time)/1000);
 	}
 
 	public void dfsAlgorithm(Shape shape, HashMap<String, Integer> answerSetNotEqual) {
@@ -198,8 +199,71 @@ public class Algorithm {
 							if (newShape != null) {
 								newShape.skip = shape.skip;
 								newShape = Connector.delete4(newShape);
-								newShape = check(newShape, j, 0, angleSetMapLocal);
-								dfsAlgorithm(newShape, answerSetNotEqual);
+								int acuracy = 3;
+								if (j == 3) {
+									if (newShape.contains(s[5]) && newShape.points.size() > 11 - acuracy) {
+										continue;
+									}
+									if (!newShape.contains(s[5]) && newShape.points.size() > 12 - acuracy) {
+										continue;
+									}
+								}
+								if (j == 4) {
+									if (newShape.contains(s[5]) && newShape.points.size() > 8) {
+										continue;
+									}
+									if (!newShape.contains(s[5]) && newShape.points.size() > 9) {
+										continue;
+									}
+								}
+								if (j == 5) {
+									if (newShape.points.size() != 5) {
+										continue;
+									}
+								}
+								String angleSetTem = getAngleList(newShape);
+								if (!angleSetMapLocal.containsKey(angleSetTem)) {// angle list is not same
+									LinkedList<Shape> tem = new LinkedList<>();
+									tem.add(newShape);
+									angleSetMapLocal.put(angleSetTem, tem);
+									dfsAlgorithm(newShape, answerSetNotEqual);
+								} else {
+									if (j == 5) {
+										continue;
+									}
+									LinkedList<Shape> tem = angleSetMapLocal.get(angleSetTem);// tem:The shape that has same angleSet
+									int len = tem.size();
+									boolean flag = false;
+									for (int h = 0; h < len; h++) {
+										if (elementsEquals(newShape, tem.get(h))) {
+											if (newShape.skip == tem.get(h).skip) {
+												flag = true;
+												continue;
+											}
+											if ((int) newShape.skip != (int) tem.get(h).skip) {
+												flag = true;
+											}
+										}
+									}
+									if (flag) {
+										continue;
+									}
+									if (len == 1) {
+										newShape.skip = index;
+										tem.get(0).skip = index;
+										index++;
+									}
+									if (len > 1) {
+										double indexTem = index;
+										while (indexTem > 1) {
+											indexTem *= 0.1;
+										}
+										newShape.skip = tem.get(0).skip + indexTem;
+									}
+									tem.add(newShape);
+									angleSetMapLocal.put(angleSetTem, tem);
+									dfsAlgorithm(newShape, answerSetNotEqual);
+								}
 							}
 						}
 					}
@@ -210,78 +274,8 @@ public class Algorithm {
 
 	int index = 0;
 
-	private Shape check(Shape shape, int i, int acuracy, HashMap<String, LinkedList<Shape>> angleSetMap) {
-		if (shape == null) {
-			return null;
-		}
-		if (i == 3) {
-			if (shape.contains(s[5]) && shape.points.size() > 11 - acuracy) {
-				return null;
-			}
-			if (!shape.contains(s[5]) && shape.points.size() > 12 - acuracy) {
-				return null;
-			}
-		}
-		if (i == 4) {
-			if (shape.contains(s[5]) && shape.points.size() > 8) {
-				return null;
-			}
-			if (!shape.contains(s[5]) && shape.points.size() > 9) {
-				return null;
-			}
-		}
-		if (i == 5) {
-			if (shape.points.size() != 5) {
-				return null;
-			}
-		}
-		String angleSetTem = getAngleList(shape);
-		if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
-			LinkedList<Shape> tem = new LinkedList<>();
-			tem.add(shape);
-			angleSetMap.put(angleSetTem, tem);
-			return shape;
-		} else {
-			if (i == 5) {
-				return null;
-			}
-			LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
-			int len = tem.size();
-			boolean flag = false;
-			for (int j = 0; j < len; j++) {
-				if (elementsEquals(shape, tem.get(j))) {
-					if (shape.skip == tem.get(j).skip) {
-						flag = true;
-						continue;
-					}
-					if ((int) shape.skip != (int) tem.get(j).skip) {
-						flag = true;
-					}
-				}
-			}
-			if (flag) {
-				return null;
-			}
-			if (len == 1) {
-				shape.skip = index;
-				tem.get(0).skip = index;
-				index++;
-			}
-			if (len > 1) {
-				double indexTem = index;
-				while (indexTem > 1) {
-					indexTem *= 0.1;
-				}
-				shape.skip = tem.get(0).skip + indexTem;
-			}
-			tem.add(shape);
-			angleSetMap.put(angleSetTem, tem);
-			return shape;
-		}
-	}
 
 	public void aStarSearch() {
-		HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
 		time = System.currentTimeMillis();
 		aStarAlgorithm(s[6], answerSetNotEqual);
 		System.out.println("50%");
@@ -314,10 +308,10 @@ public class Algorithm {
 						continue;
 					}
 					if (i == 3) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 11) {
+						if (shape1.contains(s[5]) && shape1.points.size() > 11-3) {
 							continue;
 						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 12) {
+						if (!shape1.contains(s[5]) && shape1.points.size() > 12-3) {
 							continue;
 						}
 					}
