@@ -5,7 +5,7 @@ import static LIAO.entity.Tangram.S7;
 
 import java.util.*;
 
-public class Algorithm{
+public class Algorithm {
 	public Algorithm(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
 		this.s[0] = s0;
 		this.s[1] = s1;
@@ -16,21 +16,23 @@ public class Algorithm{
 		this.s[6] = s6;// s6 is the base
 		this.s[7] = s7;// s7 is another base
 	}
+
 	Long time = System.currentTimeMillis();
 	Shape[] s = new Shape[8];
 	int answerIndex = 0;
 	LinkedList<LinkedList<Shape>> answerSet = new LinkedList<>();
 	HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
 	HashMap<String, Integer> hs = new HashMap<>();
+	HashMap<Integer, Integer> hasSameMap = new HashMap<>();
 	int count = 0;
 	int different = 0;
 	IDA ida = new IDA();
-	
+
 	private void displayAnswer(Shape shape) {
 		if (shape.points.size() == 5) {
 			String angleList = getAngleList(shape);
 			if (!hs.containsKey(angleList)) {
-				if(IDA.hasSame(shape)) {
+				if (hasSame(shape)) {
 					return;
 				}
 				different++;
@@ -46,7 +48,7 @@ public class Algorithm{
 			ArrayList<Integer> angleSet = checkAngle(shape);
 			count++;
 			long timeNow = System.currentTimeMillis();
-			System.out.println((count - 1) + ":" + angleSet + " " + (timeNow-time)/1000 + "s");
+			System.out.println((count - 1) + ":" + angleSet + " " + (timeNow - time) / 1000 + "s");
 		}
 		// here needs to draw and display the answer shape*****
 	}
@@ -63,15 +65,15 @@ public class Algorithm{
 		}
 		return angleSet;
 	}
-	
+
 	public void bfsSearch() {
 		time = System.currentTimeMillis();
-        bfsAlgorithm(S6);
-        System.out.println("50%");
-        bfsAlgorithm(S7);
-        System.out.println("End:"+((System.currentTimeMillis()-time)/1000)+"s");
+		bfsAlgorithm(S6);
+		System.out.println("50%");
+		bfsAlgorithm(S7);
+		System.out.println("End:" + ((System.currentTimeMillis() - time) / 1000) + "s");
 	}
-	
+
 	public void bfsAlgorithm(Shape shapeIn) {
 		int acuracy = 3;// 0:highest
 		int index = 1;
@@ -177,11 +179,11 @@ public class Algorithm{
 		dfsAlgorithm(s[6], answerSetNotEqual);
 		System.out.println("50%");
 		dfsAlgorithm(s[7], answerSetNotEqual);
-        System.out.println("End:"+(System.currentTimeMillis()-time)/1000);
+		System.out.println("End:" + (System.currentTimeMillis() - time) / 1000);
 	}
 
 	public void dfsAlgorithm(Shape shape, HashMap<String, Integer> answerSetNotEqual) {
-		if(shape == null) {
+		if (shape == null) {
 			return;
 		}
 		HashMap<String, LinkedList<Shape>> angleSetMapLocal = new HashMap<>();
@@ -235,7 +237,8 @@ public class Algorithm{
 									if (j == 5) {
 										continue;
 									}
-									LinkedList<Shape> tem = angleSetMapLocal.get(angleSetTem);// tem:The shape that has same angleSet
+									LinkedList<Shape> tem = angleSetMapLocal.get(angleSetTem);// tem:The shape that has
+																								// same angleSet
 									int len = tem.size();
 									boolean flag = false;
 									for (int h = 0; h < len; h++) {
@@ -278,13 +281,12 @@ public class Algorithm{
 
 	int index = 0;
 
-
 	public void aStarSearch() {
 		time = System.currentTimeMillis();
 		aStarAlgorithm(s[6], answerSetNotEqual);
 		System.out.println("50%");
 		aStarAlgorithm(s[7], answerSetNotEqual);
-        System.out.println("End:"+(System.currentTimeMillis()-time));
+		System.out.println("End:" + (System.currentTimeMillis() - time));
 	}
 
 	private void aStarAlgorithm(Shape shape, HashMap<String, Integer> answerSetNotEqual) {
@@ -312,10 +314,10 @@ public class Algorithm{
 						continue;
 					}
 					if (i == 3) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 11-3) {
+						if (shape1.contains(s[5]) && shape1.points.size() > 11 - 3) {
 							continue;
 						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 12-3) {
+						if (!shape1.contains(s[5]) && shape1.points.size() > 12 - 3) {
 							continue;
 						}
 					}
@@ -376,7 +378,7 @@ public class Algorithm{
 						set1.offer(shape1);
 					}
 				}
-				
+
 				while (!set1.isEmpty()) {
 					Shape shapeTem = set1.poll();
 					int cost = Math.abs(5 - shapeTem.points.size());
@@ -482,6 +484,27 @@ public class Algorithm{
 			answer = answer + str;
 		}
 		return answer;
+	}
+
+	public boolean hasSame(Shape shape) {
+		int angle = 0;
+		for (int j = 4; j >= 0; j--) {
+			angle += (shape.points.get(j).getAngle()) * Math.pow(10, j);
+		}
+		int[] angleList = new int[5];
+		if (hasSameMap.containsKey(angle)) {
+			return true;
+		} else {
+			for (int i = 0; i < 5; i++) {
+				for (int j = i; j < 5 + i; j++) {
+					angleList[i] += ((shape.points.get(j % 5).getAngle()) * Math.pow(10, 5 - j + i));
+				}
+			}
+			for (int i = 0; i < 5; i++) {
+				hasSameMap.put(angleList[i], 0);
+			}
+			return false;
+		}
 	}
 
 //	public String getAngleListReverse1(Shape shape) {
