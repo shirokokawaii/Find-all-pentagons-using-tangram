@@ -183,7 +183,7 @@ public class Connector {
         return result;
     }
 
-    private static Shape delete4(Shape shape) {
+    public static Shape delete4(Shape shape) {
         for (int i = 0; i < shape.size(); i++) {
             if(shape.getAngel(i) == 4) {
                 double tempL = shape.getLength(i);
@@ -219,7 +219,7 @@ public class Connector {
 
     }
 
-    private static int symCheck(Shape shape) {
+    static int symCheck(Shape shape) {
         if (shape.size()==4)
             return 1;
         else
