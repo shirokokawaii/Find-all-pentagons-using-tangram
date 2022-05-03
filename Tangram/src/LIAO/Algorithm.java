@@ -180,7 +180,7 @@ public class Algorithm {
 			return;
 		}
 		HashMap<String, LinkedList<Shape>> angleSetMapLocal = new HashMap<>();
-		if (shape.shapesSet.size() == 6) {
+		if (shape.shapesSet.size() == 7) {
 			String tem = getAngleList(shape);
 			if (!answerSetNotEqual.containsKey(tem)) {
 				answerSetNotEqual.put(tem, 0);
