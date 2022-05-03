@@ -220,12 +220,10 @@ public class Connector {
     }
 
     private static int symCheck(Shape shape) {
-        if (shape.getAngel(0) == shape.getAngel(1))
-            return 3;
         if (shape.size()==4)
             return 1;
         else
-            return 2;
+            return 3;
     }
 
     private static Shape clone(Shape shape) {
