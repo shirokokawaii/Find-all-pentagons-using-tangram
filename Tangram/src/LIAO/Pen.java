@@ -123,7 +123,7 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
             }
         }
         try {
-			Thread.sleep(100);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
