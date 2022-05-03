@@ -164,7 +164,7 @@ public class Connector {
         }
         else{
             //named(result);
-            delete4(result);
+            result = delete4(result);
             result.pointOrder.offer(named(result));
             result.shapesSet.offer(result);
             return result;
