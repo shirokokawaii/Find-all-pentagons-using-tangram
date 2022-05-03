@@ -3,17 +3,23 @@ package LIAO;
 import LIAO.entity.CircleList;
 import LIAO.entity.Point;
 
+import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
 
 import static LIAO.entity.Tangram.*;
 
 public class IDA {
-    static DecimalFormat df = new DecimalFormat("#0.00");
-    public static HashMap<String, String> map = new HashMap<>();
+    static Long startTime = System.currentTimeMillis();
 
+    static DecimalFormat df = new DecimalFormat("#0.00");
+    public static HashMap<String, String> answerMap = new HashMap<>();
+    public static HashSet<String> level1List = new HashSet<>();
+//    public static Shape[] S = new Shape[]{S0, S1, S2, S3, S4, S5};
+    public static Shape[] S = new Shape[]{S0, S1, S2, S3, S4, S5};
+    public static ArrayList<Shape> answer = new ArrayList<>();
 
     public static Shape reArrange(Shape shape) {
         CircleList<Point> points = new CircleList<>();
@@ -42,9 +48,7 @@ public class IDA {
         int length = (int)(Math.log10(n)+1);
         long firstOne;
         int index = 0;
-        long ini = 99999999999999999L;
-        long min;
-        min = ini;
+        long min = 99999999999999999L;
         for (int i = 0; i < length; i++) {
             firstOne = n/(int)Math.pow(10, length-1);
             //System.out.println(firstOne);
@@ -62,15 +66,24 @@ public class IDA {
 
     public static CircleList<Point> reverse(CircleList<Point> points) {
         CircleList<Point> result = new CircleList<>();
+
         for (int i = points.size() - 1; i >= 0; i--) {
             result.add(points.get(i));
+            //result.add(new Point(points.get(i).getAngle(), points.get(points.size()-1-i).getLength()));;
         }
         return result;
     }
 
+    public static CircleList<Point> putLength(CircleList<Point> points) {
+        CircleList<Point> result = new CircleList<>();
+        for (int i = 0; i < points.size(); i++ ) {
+            result.add(new Point(points.get(i).getAngle(), points.get(i+1).getLength()));
+        }
+        return result;
+    }
 
     public static String points2String(CircleList<Point> points) {
-        String result = "";
+        String result = new String();
         for (int i = 0; i < points.size(); i++) {
             result += points.get(i).getAngle();
             result += df.format(points.get(i).getLength());
@@ -81,110 +94,148 @@ public class IDA {
 
     public static boolean hasSame(Shape shape) {
         String feature = points2String(reArrange(shape).points);
-        if(map == null){
-            String key = points2String(reArrange(shape).points);
-            String value = points2String(reArrangePoints(shape.points));
-            map.put(key, value);
+        //System.out.println(feature);
+        if(answerMap == null){
+            String key = feature;
+            String value = points2String(putLength(reArrangePoints(reverse(shape.points))));
+            //System.out.println("VAlue:"+value);
+            answerMap.put(key, value);
             return false;
         }
-        if(map.containsKey(feature) || map.containsValue(feature)) {
+        if(answerMap.containsKey(feature) || answerMap.containsValue(feature)) {
+//            if (map.containsKey(feature))
+//                System.out.println("KEY");
+//            else
+//                System.out.println("VALUE");
             return true;
         } else {
-            String key = points2String(reArrange(shape).points);
-            String value = points2String(reArrangePoints(reverse(shape.points)));
-            map.put(key, value);
+            String key = feature;
+            String value = points2String(putLength(reArrangePoints(reverse(shape.points))));
+            //System.out.println("VAlue:"+value);
+            answerMap.put(key, value);
             return false;
         }
+    }
+
+    public static boolean isSame(Shape shape) {
+        String feature = points2String(reArrange(shape).points);
+        if(level1List == null||(!level1List.contains(feature))){
+            level1List.add(feature);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    public static void dfs(Shape shape) {
+        if (shape == null) {
+            return;
+        }
+        int level = shape.shapeList.size();
+        if(level == 2){
+            if(isSame(shape)){
+                return;
+            }
+        }else if (level == 4) {
+            if (shape.size() >=18)
+                return;
+        } else if (level == 5) {
+            if (shape.size() >= 14)
+                return;
+        } else if (level == 6) {
+            if (shape.size() >=10)
+                return;
+        } else if (level == 7) {
+            if(shape.size() == 5){
+                if(!hasSame(shape)){
+                    answer.add(shape);
+                    long timeNow = System.currentTimeMillis();
+                    System.out.println(answer.size()+":"+ (timeNow - startTime) / 1000 + "s");
+                }
+            } else {
+                return;
+            }
+        }
+
+        for(Shape s: S){
+            if(!shape.shapeList.contains(s)){
+                for(int i = 0; i < shape.size(); i++){
+                    for (int j = 0; j < symCheck(s); j++) {
+                        for (int k = 0; k < 2; k++){
+                            Shape shape1 = Connector.connect(shape, s, i, j, k == 0);
+                            if (shape1 != null)
+                                dfs(Connector.delete4(shape1));
+                            else
+                                return;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    static int symCheck(Shape shape) {
+        if (shape.size()==4)
+            return 1;
+        else
+            return 3;
     }
 
     public static void main(String[] args) {
-        Shape shape = Connector.connect(S0, S7, 0, 0, true);
-        System.out.println(shape);
-        System.out.println(reArrange(shape));
-        //System.out.println(count(shape));
-
-        Shape shape2 = Connector.connect(S0, S2, 2, 0, true);
-        System.out.println(shape2);
-        System.out.println(reArrange(shape2));
-        System.out.println(reverse(shape2.points));
-        System.out.println("reA1:"+reArrange(shape2));
-
-        Shape rever = new Shape();
-        rever.points = reverse(shape2.points);
-
-        System.out.println(hasSame(shape));
-        System.out.println(map);
-        System.out.println(hasSame(shape2));
-        System.out.println(map);
-        System.out.println(hasSame(rever));
-
-//        System.out.println("reA1:"+reArrange(rever));
-//        System.out.println("string:"+points2String(rever.points));
-//        String s = String.valueOf(1.4);
-//        s += 34;
-//        System.out.println(s);
-    }
-
-//    public void dfsSearch() {
-//        HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
-//        Long time1 = System.currentTimeMillis();
-//        dfsAlgorithm(s[6], answerSetNotEqual);
-//        System.out.println("50%");
-//        dfsAlgorithm(s[7], answerSetNotEqual);
-//        Long time2 = System.currentTimeMillis();
-//        System.out.println("time" + (time2 - time1));
-//    }
-
-    public ArrayList<Shape> dfs() {
-        ArrayList<Shape> result = null;
-
-        return result;
-    }
-
-    public ArrayList<Shape> dfs(Shape shapeA, Shape shapeB) {
-        ArrayList<Shape> result = null;
-        return result;
-    }
-
-//    public Shape dfs(Shape shape) {
-//        if(shape.shapeList.size() == 7) {
-//            if(hasSame(shape)){
-//                return shape;
-//            }
-//        }
+//        Shape shape = Connector.connect(S0, S7, 0, 0, true);
+//        System.out.println(shape);
+//        System.out.println(reArrange(shape));
+//        //System.out.println(count(shape));
 //
-//    }
+//        Shape shape2 = Connector.connect(S0, S2, 2, 0, true);
+//        System.out.println(shape2);
+//        System.out.println(reArrange(shape2));
+//        System.out.println(reverse(shape2.points));
+//        System.out.println("reA1:"+reArrange(shape2));
+//
+//        Shape rever = new Shape();
+//        rever.points = reverse(shape.points);
+//
+//        System.out.println(hasSame(shape));
+//        System.out.println(answerMap);
+//        System.out.println(hasSame(shape2));
+//        System.out.println(answerMap);
+//        System.out.println(shape.shapeList.contains(S0));
 
-//    public void dfsAlgorithm(Shape shape, HashMap<String, Integer> answerSetNotEqual) {
-//        if(shape == null) {
-//            return;
-//        }
-//        HashMap<String, LinkedList<Shape>> angleSetMapLocal = new HashMap<>();
-//        if (shape.shapesSet.size() == 7) {
-//            String tem = getAngleList(shape);
-//            if (!answerSetNotEqual.containsKey(tem)) {
-//                answerSetNotEqual.put(tem, 0);
-//                displayAnswer(shape);
-//            }
-//            return;
-//        }
-//        for (int j = 0; j < 6; j++) {
-//            if (!shape.contains(s[j])) {
-//                for (int b = 0; b < shape.size(); b++) {
-//                    for (int n = 0; n < symCheck(s[j]); n++) {
-//                        for (int k = 0; k < 2; k++) {
-//                            Shape newShape = null;
-//                            newShape = Connector.connect(shape, s[j], b, n, k == 0);
-//                            if (newShape != null) {
-//                                newShape.skip = shape.skip;
-//                                newShape = check(newShape, j, 0, angleSetMapLocal);
-//                                dfsAlgorithm(newShape, answerSetNotEqual);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
 
+
+        dfs(S6);
+        dfs(S7);
+
+        System.out.println(answer);
+
+
+
+
+
+
+        JFrame jf = new JFrame("图形可视化工具");
+        JPanel jpanel = new JPanel();
+        jf.add(jpanel);
+        jpanel.setSize(600, 600);
+        jf.setSize(600, 600);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
+
+        for(int i=0;i<answer.size();i++) {
+                Pen pen = new Pen(jf, jpanel);
+                pen.beforeDraw(answer.get(i), 300, 300, 50);
+                pen.draw("X:/javaProject/Find-all-pentagons-using-tangram/Tangram/ima_output/pic"+i+"-.jpg");
+                jpanel.repaint();
+                System.out.println(i+" ");
+
+        }
+    }
 
 
 }
+
+
+
