@@ -24,11 +24,15 @@ public class Algorithm{
 	HashMap<String, Integer> hs = new HashMap<>();
 	int count = 0;
 	int different = 0;
+	IDA ida = new IDA();
 	
 	private void displayAnswer(Shape shape) {
 		if (shape.points.size() == 5) {
 			String angleList = getAngleList(shape);
 			if (!hs.containsKey(angleList)) {
+				if(IDA.hasSame(shape)) {
+					return;
+				}
 				different++;
 				hs.put(angleList, answerIndex);
 				LinkedList<Shape> tem = new LinkedList<>();
