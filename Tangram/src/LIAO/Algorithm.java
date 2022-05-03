@@ -2,6 +2,8 @@ package LIAO;
 
 import java.util.*;
 
+import LIAO.entity.Point;
+
 public class Algorithm {
 	public Algorithm(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
 		this.s[0] = s0;
@@ -15,13 +17,18 @@ public class Algorithm {
 	}
 	Shape[] s = new Shape[8];
 	LinkedList<Shape> answerSet = new LinkedList<Shape>();
+	HashMap<String, Integer> hs = new HashMap<>();
 	int count = 0;
+	int different = 0;
 	private void displayAnswer(Shape shape) {
 		if(shape.points.size() == 5) {
+			if(!hs.containsKey(getAngleListAll(shape))) {
+				different++;
+			}
 			ArrayList<Integer> angleSet = checkAngle(shape);
 			count++;
 			answerSet.add(shape);
-			System.out.println((count-1)+":"+angleSet);
+			System.out.println((count-1)+":"+angleSet+" "+getAngleList(shape));
 		}
 			// here needs to draw and display the answer shape*****
 	}
@@ -38,11 +45,11 @@ public class Algorithm {
 	}
 
 	public void bfsSearch(Shape shapeIn) {
-		int acuracy = 2;//0:highest
+		int acuracy = 3;//0:highest
 		int index = 1;
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 6; i++) {
 			HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 			System.out.println("Adding " + (i + 1) + "st shape");
 			LinkedList<Shape> set2 = new LinkedList<Shape>();
@@ -55,9 +62,6 @@ public class Algorithm {
 					}
 				}
 			}
-			Long time2 = System.currentTimeMillis();
-			System.out.println("Connect time:" + (time2 - time1) + "ms");
-			
 			while (!set2.isEmpty()) {
 				Shape shape = set2.poll();
 				if (shape == null) {
@@ -93,18 +97,19 @@ public class Algorithm {
 					set1.offer(shape);
 				} 
 				else {
+					if(i==5) {
+						continue;
+					}
 					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
 					int len = tem.size();
 					boolean flag = false;
 					for (int j = 0; j < len; j++) {
 						if (elementsEquals(shape, tem.get(j))) {
-							if(i==5 && shape.skip == tem.get(j).skip){
+							if(shape.skip == tem.get(j).skip){
 								flag = true;
+								continue;
 							}
 							if ((int)shape.skip != (int)tem.get(j).skip) {
-								flag = true;
-							}
-							if (shape.skip == 0) {
 								flag = true;
 							}
 						}
@@ -130,12 +135,13 @@ public class Algorithm {
 				}
 			}
 			Long time3 = System.currentTimeMillis();
-			System.out.println("Prune time:" + (time3 - time2) + "ms");
+			System.out.println("time:" + (time3 - time1) + "ms");
 		}
 		while (!set1.isEmpty()) {
 			displayAnswer(set1.poll());
 		}
-		System.out.println(count + "different answers");
+		System.out.println(count + "answers");
+		System.out.println(different + "different answers");
 	}
 
 	public void dfsSearch() {
@@ -294,37 +300,14 @@ public class Algorithm {
 
 	}
 
-//	public String getAngleList(Shape shape) {
-//		String answer = new String();
-//		int len = shape.size();
-//		int min = 8;
-//		int index = 0;
-//		for (int i = 0; i < len; i++) {
-//			int tem = shape.points.get(i).getAngle();
-//			if (tem <= min) {
-//				min = tem;
-//				index = i;
-//			}
-//		}
-//		for (int i = 0; i < len; i++) {
-//			if (index > len - 1) {
-//				index = 0;
-//			}
-//			answer += Integer.toString(shape.points.get(index).getAngle());
-//			index++;
-//		}
-//
-//		return answer;
-//	}
 	
 	public String getAngleList(Shape shape) {
 	String answer = new String();
-	int len = shape.size();
+	int len = shape.points.size();
 	int[] angleList = new int[len];
 	for(int i=0;i<len;i++) {
 		for(int j=i;j<len+i;j++) {
-			angleList[i] += shape.getAngel(j%len)*(len-j+i);
-			j++;
+			angleList[i] += shape.getAngel(j%len)*(len-j+i)+shape.getLength(j);
 		}
 	}
 	for(int i=0;i<len-1;i++) {
@@ -338,11 +321,47 @@ public class Algorithm {
 	}
 	for(int i=0;i<len;i++) {
 		int tem = angleList[i];
-		answer += Integer.toString(tem);
+		String str = Integer.toString(tem);
+		answer = answer + str ;
 	}
 	return answer;
 }
 
+	public String getAngleListAll(Shape shape) {
+	String answer = new String();
+	int len = shape.points.size();
+	int[] angleList1 = new int[len*2];
+	for(int i=0;i<len;i++) {
+		for(int j=i;j<len+i;j++) {
+			angleList1[i] += shape.getAngel(j%len)*(len-j+i)+shape.getLength(j);
+		}
+	}
+	int[] angleList2 = new int[len];
+	for(int i=0;i<len;i++) {
+		for(int j=len-1;j>len-i;j--) {
+			angleList2[i] += shape.getAngel(j%len)*(len-j+i)+shape.getLength(j);
+		}
+	}
+	for(int i=len;i<len*2;i++) {
+		angleList1[i] = angleList2[i-len];
+	}
+	for(int i=0;i<(len*2)-1;i++) {
+		for(int j=0;j<(len*2)-i-1;j++) {
+			if(angleList1[j]>angleList1[j+1]) {
+				int tem = angleList1[j+1];
+				angleList1[j+1] = angleList1[j];
+				angleList1[j] = tem;
+			}
+		}
+	}
+	for(int i=0;i<(len*2);i++) {
+		int tem = angleList1[i];
+		String str = Integer.toString(tem);
+		answer = answer + str ;
+	}
+	return answer;
+}
+	
 	private Queue<String> getAllEdgePossibility(Shape shape1, Shape shape2) {
 		Queue<String> edgeSet = new LinkedList<String>();
 		// here calculate all the possible edge combination and store them into

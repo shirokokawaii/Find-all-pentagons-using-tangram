@@ -106,7 +106,7 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
     
     public void draw(String path) {
         int index = 0;
-        for(int count=0;count<20;count++) {
+        for(int count=0;count<100;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
@@ -123,7 +123,7 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
             }
         }
         try {
-			Thread.sleep(200);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
