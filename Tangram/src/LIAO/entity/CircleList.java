@@ -9,6 +9,13 @@ public class CircleList<E> extends ArrayList<E> {
         return super.get((index+size())%size());
     }
 
+    public CircleList<E> rearrange(int n, CircleList<E> list) {
+        CircleList<E> newList = new CircleList<>();
+        for (int i = n; i < list.size() + n; i++)
+            newList.add(list.get(i));
+        return newList;
+    }
+
     public E set(int index, E element) {
         return super.set((index+size())%size(), element);
     }

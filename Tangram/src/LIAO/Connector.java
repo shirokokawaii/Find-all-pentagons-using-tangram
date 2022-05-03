@@ -96,7 +96,7 @@ public class Connector {
             if (d) {
                 checkList = add(shapeA, shapeB, A, B);
                 firstSize = shapeA.size();
-                int n = (A-2+2*shapeA.size())%shapeA.size();
+                //int n = (A-2+2*shapeA.size())%shapeA.size();
 //                result.pointOrder.offer(n);
                 //System.out.println(n+"!!!!!!!!!!");
             } else {
