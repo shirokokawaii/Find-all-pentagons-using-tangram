@@ -14,7 +14,6 @@ import static LIAO.entity.Tangram.S7;
 public class AlgorithmTest {
 
 
-
 		public AlgorithmTest(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
 			this.s[0] = s0;
 			this.s[1] = s1;
@@ -25,29 +24,21 @@ public class AlgorithmTest {
 			this.s[6] = s6;// s6 is the base
 			this.s[7] = s7;// s7 is another base
 		}
-
 		Shape[] s = new Shape[8];
-		ArrayList<Shape> answerSet = new ArrayList<Shape>();
+		LinkedList<Shape> answerSet = new LinkedList<Shape>();
 		int count = 0;
-		int countSame = 0;
-		HashMap<String, Integer> hs = new HashMap<>();
 		private void displayAnswer(Shape shape) {
-			ArrayList<Integer> angleSet = checkAngle(shape);
-			if (shape.points.size() == 5) {// This shape is a pentagon, draw and display it\
-				String angleSetTem=getAngleList(shape);
-				if (!hs.containsKey(angleSetTem)) {// angle list is not same
-					hs.put(angleSetTem, 0);
-				}
-				else {
-					countSame++;
-				}
+			if(shape.points.size() == 5) {
+				ArrayList<Integer> angleSet = checkAngle(shape);
 				count++;
 				answerSet.add(shape);
-				System.out.println(angleSet);
-				// here needs to draw and display the answer shape*****
+				System.out.println((count-1)+":"+angleSet);
 			}
+			// here needs to draw and display the answer shape*****
 		}
-
+		public LinkedList<Shape> getAnswerList() {
+			return answerSet;
+		}
 		public ArrayList<Integer> checkAngle(Shape shape) {
 			int len = shape.size();
 			ArrayList<Integer> angleSet = new ArrayList<Integer>();
@@ -57,11 +48,12 @@ public class AlgorithmTest {
 			return angleSet;
 		}
 
-		public ArrayList<Shape> bfsSearch(Shape shapeIn) {
+		public void bfsSearch(Shape shapeIn) {
+			int acuracy = 2;//0:highest
 			int index = 1;
 			LinkedList<Shape> set1 = new LinkedList<Shape>();
 			set1.offer(shapeIn);
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 6; i++) {
 				HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 				System.out.println("Adding " + (i + 1) + "st shape");
 				LinkedList<Shape> set2 = new LinkedList<Shape>();
@@ -83,10 +75,10 @@ public class AlgorithmTest {
 						continue;
 					}
 					if (i == 3) {
-						if (shape.contains(s[5]) && shape.points.size() > 9) {
+						if (shape.contains(s[5]) && shape.points.size() > 11-acuracy) {
 							continue;
 						}
-						if (!shape.contains(s[5]) && shape.points.size() > 10) {
+						if (!shape.contains(s[5]) && shape.points.size() > 12-acuracy) {
 							continue;
 						}
 					}
@@ -108,6 +100,7 @@ public class AlgorithmTest {
 						LinkedList<Shape> tem = new LinkedList<>();
 						tem.add(shape);
 						angleSetMap.put(angleSetTem, tem);
+//					angleSetMap.put(angleSetTem, 0);
 						set1.offer(shape);
 					}
 					else {
@@ -115,7 +108,7 @@ public class AlgorithmTest {
 						int len = tem.size();
 						boolean flag = false;
 						for (int j = 0; j < len; j++) {
-							if (i==5 || elementsEquals(shape, tem.get(j))) {
+							if (elementsEquals(shape, tem.get(j))) {
 								if(i==5 && shape.skip == tem.get(j).skip){
 									flag = true;
 								}
@@ -154,31 +147,56 @@ public class AlgorithmTest {
 				displayAnswer(set1.poll());
 			}
 			System.out.println(count + "different answers");
-			System.out.println(countSame+ "same shape answers");
-			return answerSet;
 		}
 
 		public void dfsSearch() {
-			HashMap<ArrayList<Integer>, Integer> angleSetMap = new HashMap<>();
+			HashMap<String, Integer> angleSetMap = new HashMap<>();
 			dfsAlgorithm(s[6], angleSetMap);
+			System.out.println("50%");
 			dfsAlgorithm(s[7], angleSetMap);
 		}
 
-		private void dfsAlgorithm(Shape shape, HashMap<ArrayList<Integer>, Integer> angleSetMap) {
-			if (shape.shapesSet.size() == 7) {
-				displayAnswer(shape);
+		private void dfsAlgorithm(Shape shape, HashMap<String, Integer> angleSetMap) {
+			if(shape == null) {
 				return;
 			}
+			if (shape.shapeList.size() == 4) {
+				if (shape.contains(s[5]) && shape.points.size() > 11) {
+					return;
+				}
+				if (!shape.contains(s[5]) && shape.points.size() > 12) {
+					return;
+				}
+			}
+			if (shape.shapeList.size() == 5) {
+				if (shape.contains(s[5]) && shape.points.size() > 8) {
+					return;
+				}
+				if (!shape.contains(s[5]) && shape.points.size() > 9) {
+					return;
+				}
+			}
+
+			if (shape.shapeList.size() == 6) {
+				String angleList = getAngleList(shape);
+				if(!angleSetMap.containsKey(angleList)) {
+					angleSetMap.put(angleList, 0);
+					displayAnswer(shape);
+				}
+				return;
+			}
+
 			for (int j = 0; j < 6; j++) {
 				if (!shape.contains(s[j])) {
-					Queue<String> edgeSet = getAllEdgePossibility(shape, s[j]);
-					while (!edgeSet.isEmpty()) {
-						String edge = edgeSet.poll();
-						Shape result = new Shape();
-						// here needs to get all the possibility edge and connect shapes with specified
-						// edge*****
-						if (!angleSetMap.containsKey(getAngleList(result))) {
-							dfsAlgorithm(result, angleSetMap);
+					int len1 = shape.size();
+					int len2 = s[j].size();
+					for(int h=0;h<len1;h++) {
+						for(int k=0;k<len2;k++) {
+							Shape result1 = Connector.connect(shape, s[j], h, k, true);
+							dfsAlgorithm(result1, angleSetMap);
+							System.out.println("shapeA.size:"+shape.shapeList.size()+",j: "+j+",h: "+h+",k:"+k);
+							Shape result2 = Connector.connect(shape, s[j], h, k, false);
+							dfsAlgorithm(result2, angleSetMap);
 						}
 					}
 
@@ -192,8 +210,9 @@ public class AlgorithmTest {
 		}
 
 		private void aStarAlgorithm(Shape shape) {
-			if (shape.shapesSet.size() == 7) {
+			if (shape.shapeList.size() == 6) {
 				displayAnswer(shape);
+				System.out.println(shape.size());
 				return;
 			}
 			ArrayList<ArrayList<Shape>> costSet = new ArrayList<ArrayList<Shape>>();
@@ -285,28 +304,52 @@ public class AlgorithmTest {
 
 		}
 
-		private String getAngleList(Shape shape) {
-			ArrayList<Integer> angleSet = new ArrayList<Integer>();
+//	public String getAngleList(Shape shape) {
+//		String answer = new String();
+//		int len = shape.size();
+//		int min = 8;
+//		int index = 0;
+//		for (int i = 0; i < len; i++) {
+//			int tem = shape.points.get(i).getAngle();
+//			if (tem <= min) {
+//				min = tem;
+//				index = i;
+//			}
+//		}
+//		for (int i = 0; i < len; i++) {
+//			if (index > len - 1) {
+//				index = 0;
+//			}
+//			answer += Integer.toString(shape.points.get(index).getAngle());
+//			index++;
+//		}
+//
+//		return answer;
+//	}
+
+		public String getAngleList(Shape shape) {
 			String answer = new String();
 			int len = shape.size();
-			int min = 8;
-			int index = 0;
-			for (int i = 0; i < len; i++) {
-				int tem = shape.points.get(i).getAngle();
-				if (tem <= min) {
-					min = tem;
-					index = i;
+			int[] angleList = new int[len];
+			for(int i=0;i<len;i++) {
+				for(int j=i;j<len+i;j++) {
+					angleList[i] += shape.getAngel(j%len)*(len-j+i);
+					j++;
 				}
 			}
-			for (int i = 0; i < len; i++) {
-				if (index > len - 1) {
-					index = 0;
+			for(int i=0;i<len-1;i++) {
+				for(int j=0;j<len-i-1;j++) {
+					if(angleList[j]>angleList[j+1]) {
+						int tem = angleList[j+1];
+						angleList[j+1] = angleList[j];
+						angleList[j] = tem;
+					}
 				}
-				angleSet.add(shape.points.get(index).getAngle());
-				answer += Integer.toString(shape.points.get(index).getAngle());
-				index++;
 			}
-
+			for(int i=0;i<len;i++) {
+				int tem = angleList[i];
+				answer += Integer.toString(tem);
+			}
 			return answer;
 		}
 
@@ -316,6 +359,7 @@ public class AlgorithmTest {
 			// edgeSet.*****
 			return edgeSet;
 		}
+
 
 
 	public static void main(String[] args) {
@@ -331,10 +375,10 @@ public class AlgorithmTest {
 		//Pen newP = new Pen(jpanel);
 		AlgorithmTest algorithm = new AlgorithmTest(S0, S1, S2, S3, S4, S5, S6, S7);
 
-		//algorithm.bfsSearch(S6);
-		//algorithm.bfsSearch(S7);
+		algorithm.bfsSearch(S6);
+		algorithm.bfsSearch(S7);
 
-		//algorithm.bfsSearch(4, 9);
+		//algorithm.dfsSearch();
 		System.out.println(algorithm.answerSet);
 		System.out.println("----------------" + algorithm.answerSet.size() + "----------------");
 		//int size = algorithm.answerSet.size() - 119;
@@ -342,8 +386,8 @@ public class AlgorithmTest {
 		//Shape test = algorithm.answerSet.get(3);
 
 		Shape s1 = Connector.connect(S6, S0, 0, 0, true);
-		Shape s2 = Connector.connect(s1, S1, 1, 1, false);
-//		Shape s3 = Connector.connect(s2, S2, 4, 0, false);
+		Shape s2 = Connector.connect(s1, S2, 1, 1, false);
+		Shape s3 = Connector.connect(s2, S1, 4, 0, false);
 //		Shape s4 = Connector.connect(s3, S3, 3, 0, true);
 //		Shape s5 = Connector.connect(s3, S5, 3, 0, true);
 //		Shape s6 = Connector.connect(s3, S4, 4, 1, true);
