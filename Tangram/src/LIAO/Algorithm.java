@@ -96,17 +96,15 @@ public class Algorithm {
 		time = System.currentTimeMillis();
 		bfsAlgorithm(S6);
 		bfsAlgorithm(S7);
-		System.out.println("End:" + ((System.currentTimeMillis() - time) / 1000) + "s");
+		System.out.println("End: " + ((System.currentTimeMillis() - time) / 1000) + "s");
 	}
 
 	public void bfsAlgorithm(Shape shapeIn) {
-		int acuracy = 3;// 0:highest
-//		int index = 1;
+		int acuracy = 4;// 0:highest
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		LinkedList<Shape> set2 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
 		for (int i = 0; i < 6; i++) {
-//			HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 			HashMap<String, Boolean> angleSetMap = new HashMap<>();
 			System.out.println("Adding " + (i + 1) + "st shape");
 			for(int q=0;q<set1.size();q++) {
@@ -116,92 +114,56 @@ public class Algorithm {
 						set2.addAll(Connector.connectAll(order, s[j]));
 					}
 				}
-				order = null;
 			}
 			set1.clear();
-//			while (!set2.isEmpty()) {
 			for(Shape shape:set2) {
-				//Shape shape = set2.poll();
 				if (shape == null) {
 					continue;
 				}
+				if (i == 1) {
+					if (shape.contains(s[5]) && shape.points.size() > 17 - acuracy*3) {
+						continue;
+					}
+					if (!shape.contains(s[5]) && shape.points.size() > 18 - acuracy*3) {
+						continue;
+					}
+				}
+				if (i == 2) {
+					if (shape.contains(s[5]) && shape.points.size() > 14 - acuracy*2) {
+						continue;
+					}
+					if (!shape.contains(s[5]) && shape.points.size() > 15 - acuracy*2) {
+						continue;
+					}
+				}
 				if (i == 3) {
 					if (shape.contains(s[5]) && shape.points.size() > 11 - acuracy) {
-						shape = null;
 						continue;
 					}
 					if (!shape.contains(s[5]) && shape.points.size() > 12 - acuracy) {
-						shape = null;
 						continue;
 					}
 				}
 				if (i == 4) {
 					if (shape.contains(s[5]) && shape.points.size() > 8) {
-						shape = null;
 						continue;
 					}
 					if (!shape.contains(s[5]) && shape.points.size() > 9) {
-						shape = null;
 						continue;
 					}
 				}
 				if (i == 5) {
 					if (shape.points.size() != 5) {
-						shape = null;
 						continue;
 					}
 				}
 				String angleSetTem = getAngleList(shape);
 				if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
-//					LinkedList<Shape> tem = new LinkedList<>();
-//					tem.add(shape);
-//					angleSetMap.put(angleSetTem, tem);
 					angleSetMap.put(angleSetTem, null);
 					set1.offer(shape);
 				} 
-//				else {
-//					if (i == 5) {
-//						shape = null;
-//						continue;
-//					}
-//					LinkedList<Shape> tem = angleSetMap.get(angleSetTem);// tem:The shape that has same angleSet
-//					int len = tem.size();
-//					boolean flag = false;
-//					for (int j = 0; j < len; j++) {
-//						if (elementsEquals(shape, tem.get(j))) {
-//							if (shape.skip == tem.get(j).skip) {
-//								flag = true;
-//								continue;
-//							}
-//							if ((int) shape.skip != (int) tem.get(j).skip) {
-//								flag = true;
-//							}
-//						}
-//					}
-//					if (flag) {
-//						shape = null;
-//						continue;
-//					}
-//					if (len == 1) {
-//						shape.skip = index;
-//						tem.get(0).skip = index;
-//						index++;
-//					}
-//					if (len > 1) {
-//						double indexTem = index;
-//						while (indexTem > 1) {
-//							indexTem *= 0.1;
-//						}
-//						shape.skip = tem.get(0).skip + indexTem;
-//					}
-//					tem.add(shape);
-//					angleSetMap.put(angleSetTem, tem);
-//					set1.offer(shape);
-//				}
 			}
 			set2.clear();
-			//Long time3 = System.currentTimeMillis();
-			//System.out.println("time:" + (time3 - time1) + "ms");
 		}
 		while (!set1.isEmpty()) {
 			displayAnswer(set1.poll());
@@ -213,10 +175,8 @@ public class Algorithm {
 	public void dfsSearch() {
 		HashMap<String, Boolean> answerSetNotEqual = new HashMap<>();
 		time = System.currentTimeMillis();
-		//dfsAlgorithm(s[7], answerSetNotEqual);
-		//System.out.println("50%");
 		dfsAlgorithm(s[6], answerSetNotEqual);
-		System.out.println("End:" + (System.currentTimeMillis() - time) / 1000);
+		System.out.println("End: " + (System.currentTimeMillis() - time) / 1000);
 	}
 
 	public void dfsAlgorithm(Shape shape, HashMap<String, Boolean> answerSetNotEqual) {
@@ -338,7 +298,7 @@ public class Algorithm {
 	public void aStarSearch() {
 		time = System.currentTimeMillis();
 		aStarAlgorithm(s[6]);
-		System.out.println("End:" + (System.currentTimeMillis() - time)/1000 +"s");
+		System.out.println("End: " + (System.currentTimeMillis() - time)/1000 +"s");
 	}
 
 	private void aStarAlgorithm(Shape shape) {
@@ -373,15 +333,15 @@ public class Algorithm {
 						if (shape1.contains(s[5]) && shape1.points.size() > 17 - (acuracy*3)) {
 							continue;
 						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 18 - (acuracy*3)) {
+						if (!shape1.contains(s[5]) && shape1.points.size() > 18 - (acuracy*3)-1) {
 							continue;
 						}
 					}
 					if (i == 2) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 14 - (acuracy*2)) {
+						if (shape1.contains(s[5]) && shape1.points.size() > 14 - (acuracy*2)-1) {
 							continue;
 						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 15 - (acuracy*2)) {
+						if (!shape1.contains(s[5]) && shape1.points.size() > 15 - (acuracy*2)-1) {
 							continue;
 						}
 					}
