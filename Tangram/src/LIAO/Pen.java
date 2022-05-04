@@ -9,7 +9,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Pen{// usage:First create an object of pen, then call the method "draw".
+public class Pen extends Thread{// usage:First create an object of pen, then call the method "draw".
     int x1, x2, y1, y2 = 0;
     Graphics graphics;
     JPanel jpanel;
@@ -87,7 +87,9 @@ public class Pen{// usage:First create an object of pen, then call the method "d
 
     public void draw() {
         int index = 0;
-        jpanel.repaint();
+        graphics.setColor(Color.white);
+        graphics.fillRect(0, 0, jpanel.getHeight(), jpanel.getWidth());
+        graphics.setColor(Color.black);
         for(int count=0;count<10;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);

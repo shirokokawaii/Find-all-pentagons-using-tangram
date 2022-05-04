@@ -2,8 +2,8 @@ package LIAO;
 
 import LIAO.entity.CircleList;
 import LIAO.entity.Point;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+//import org.springframework.util.LinkedMultiValueMap;
+//import org.springframework.util.MultiValueMap;
 
 import javax.swing.*;
 import java.text.DecimalFormat;
@@ -18,7 +18,7 @@ public class IDA {
     public static HashMap<String, String> answerMap = new HashMap<>();
 
     public static HashMap<String, String> relationMap = new HashMap<>();
-    public static MultiValueMap<String, String> containMap = new LinkedMultiValueMap<>();
+    //public static MultiValueMap<String, String> containMap = new LinkedMultiValueMap<>();
 
     public static HashSet<String> level1List = new HashSet<>();
 
@@ -136,13 +136,13 @@ public class IDA {
     public static boolean containSame(Shape shape) {
         String contain = getContain(shape);
         String feature = points2String(reArrange(shape).points);
-        if (containMap == null){
-            containMap.add(contain, feature);
-            return false;
-        } else if ((!containMap.containsKey(contain))||(containMap.containsKey(contain)&&(!containMap.get(contain).contains(feature)))) {
-            containMap.add(contain, feature);
-            return false;
-        }
+//        if (containMap == null){
+//            containMap.add(contain, feature);
+//            return false;
+//        } else if ((!containMap.containsKey(contain))||(containMap.containsKey(contain)&&(!containMap.get(contain).contains(feature)))) {
+//            containMap.add(contain, feature);
+//            return false;
+//        }
         return true;
     }
 

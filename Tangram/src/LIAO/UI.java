@@ -16,7 +16,7 @@ public class UI {
 	int way = 0;
 	JPanel[] p = new JPanel[100];
 	int left, top;
-	int x, y;
+	int x, y, k;
 	int n = 1, shapek = 0, t = 100;
 
 	public void CreateUI() {
@@ -67,7 +67,6 @@ public class UI {
 		type.addActionListener((e) -> {
 			shapek = method.getSelectedIndex();
 		});
-		algorithm.displayWhileCalculating(rf, panel, 260, 350, 60);
 		JLabel alg = new JLabel("Search Method：");
 		alg.setBounds(15, 265, 200, 20);
 		alg.setFont(new Font("DejaVu Sans Mono", 1, 20));
@@ -77,7 +76,7 @@ public class UI {
 		method.addItem("              DFS");
 		method.addItem("              BFS");
 		method.addItem("                A*");
-		method.addItem("              ide*");
+		method.addItem("              ida*");
 		// 监听
 		method.addActionListener((e) -> {
 			int index = method.getSelectedIndex();
@@ -116,15 +115,19 @@ public class UI {
 		button1.setBounds(15, 700, 135, 35);
 		button1.setText("Different ways");
 		button1.addActionListener((e) -> {
-			// String img = path.getText().toString();
-			// plabel.setIcon(new ImageIcon(UI.class.getResource(img+"/1.jpg")));
-			// System.out.println(img+"/1.jpg");
+			now.setText(String.valueOf(n+"-"+answerList.get(n).size()));
+			Pen pen = new Pen(rf, panel);
+			now.setText(String.valueOf(n));
+			pen.beforeDraw(answerList.get(n).get(k%answerList.get(n).size()), 260, 350, 60);
+			k++;
+			pen.draw();
 		});
 
 		button2 = new JButton();
 		button2.setBounds(15, 750, 135, 35);
 		button2.setText("Solve");
 		button2.addActionListener((e) -> {
+			algorithm.displayWhileCalculating(rf, panel, 260, 350, 60);
 			if (way == 0) {
 				total.setText("Please choose a solve approach before start");
 			}
@@ -137,32 +140,24 @@ public class UI {
 			if (way == 3) {
 				algorithm.aStarSearch();
 			}
-			if (way == 3) {
+			if (way == 4) {
 				algorithm.aStarSearch();// ***************************************
 			}
 			answerList = algorithm.getAnswerList();
 			t = answerList.size();
 			total.setText(String.valueOf(t));
-//			panel.repaint();
-//			Pen pen = new Pen(rf, panel);
-//			pen.beforeDraw(answerList.get(n - 1).get(0), 260, 350, 100);
-//			pen.draw();
 		});
 
 		button4 = new JButton();
 		button4.setBounds(980, 765, 75, 25);
 		button4.setText("Next");
 		button4.addActionListener((e) -> {
-			if (n == answerList.size()) {
-				;
-			} else {
-				n++;
-				panel.repaint();
 				Pen pen = new Pen(rf, panel);
-				pen.beforeDraw(answerList.get(n - 1).get(0), 260, 350, 100);
+				pen.beforeDraw(answerList.get(n%answerList.size()).get(0), 260, 350, 60);
+				k=0;
 				pen.draw();
-				now.setText(String.valueOf(n));
-			}
+				n++;
+				now.setText(String.valueOf(n%answerList.size()));
 		});
 
 		rf.getContentPane().add(title, null);

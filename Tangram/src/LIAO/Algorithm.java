@@ -26,8 +26,8 @@ public class Algorithm {
 	LinkedList<LinkedList<Shape>> answerSet = new LinkedList<>();
 	HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
 	HashMap<String, Integer> hs = new HashMap<>();
-	JFrame jf = null; 
-	JPanel jp = null;
+	JFrame jf; 
+	JPanel jp;
 	int X = 0;
 	int Y = 0;
 	int size = 0;
@@ -43,10 +43,10 @@ public class Algorithm {
 	}
 	
 	private void draw(Shape shape) {
-        jp.repaint();
         Pen pen = new Pen(jf, jp);
         pen.beforeDraw(shape, X, Y, size);
         pen.draw();
+		jp.repaint();
 	}
 	
 	private void displayAnswer(Shape shape) {
