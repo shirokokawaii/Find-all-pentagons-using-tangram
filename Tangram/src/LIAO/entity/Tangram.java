@@ -6,9 +6,6 @@ import LIAO.Shape;
 public class Tangram {
     public static final Point s = new Point(2, 1d);
 
-
-
-
     public static final CircleList<Point> p0 = new CircleList<Point>(){
         {
             add(new Point(1, 2d));

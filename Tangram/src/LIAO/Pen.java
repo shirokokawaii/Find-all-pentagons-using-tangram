@@ -87,7 +87,8 @@ public class Pen{// usage:First create an object of pen, then call the method "d
 
     public void draw() {
         int index = 0;
-        for(int count=0;count<150;count++) {
+        jpanel.repaint();
+        for(int count=0;count<10;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
