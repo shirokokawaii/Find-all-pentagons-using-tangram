@@ -49,7 +49,6 @@ public class Algorithm {
 			long timeNow = System.currentTimeMillis();
 			System.out.println((count - 1) + ":" + angleSet + " " + (timeNow - time) / 1000 + "s");
 		}
-		// here needs to draw and display the answer shape*****
 	}
 
 	public LinkedList<LinkedList<Shape>> getAnswerList() {
@@ -82,7 +81,7 @@ public class Algorithm {
 			HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 			System.out.println("Adding " + (i + 1) + "st shape");
 			LinkedList<Shape> set2 = new LinkedList<Shape>();
-			Long time1 = System.currentTimeMillis();
+			//Long time1 = System.currentTimeMillis();
 			while (!set1.isEmpty()) {
 				Shape order = set1.poll();
 				for (int j = 0; j < 6; j++) {
@@ -90,6 +89,7 @@ public class Algorithm {
 						set2.addAll(Connector.connectAll(order, s[j]));
 					}
 				}
+				order.shapesSet.clear();
 			}
 			while (!set2.isEmpty()) {
 				Shape shape = set2.poll();
@@ -122,7 +122,6 @@ public class Algorithm {
 					LinkedList<Shape> tem = new LinkedList<>();
 					tem.add(shape);
 					angleSetMap.put(angleSetTem, tem);
-//					angleSetMap.put(angleSetTem, 0);
 					set1.offer(shape);
 				} else {
 					if (i == 5) {
@@ -162,8 +161,8 @@ public class Algorithm {
 					set1.offer(shape);
 				}
 			}
-			Long time3 = System.currentTimeMillis();
-			System.out.println("time:" + (time3 - time1) + "ms");
+			//Long time3 = System.currentTimeMillis();
+			//System.out.println("time:" + (time3 - time1) + "ms");
 		}
 		while (!set1.isEmpty()) {
 			displayAnswer(set1.poll());
@@ -204,7 +203,7 @@ public class Algorithm {
 							if (newShape != null) {
 								newShape.skip = shape.skip;
 								newShape = Connector.delete4(newShape);
-								int acuracy = 2;
+								int acuracy = 0;
 								if(newShape.points.size() <3){
 									continue;
 								}
@@ -291,7 +290,7 @@ public class Algorithm {
 	private void aStarAlgorithm(Shape shape) {
 		if (shape.shapesSet.size() == 7) {
 			String tem = getAngleList(shape);
-			System.out.println(checkAngle(shape));
+			//System.out.println(checkAngle(shape));
 			if (!answerSetNotEqual.containsKey(tem)) {
 				answerSetNotEqual.put(tem, 0);
 				displayAnswer(shape);
@@ -481,15 +480,18 @@ public class Algorithm {
 				angleList[i] += ((shape.getAngel(j % len)) * Math.pow(10, len - j + i) + shape.getLength(j));
 			}
 		}
-		for (int i = 0; i < len - 1; i++) {
-			for (int j = 0; j < len - i - 1; j++) {
-				if (angleList[j] > angleList[j + 1]) {
-					int tem = angleList[j + 1];
-					angleList[j + 1] = angleList[j];
-					angleList[j] = tem;
-				}
-			}
-		}
+		// for (int i = 0; i < len - 1; i++) {
+		// 	for (int j = 0; j < len - i - 1; j++) {
+		// 		if (angleList[j] > angleList[j + 1]) {
+		// 			int tem = angleList[j + 1];
+		// 			angleList[j + 1] = angleList[j];
+		// 			angleList[j] = tem;
+		// 		}
+		// 	}
+		// }
+		int[] arr = new int[angleList.length];
+		mergeSort(angleList, 0, angleList.length-1, arr);
+
 		for (int i = 0; i < len; i++) {
 			int tem = angleList[i];
 			String str = Integer.toString(tem);
@@ -498,135 +500,40 @@ public class Algorithm {
 		return answer;
 	}
 
-	public boolean hasSame(Shape shape) {
-		int angle = 0;
-		for (int j = 4; j >= 0; j--) {
-			angle += ((shape.points.get(j).getAngle()) * Math.pow(10, j))+ shape.getLength(j);
-		}
-		int[] angleList = new int[5];
-		if (hasSameMap.containsKey(angle)) {
-			return true;
-		} else {
-			for (int i = 0; i < 5; i++) {
-				for (int j = i; j < 5 + i; j++) {
-					angleList[i] += ((shape.points.get(j % 5).getAngle()) * Math.pow(10, 5 - j + i))+ shape.getLength(j);
-				}
-			}
-			for (int i = 0; i < 5; i++) {
-				hasSameMap.put(angleList[i], 0);
-			}
-			return false;
-		}
-	}
-
-//	public String getAngleListReverse1(Shape shape) {
-//	String answer = new String();
-//	int len = shape.points.size();
-//	int[] angleList = new int[len];
-//	for(int i=0;i<len;i++) {
-//		for(int j=i;j<len+i;j++) {
-//			angleList[i] += (shape.getAngel(j%len)+shape.getLength(j%len))*Math.pow(10, len-j+i);
-//		}
-//	}
-//	for(int i=0;i<len-1;i++) {
-//		for(int j=0;j<len-i-1;j++) {
-//			if(angleList[j]>angleList[j+1]) {
-//				int tem = angleList[j+1];
-//				angleList[j+1] = angleList[j];
-//				angleList[j] = tem;
-//			}
-//		}
-//	}
-//	for(int i=0;i<len;i++) {
-//		int tem = angleList[i];
-//		String str = Integer.toString(tem);
-//		answer = answer + str ;
-//	}
-//	return answer;
-//}
-//	
-//	public String getAngleListReverse2(Shape shape) {
-//	String answer = new String();
-//	int len = shape.points.size();
-//	int[] angleList = new int[len];
-//	for(int i=0;i<len;i++) {
-//		for(int j=len+len-1-i;j>len-i-1;j--) {
-//			angleList[i] += (shape.getAngel(j%len)+shape.getLength((j-1)%len))*Math.pow(10, j-len+i);
-//		}
-//	}
-//	for(int i=0;i<len-1;i++) {
-//		for(int j=0;j<len-i-1;j++) {
-//			if(angleList[j]>angleList[j+1]) {
-//				int tem = angleList[j+1];
-//				angleList[j+1] = angleList[j];
-//				angleList[j] = tem;
-//			}
-//		}
-//	}
-//	for(int i=0;i<len;i++) {
-//		int tem = angleList[i];
-//		answer += Integer.toString(tem);
-//	}
-//	return answer;
-//}
-    public static void main(String[] args) {
-
-//        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
-//        int[] temp = new int[arr.length];
-//        mergeSort(arr, 0, 7, temp);
-//        System.out.println(Arrays.toString(arr));
-
-        int[] arr = new int[80000];
-        int[] temp = new int[arr.length];
-        for (int i = 0; i < 80000; i++) {
-            arr[i] = (int) (Math.random()*80000);
-        }
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-        Date date = new Date();
-        String dateString = format.format(date);
-        System.out.println("排序前的时间：" + dateString);
-
-        mergeSort(arr, 0, 79999, temp);
-
-        Date date1 = new Date();
-        String dateString1 = format.format(date1);
-        System.out.println("排序前的时间：" + dateString1);
-    }
-
-    //分治排序
+	// public boolean hasSame(Shape shape) {
+	// 	int angle = 0;
+	// 	for (int j = 4; j >= 0; j--) {
+	// 		angle += ((shape.points.get(j).getAngle()) * Math.pow(10, j))+ shape.getLength(j);
+	// 	}
+	// 	int[] angleList = new int[5];
+	// 	if (hasSameMap.containsKey(angle)) {
+	// 		return true;
+	// 	} else {
+	// 		for (int i = 0; i < 5; i++) {
+	// 			for (int j = i; j < 5 + i; j++) {
+	// 				angleList[i] += ((shape.points.get(j % 5).getAngle()) * Math.pow(10, 5 - j + i))+ shape.getLength(j);
+	// 			}
+	// 		}
+	// 		for (int i = 0; i < 5; i++) {
+	// 			hasSameMap.put(angleList[i], 0);
+	// 		}
+	// 		return false;
+	// 	}
+	// }
+	
     public static void mergeSort(int[] arr, int left, int right, int[] temp){
-        //递归，将数组逐步分成单个数，再将逐步其合并排序
-        //在数组内部将数组分成单个数的数组
         if (left < right){
-            int mid = (left + right) / 2;//中间位置的索引
-
-            //向左递归分解
+            int mid = (left + right) / 2;
             mergeSort(arr, left, mid, temp);
-            //向右递归分解
             mergeSort(arr, mid + 1, right, temp);
-
-            //每次分完过后，将其合并排序
             merge(arr, left, mid, right, temp);
         }
 
     }
-
-
-    /**
-     * 合并方法
-     * @param arr 排序数组
-     * @param left 左边数组的起始索引
-     * @param mid  左边数组的结束索引
-     * @param right 右边数组的结束索引
-     * @param temp 辅助数组 用来储存合并的数组
-     */
     public static void merge(int[] arr, int left, int mid, int right, int[] temp){
-        int i = left;//左边数组的起始下标
-        int j = mid + 1;//右边数组的起始索引
-        int t = 0;//temp数组的下标
-
-        //1、比较两个数组中值，将较小的数放入temp数组
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
         while (i <= mid && j <= right){
             if (arr[i] <= arr[j]){
                 temp[t] = arr[i];
@@ -638,8 +545,6 @@ public class Algorithm {
                 j++;
             }
         }
-
-        //2、将剩余数依次添加到数组中
         while (i <= mid){
             temp[t] = arr[i];
             t++;
@@ -652,9 +557,8 @@ public class Algorithm {
             j++;
         }
 
-        //3、将合并好的数组复制回原数组中
-        t = 0;//从temp数组的开头开始复制
-        int tempLeft = left;//需要复制回的原数组的下标
+        t = 0;
+        int tempLeft = left;
 
         while (tempLeft <= right){
             arr[tempLeft] = temp[t];
@@ -662,8 +566,4 @@ public class Algorithm {
             tempLeft++;
         }
     }
-
-
-
-
 }
