@@ -36,11 +36,5 @@ public class Test {
                  System.out.println(i+" "+j);
         	 }
          }
-        Shape shape = new Shape();
-        LinkedList<Shape> s= Connector.connectAll(S5, S3);
-       Pen pen = new Pen(jf, jp);
-       pen.beforeDraw(s.get(0), 300, 300, 50);
-       pen.draw();
-
     }
 }

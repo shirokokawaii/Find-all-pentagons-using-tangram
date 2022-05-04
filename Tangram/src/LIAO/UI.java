@@ -47,7 +47,7 @@ public class UI {
 		rf.add(panel);
 		
 		JLabel now = new JLabel(String.valueOf(n));
-		now.setBounds(870, 769, 50, 20);
+		now.setBounds(860, 769, 50, 20);
 		now.setFont(new Font("DejaVu Sans Mono", 1, 20));
 		JLabel l = new JLabel("/");
 		l.setBounds(910, 769, 20, 20);
@@ -61,11 +61,11 @@ public class UI {
 		kind.setFont(new Font("DejaVu Sns Mono", 1, 20));
 		JComboBox<String> type = new JComboBox<String>();
 		type.setBounds(15, 195, 135, 30);
-		type.addItem("   --Please choose--");
+		type.addItem("   All pentagon");
 		type.addItem("   Convex pentagon"); // 凸
 		type.addItem("   Concave pentagon");
 		type.addActionListener((e) -> {
-			shapek = method.getSelectedIndex();
+			shapek = type.getSelectedIndex();
 		});
 		JLabel alg = new JLabel("Search Method：");
 		alg.setBounds(15, 265, 200, 20);
@@ -81,33 +81,16 @@ public class UI {
 		method.addActionListener((e) -> {
 			int index = method.getSelectedIndex();
 			if (index == 1) {
-//            	algorithm.dfsSearch();
 				way = 1;
-//            	algorithm.displayWhileCalculating(rf, panel,260,350,100);
-//            	answerList = algorithm.getAnswerList();
-//            	t = answerList.size();
-//            	total.setText(String.valueOf(t));
 			}
 			if (index == 2) {
-//            	algorithm.bfsSearch();
 				way = 2;
-//            	answerList = algorithm.getAnswerList();
-//            	t = answerList.size();
-//            	total.setText(String.valueOf(t));
 			}
 			if (index == 3) {
-//            	algorithm.aStarSearch();
 				way = 3;
-//            	answerList = algorithm.getAnswerList();
-//            	t = answerList.size();
-//            	total.setText(String.valueOf(t));
 			}
 			if (index == 4) {
-//            	algorithm.aStarSearch();//***************************************
 				way = 4;
-//            	answerList = algorithm.getAnswerList();
-//            	t = answerList.size();
-//            	total.setText(String.valueOf(t));
 			}
 		});
 
@@ -115,12 +98,13 @@ public class UI {
 		button1.setBounds(15, 700, 135, 35);
 		button1.setText("Different ways");
 		button1.addActionListener((e) -> {
-			now.setText(String.valueOf(n+"-"+answerList.get(n).size()));
-			Pen pen = new Pen(rf, panel);
-			now.setText(String.valueOf(n));
-			pen.beforeDraw(answerList.get(n).get(k%answerList.get(n).size()), 260, 350, 60);
-			k++;
-			pen.draw();
+			if(answerList.get(n).size() !=1) {
+				Pen pen = new Pen(rf, panel);
+				pen.beforeDraw(answerList.get(n).get(k%answerList.get(n).size()), 260, 350, 60);
+				pen.draw();
+				k++;
+			}
+
 		});
 
 		button2 = new JButton();
@@ -152,13 +136,42 @@ public class UI {
 		button4.setBounds(980, 765, 75, 25);
 		button4.setText("Next");
 		button4.addActionListener((e) -> {
-				Pen pen = new Pen(rf, panel);
-				pen.beforeDraw(answerList.get(n%answerList.size()).get(0), 260, 350, 60);
-				k=0;
-				pen.draw();
-				n++;
-				now.setText(String.valueOf(n%answerList.size()));
-		});
+			Shape shape;
+				if(shapek == 1) {
+					int index=0;
+					n--;
+					while(index<5) {
+						n++;
+						shape = answerList.get(n%answerList.size()).get(0);
+						index=0;
+						for(int i=0;i<shape.size();i++) {
+							if(shape.getAngel(i)<4) {
+								index++;
+							}
+						}
+					}
+				}
+				if(shapek == 2) {
+					int index=5;
+					n--;
+					while(index==5) {
+						n++;
+						shape = answerList.get(n%answerList.size()).get(0);
+						index=0;
+						for(int i=0;i<shape.size();i++) {
+							if(shape.getAngel(i)<4) {
+								index++;
+							}
+						}
+					}
+				}
+					Pen pen = new Pen(rf, panel);
+					pen.beforeDraw(answerList.get(n%answerList.size()).get(0), 260, 350, 60);
+					k=0;
+					pen.draw();
+					n++;
+					now.setText(String.valueOf(n%answerList.size()+"-"+answerList.get(n%answerList.size()).size()));
+					});
 
 		rf.getContentPane().add(title, null);
 		rf.getContentPane().add(group, null);
