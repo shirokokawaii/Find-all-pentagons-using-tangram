@@ -83,10 +83,9 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
         }
     }
 
-    public void draw(boolean drawInfinitly) {
-    	this.drawInfinitly = drawInfinitly;
+    public void draw() {
         int index = 0;
-        for(int count=0;count<10;count++) {
+        for(int count=0;count<100;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();

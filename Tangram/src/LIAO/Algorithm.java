@@ -5,6 +5,9 @@ import static LIAO.entity.Tangram.S7;
 
 import java.util.*;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 public class Algorithm {
 	public Algorithm(Shape s0, Shape s1, Shape s2, Shape s3, Shape s4, Shape s5, Shape s6, Shape s7) {
 		this.s[0] = s0;
@@ -23,10 +26,29 @@ public class Algorithm {
 	LinkedList<LinkedList<Shape>> answerSet = new LinkedList<>();
 	HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
 	HashMap<String, Integer> hs = new HashMap<>();
-	//HashMap<Integer, Integer> hasSameMap = new HashMap<>();
+	JFrame jf = null; 
+	JPanel jp = null;
+	int X = 0;
+	int Y = 0;
+	int size = 0;
 	int count = 0;
 	int different = 0;
-
+	
+	void displayWhileCalculating(JFrame jf, JPanel jp, int X, int Y, int size) {
+		this.jf = jf;
+		this.jp = jp;
+		this.X = X;
+		this.Y = Y;
+		this.size = size;
+	}
+	
+	private void draw(Shape shape) {
+        jp.repaint();
+        Pen pen1 = new Pen(jf, jp);
+        pen1.beforeDraw(shape, X, Y, size);
+        pen1.draw();
+	}
+	
 	private void displayAnswer(Shape shape) {
 		if (shape.points.size() == 5) {
 			String angleList = getAngleList(shape);
@@ -40,10 +62,16 @@ public class Algorithm {
 				LinkedList<Shape> tem = new LinkedList<>();
 				tem.add(shape);
 				answerSet.add(tem);
+				if(jp != null) {
+					draw(shape);
+				}
 				answerIndex++;
 			} else {
 				int tem = hs.get(angleList);
 				answerSet.get(tem).add(shape);
+				if(jp != null) {
+					draw(shape);
+				}
 			}
 			LinkedList<Integer> angleSet = checkAngle(shape);
 			count++;
@@ -220,10 +248,10 @@ public class Algorithm {
 									continue;
 								}
 								if (j == 1) {
-									if (newShape.contains(s[5]) && newShape.points.size() > 17 - (acuracy*2)) {
+									if (newShape.contains(s[5]) && newShape.points.size() > 17 - (acuracy*2+2)) {
 										continue;
 									}
-									if (!newShape.contains(s[5]) && newShape.points.size() > 18 - (acuracy*2)) {
+									if (!newShape.contains(s[5]) && newShape.points.size() > 18 - (acuracy*2+2)) {
 										continue;
 									}
 								}
@@ -343,10 +371,10 @@ public class Algorithm {
 						continue;
 					}
 					if (i == 1) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 17 - (acuracy*2)) {
+						if (shape1.contains(s[5]) && shape1.points.size() > 17 - (acuracy*3)) {
 							continue;
 						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 18 - (acuracy*2)) {
+						if (!shape1.contains(s[5]) && shape1.points.size() > 18 - (acuracy*3)) {
 							continue;
 						}
 					}
@@ -544,26 +572,7 @@ public class Algorithm {
 		return answer;
 	}
 
-	// public boolean hasSame(Shape shape) {
-	// 	int angle = 0;
-	// 	for (int j = 4; j >= 0; j--) {
-	// 		angle += ((shape.points.get(j).getAngle()) * Math.pow(10, j))+ shape.getLength(j);
-	// 	}
-	// 	int[] angleList = new int[5];
-	// 	if (hasSameMap.containsKey(angle)) {
-	// 		return true;
-	// 	} else {
-	// 		for (int i = 0; i < 5; i++) {
-	// 			for (int j = i; j < 5 + i; j++) {
-	// 				angleList[i] += ((shape.points.get(j % 5).getAngle()) * Math.pow(10, 5 - j + i))+ shape.getLength(j);
-	// 			}
-	// 		}
-	// 		for (int i = 0; i < 5; i++) {
-	// 			hasSameMap.put(angleList[i], 0);
-	// 		}
-	// 		return false;
-	// 	}
-	// }
+
 	
     public static void mergeSort(int[] arr, int left, int right, int[] temp){
         if (left < right){
