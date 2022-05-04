@@ -1,138 +1,193 @@
-package tangram;
+package LIAO;
 
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-/*
- * load path填写/img(如果图片在img下）
- * */
-
+import java.awt.*;
+import java.util.LinkedList;
+import static LIAO.entity.Tangram.*;
+import javax.swing.*;
 
 public class UI {
 	JLabel plabel, title, group, kind, alg, load;
 	JPanel panel;
 	JComboBox<String> type, method;
 	JTextField path;
+	//static JTextArea console;
 	JButton button1, button2, button3, button4;
-	
-	int left,top;
-	int x,y;
-	int n = 1;
-	
+	Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
+	LinkedList<LinkedList<Shape>> answerList = new LinkedList<>();
+	int way = 0;
+	JPanel[] p = new JPanel[100];
+	int left, top;
+	int x, y, k;
+	int n = 1, shapek = 0, t = 100;
+
 	public void CreateUI() {
-		JFrame rf=new JFrame("Tangram Solver");
-		rf.setBounds(100,100,770,700);
+		JFrame rf = new JFrame("Tangram Solver");
+		rf.setBounds(100, 100, 1400, 1080);
 		rf.setLocationRelativeTo(null);
-		rf.setResizable(false);
 		rf.getContentPane().setLayout(null);
 		rf.setBackground(Color.white);
-		
+		rf.setLayout(null);
+		rf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		JLabel title = new JLabel();
-		title.setBounds(170,10,500,85);
+		title.setBounds(10, 1, 500, 85);
 		title.setForeground(Color.black);
-		title.setFont(new Font("TimesRoman",1,40));
+		title.setFont(new Font("TimesRoman", 1, 40));
 		title.setText("SE360 Tangram Solver");
-		
+
 		JLabel group = new JLabel();
-		group.setBounds(164,58,700,85);
+		group.setBounds(10, 58, 700, 85);
 		group.setForeground(Color.black);
-		group.setFont(new Font("TimesRoman",1,15));
+		group.setFont(new Font("TimesRoman", 1, 15));
 		group.setText("Group 12: Liao Weiyu, Yao Tianyi, Yu Mengke, Fu Zhanchao");
+
+		panel = new JPanel();
+		panel.setBounds(511, 10, 750, 750);
+		panel.setBackground(Color.white);
+		panel.setVisible(true);
+		rf.add(panel);
 		
-        panel = new JPanel();
-		panel.setBounds(240, 145, 480, 480);
-		JLabel plabel = new JLabel();
-		plabel.setBounds(240, 145, 480, 480);
-		panel.add(plabel);
+		JLabel now = new JLabel(String.valueOf(n));
+		now.setBounds(870, 769, 50, 20);
+		now.setFont(new Font("DejaVu Sans Mono", 1, 20));
+		JLabel l = new JLabel("/");
+		l.setBounds(910, 769, 20, 20);
+		l.setFont(new Font("DejaVu Sans Mono", 1, 20));
+		JLabel total = new JLabel("???");
+		total.setBounds(920, 769, 50, 20);
+		total.setFont(new Font("DejaVu Sans Mono", 1, 20));
+
+		JLabel kind = new JLabel("Pentagonal Type：");
+		kind.setBounds(15, 162, 200, 25);
+		kind.setFont(new Font("DejaVu Sns Mono", 1, 20));
+		JComboBox<String> type = new JComboBox<String>();
+		type.setBounds(15, 195, 135, 30);
+		type.addItem("   --Please choose--");
+		type.addItem("   Convex pentagon"); // 凸
+		type.addItem("   Concave pentagon");
+		type.addActionListener((e) -> {
+			shapek = method.getSelectedIndex();
+		});
+		JLabel alg = new JLabel("Search Method：");
+		alg.setBounds(15, 265, 200, 20);
+		alg.setFont(new Font("DejaVu Sans Mono", 1, 20));
+		JComboBox<String> method = new JComboBox<String>();
+		method.setBounds(15, 295, 135, 30);
+		method.addItem("   --Please choose--");
+		method.addItem("              DFS");
+		method.addItem("              BFS");
+		method.addItem("                A*");
+		method.addItem("              ida*");
+		// 监听
+		method.addActionListener((e) -> {
+			int index = method.getSelectedIndex();
+			if (index == 1) {
+//            	algorithm.dfsSearch();
+				way = 1;
+//            	algorithm.displayWhileCalculating(rf, panel,260,350,100);
+//            	answerList = algorithm.getAnswerList();
+//            	t = answerList.size();
+//            	total.setText(String.valueOf(t));
+			}
+			if (index == 2) {
+//            	algorithm.bfsSearch();
+				way = 2;
+//            	answerList = algorithm.getAnswerList();
+//            	t = answerList.size();
+//            	total.setText(String.valueOf(t));
+			}
+			if (index == 3) {
+//            	algorithm.aStarSearch();
+				way = 3;
+//            	answerList = algorithm.getAnswerList();
+//            	t = answerList.size();
+//            	total.setText(String.valueOf(t));
+			}
+			if (index == 4) {
+//            	algorithm.aStarSearch();//***************************************
+				way = 4;
+//            	answerList = algorithm.getAnswerList();
+//            	t = answerList.size();
+//            	total.setText(String.valueOf(t));
+			}
+		});
 		
-        JLabel kind=new JLabel("Pentagonal Types：");   
-        kind.setBounds(15,162,200,25);
-        kind.setFont(new Font("DejaVu Sans Mono",1,20));
-        JComboBox<String> type=new JComboBox<String>();   
-        type.setBounds(15,195,135,20);
-        type.addItem("   --Please choose--"); 
-        type.addItem("   Convex pentagon"); //凸
-        type.addItem("   Concave pentagon");
-        
-        JLabel alg=new JLabel("Search Method：");   
-        alg.setBounds(15,265,200,20);
-        alg.setFont(new Font("DejaVu Sans Mono",1,20));
-        JComboBox<String> method=new JComboBox<String>();   
-        method.setBounds(15,295,135,20);
-        method.addItem("   --Please choose--"); 
-        method.addItem("              DFS"); 
-        method.addItem("              BFS");
-        method.addItem("                A*");
-        
-        JLabel load=new JLabel("Load from path：");   
-        load.setBounds(15,365,200,20);
-        load.setFont(new Font("DejaVu Sans Mono",1,20));
-        JTextField path=new JTextField();
-        path.setBounds(15,396,135,20);
-        
+		//JTextArea console= new JTextArea();
+		//console.setFont(new Font("DejaVu Sans Mono", 1, 18));
+	    //JScrollPane jsp = new JScrollPane(console);
+        //jsp.setBounds(15, 400, 400, 260);
+	    //jsp.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		button1 = new JButton();
-        button1.setBounds(15,549,90,27);
-        button1.setText("Load");
-        button1.addActionListener((e)->{
-        	String img = path.getText().toString();
-        	plabel.setIcon(new ImageIcon(UI.class.getResource(img+"/1.jpg")));
-        	System.out.println(img+"/1.jpg");
-        });
-        
-        button2 = new JButton();
-        button2.setBounds(15,598,90,27);
-        button2.setText("Solve");
-        button2.addActionListener((e)->{
-    		
-        });
-        
-        button3 = new JButton();
-        button3.setBounds(555,630,75,25);
-        button3.setText("Return");
-        button3.addActionListener((e)->{
-    		if(n==1) {
-    			;
-    		}else {
-    			n--;
-    			String img = path.getText().toString();
-            	plabel.setIcon(new ImageIcon(UI.class.getResource(img+"/"+n+".jpg")));
-    		}
-        });
-        
-        button4 = new JButton();
-        button4.setBounds(645,630,75,25);
-        button4.setText("Next");
-        button4.addActionListener((e)->{
-    		if(n==55) {
-    			;
-    		}else {
-    			n++;
-    			String img = path.getText().toString();
-            	plabel.setIcon(new ImageIcon(UI.class.getResource(img+"/"+n+".jpg")));
-    		}
-        });
-        
-        rf.getContentPane().add(title,null);
-        rf.getContentPane().add(group,null);
-        rf.getContentPane().add(panel,null);
-        rf.getContentPane().add(kind,null);
-        rf.getContentPane().add(type,null);
-        rf.getContentPane().add(alg,null);
-        rf.getContentPane().add(method,null);
-        rf.getContentPane().add(load,null);
-        rf.getContentPane().add(path,null);
-        rf.getContentPane().add(button1,null);
-        rf.getContentPane().add(button2,null);
-        rf.getContentPane().add(button3,null);
-        rf.getContentPane().add(button4,null);
-        rf.setVisible(true);
+		button1.setBounds(15, 700, 135, 35);
+		button1.setText("Different ways");
+		button1.addActionListener((e) -> {
+			now.setText(String.valueOf(n+"-"+answerList.get(n).size()));
+			Pen pen = new Pen(rf, panel);
+			now.setText(String.valueOf(n));
+			pen.beforeDraw(answerList.get(n).get(k%answerList.get(n).size()), 260, 350, 60);
+			k++;
+			pen.draw();
+		});
+
+		button2 = new JButton();
+		button2.setBounds(15, 750, 135, 35);
+		button2.setText("Solve");
+		button2.addActionListener((e) -> {
+			algorithm.displayWhileCalculating(rf, panel, 260, 350, 60);
+			if (way == 0) {
+				total.setText("Please choose a solve approach before start");
+			}
+			if (way == 1) {
+				algorithm.dfsSearch();
+				
+			}
+			if (way == 2) {
+				algorithm.bfsSearch();
+			}
+			if (way == 3) {
+				algorithm.aStarSearch();
+			}
+			if (way == 4) {
+				answerList = IDA.idaStar();// ***************************************
+			}
+			if(way==1||way==2||way==3) {
+			    answerList = algorithm.getAnswerList();
+			}
+			t = answerList.size();
+			total.setText(String.valueOf(t));
+		});
+
+		button4 = new JButton();
+		button4.setBounds(980, 765, 75, 25);
+		button4.setText("Next");
+		button4.addActionListener((e) -> {
+				Pen pen = new Pen(rf, panel);
+				pen.beforeDraw(answerList.get(n%answerList.size()).get(0), 260, 350, 60);
+				k=0;
+				pen.draw();
+				n++;
+				now.setText(String.valueOf(n%answerList.size()));
+		});
+
+		rf.getContentPane().add(title, null);
+		rf.getContentPane().add(group, null);
+		rf.getContentPane().add(panel, null);
+		rf.getContentPane().add(kind, null);
+		rf.getContentPane().add(type, null);
+		rf.getContentPane().add(alg, null);
+		rf.getContentPane().add(method, null);
+		rf.getContentPane().add(button1, null);
+		rf.getContentPane().add(button2, null);
+		// rf.getContentPane().add(button3,null);
+		rf.getContentPane().add(button4, null);
+		rf.getContentPane().add(now, null);
+		rf.getContentPane().add(total, null);
+		rf.getContentPane().add(l, null);
+		//rf.getContentPane().add(jsp, null);
+		rf.setVisible(true);
 	}
+
 	public static void main(String[] args) {
 		new UI().CreateUI();
 	}
