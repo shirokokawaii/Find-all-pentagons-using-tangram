@@ -34,6 +34,10 @@ public class Algorithm {
 	int count = 0;
 	int different = 0;
 	
+	public void MessageBack(Jtext jt) {
+		
+	}
+	
 	void displayWhileCalculating(JFrame jf, JPanel jp, int X, int Y, int size) {
 		this.jf = jf;
 		this.jp = jp;
