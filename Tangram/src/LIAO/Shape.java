@@ -6,6 +6,7 @@ import LIAO.entity.Point;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class Shape {
@@ -22,10 +23,13 @@ public class Shape {
     LinkedList<Shape> shapeList = new LinkedList<>();
     double skip = 0;
 
+    HashSet<String> linkset = new HashSet<>();
     LinkedList<Shape> debugShapeSet = new LinkedList<>();
     LinkedList<Integer> debugPointOrderA = new LinkedList<>();
     LinkedList<Integer> debugPointOrderB = new LinkedList<>();
     LinkedList<Boolean> debugDirection = new LinkedList<>();
+
+    char name;
 
     public Shape() {
     }
@@ -60,6 +64,11 @@ public class Shape {
         this.points = point;
     }
 
+    public Shape(CircleList<Point> point, char name) {
+        this.points = point;
+        this.name = name;
+    }
+
     public void addShape(Shape shape) {
         shapesSet.offer(shape);
     }
@@ -83,6 +92,8 @@ public class Shape {
     public int getAngel(int n) {
         return points.get(n).getAngle();
     }
+
+    public char getShapeName(){return name;}
 
     public char getName(int n){
         return points.get(n).getName();

@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="fastjson-1.2.59" level="project" />
+    <orderEntry type="library" name="org.springframework.core-3.0.6.release" level="project" />
   </component>
 </module>

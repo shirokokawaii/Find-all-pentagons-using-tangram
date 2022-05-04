@@ -2,15 +2,21 @@ package LIAO.entity;
 
 
 import LIAO.Shape;
+import LIAO.entity.CircleList;
+import LIAO.entity.Point;
 
-public class Tangram {
-    public static final Point s = new Point(2, 1d);
+public class TestTang {
+
+    public static final Point A = new Point('A', 1, 2d);
+    public static final Point B = new Point('B', 2, 2d);
+    public static final Point C = new Point('C', 1, 2*Math.sqrt(2));
+
 
     public static final CircleList<Point> p0 = new CircleList<Point>(){
         {
-            add(new Point(1, 2d));
-            add(new Point(2, 2d));
-            add(new Point(1, 2*Math.sqrt(2)));
+            add(A);
+            add(B);
+            add(C);
         }
     };
 
@@ -22,19 +28,27 @@ public class Tangram {
         }
     };
 
+    public static final Point D = new Point('D', 1, 2d);
+    public static final Point E = new Point('E', 1, Math.sqrt(2));
+    public static final Point F = new Point('F', 2, Math.sqrt(2));
+
     public static final CircleList<Point> p2 = new CircleList<Point>(){
         {
-            add(new Point(1, 2d));
-            add(new Point(1, Math.sqrt(2)));
-            add(new Point(2, Math.sqrt(2)));
+            add(D);
+            add(E);
+            add(F);
         }
     };
 
+    public static final Point G = new Point('G', 1, 1d);
+    public static final Point H = new Point('H', 2, 1d);
+    public static final Point I = new Point('I', 1, Math.sqrt(2));
+
     public static final CircleList<Point> p3 = new CircleList<Point>(){
         {
-            add(new Point(1, 1d));
-            add(new Point(2, 1d));
-            add(new Point(1, Math.sqrt(2)));
+            add(G);
+            add(H);
+            add(I);
         }
     };
 
@@ -46,21 +60,32 @@ public class Tangram {
         }
     };
 
+    public static final Point s = new Point('J', 2, 1d);
+    public static final Point J = new Point('J', 2, 1d);
+    public static final Point K = new Point('K', 2, 1d);
+    public static final Point L = new Point('L', 2, 1d);
+    public static final Point M = new Point('M', 2, 1d);
+
     public static final CircleList<Point> p5 = new CircleList<Point>(){
         {
-            add(s);
-            add(s);
-            add(s);
-            add(s);
+            add(J);
+            add(K);
+            add(L);
+            add(M);
         }
     };
 
+    public static final Point N = new Point('N', 1, 1d);
+    public static final Point O = new Point('O', 3, Math.sqrt(2));
+    public static final Point P = new Point('P', 1, 1d);
+    public static final Point Q = new Point('Q', 3, Math.sqrt(2));
+
     public static final CircleList<Point> p6 = new CircleList<Point>(){
         {
-            add(new Point(1, 1d));
-            add(new Point(3, Math.sqrt(2)));
-            add(new Point(1, 1d));
-            add(new Point(3, Math.sqrt(2)));
+            add(N);
+            add(O);
+            add(P);
+            add(Q);
         }
     };
 

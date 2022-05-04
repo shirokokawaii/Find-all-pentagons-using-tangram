@@ -19,11 +19,20 @@ public class Point {
 	// @JSONField(serialize = false)
 	char name;
 
+	char iniName;
+
 	// @JSONCreator
 	public Point(int angle, double length) {
 		this.angle = angle;
 		this.length = length;
 		this.flag = false;
+	}
+
+	public Point(char iniName, int angle, double length) {
+		this.angle = angle;
+		this.length = length;
+		this.flag = false;
+		this.iniName = iniName;
 	}
 
 

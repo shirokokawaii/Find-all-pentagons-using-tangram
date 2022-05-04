@@ -11,14 +11,14 @@ public class Test2 {
     public static void main(String[] args) {
 
 
-        // JFrame jf = new JFrame("图形可视化工具");
+        // JFrame jf = new JFrame("鍥惧舰鍙鍖栧伐鍏�");
         // JPanel jpanel = new JPanel();
         // jf.add(jpanel);
         // jpanel.setSize(1000, 1000);
         // jf.setResizable(false);
-        // jf.setSize(1000, 1000); //设置窗口大小
-        // jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//意思就是设置一个默认的关闭操作，也就是你的JFrame窗口的关闭按钮，点击它时，退出程序。
-        // jf.setVisible(true);// 可视化 显示在屏幕上
+        // jf.setSize(1000, 1000); //璁剧疆绐楀彛澶у皬
+        // jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//鎰忔�濆氨鏄缃竴涓粯璁ょ殑鍏抽棴鎿嶄綔锛屼篃灏辨槸浣犵殑JFrame绐楀彛鐨勫叧闂寜閽紝鐐瑰嚮瀹冩椂锛岄��鍑虹▼搴忋��
+        // jf.setVisible(true);// 鍙鍖� 鏄剧ず鍦ㄥ睆骞曚笂
         // Shape shape = S6;
         // shape.shapesSet.offer(S6);
         // shape.shapesSet.offer(S3);
@@ -29,13 +29,13 @@ public class Test2 {
 //        pen.draw(shape);
 
 
-        JFrame jf = new JFrame("图形可视化工具");
+        JFrame jf = new JFrame("鍥惧舰鍙鍖栧伐鍏�");
         JPanel jpanel = new JPanel();
         jf.add(jpanel);
         jpanel.setSize(600, 600);
-        jf.setSize(600, 600); //设置窗口大小
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//意思就是设置一个默认的关闭操作，也就是你的JFrame窗口的关闭按钮，点击它时，退出程序。
-        jf.setVisible(true);// 可视化 显示在屏幕上
+        jf.setSize(600, 600); //璁剧疆绐楀彛澶у皬
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//鎰忔�濆氨鏄缃竴涓粯璁ょ殑鍏抽棴鎿嶄綔锛屼篃灏辨槸浣犵殑JFrame绐楀彛鐨勫叧闂寜閽紝鐐瑰嚮瀹冩椂锛岄��鍑虹▼搴忋��
+        jf.setVisible(true);// 鍙鍖� 鏄剧ず鍦ㄥ睆骞曚笂
 
 //        AlgorithmTest algorithm = new AlgorithmTest(S0, S1, S2, S3, S4, S5, S6, S7);
 //        LinkedList<Shape> answerList = new LinkedList<>();
@@ -45,8 +45,8 @@ public class Test2 {
 
         Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
         LinkedList<LinkedList<Shape>> answerList = new LinkedList<>();
-        //algorithm.bfsSearch();
-        algorithm.dfsSearch();
+        algorithm.bfsSearch();
+        //algorithm.dfsSearch();
         //algorithm.aStarSearch();
         answerList = algorithm.getAnswerList();
 

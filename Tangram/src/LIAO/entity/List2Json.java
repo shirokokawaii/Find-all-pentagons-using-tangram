@@ -1,5 +1,8 @@
-package LIAO;
+package LIAO.entity;
 
+import LIAO.Connector;
+import LIAO.Pen;
+import LIAO.Shape;
 import LIAO.entity.DrawOutline;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -59,23 +62,6 @@ public class List2Json {
 
         System.out.println("!!"+list);
 
-
-        //list-1
-        JFrame jf = new JFrame("可视化");
-        JPanel jpanel = new JPanel();
-        jf.add(jpanel);
-        jpanel.setSize(500, 500);
-        jf.setResizable(true);
-        jf.setSize(500, 500);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-        DrawOutline p = new DrawOutline(jpanel);
-        Pen pen = new Pen(jf, jpanel);
-        Shape shape = new Shape();
-        shape.shapesSet.offer(list.get(0));
-        pen.beforeDraw(shapes.get(2), 500, 500, 50);
-        pen.draw("X:/javaProject/Find-all-pentagons-using-tangram/Tangram/ima_output/pic.jpg");
-        //p.draw(list.get(44));
 
 
 

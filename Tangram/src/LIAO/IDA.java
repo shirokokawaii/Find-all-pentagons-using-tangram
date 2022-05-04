@@ -2,12 +2,12 @@ package LIAO;
 
 import LIAO.entity.CircleList;
 import LIAO.entity.Point;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.swing.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import static LIAO.entity.Tangram.*;
 
@@ -16,10 +16,16 @@ public class IDA {
 
     static DecimalFormat df = new DecimalFormat("#0.00");
     public static HashMap<String, String> answerMap = new HashMap<>();
+
+    public static HashMap<String, String> relationMap = new HashMap<>();
+    public static MultiValueMap<String, String> containMap = new LinkedMultiValueMap<>();
+
     public static HashSet<String> level1List = new HashSet<>();
-//    public static Shape[] S = new Shape[]{S0, S1, S2, S3, S4, S5};
+
     public static Shape[] S = new Shape[]{S0, S1, S2, S3, S4, S5};
     public static ArrayList<Shape> answer = new ArrayList<>();
+    static int DETH = 20;
+
 
     public static Shape reArrange(Shape shape) {
         CircleList<Point> points = new CircleList<>();
@@ -127,6 +133,31 @@ public class IDA {
         }
     }
 
+    public static boolean containSame(Shape shape) {
+        String contain = getContain(shape);
+        String feature = points2String(reArrange(shape).points);
+        if (containMap == null){
+            containMap.add(contain, feature);
+            return false;
+        } else if ((!containMap.containsKey(contain))||(containMap.containsKey(contain)&&(!containMap.get(contain).contains(feature)))) {
+            containMap.add(contain, feature);
+            return false;
+        }
+        return true;
+    }
+
+    public static String getContain(Shape shape) {
+        ArrayList<Character> charlist = new ArrayList<>();
+        for (int i = 0; i < shape.shapeList.size(); i++) {
+            charlist.add(shape.shapeList.get(i).getShapeName());
+        }
+        charlist.sort(Comparator.naturalOrder());
+        String result = "";
+        for (char c : charlist){
+            result += c;
+        }
+        return result;
+    }
 
     public static void dfs(Shape shape) {
         if (shape == null) {
@@ -137,8 +168,8 @@ public class IDA {
             if(isSame(shape)){
                 return;
             }
-        }else if (level == 4) {
-            if (shape.size() >=18)
+        } else if (level == 4) {
+            if (shape.size() >=20)
                 return;
         } else if (level == 5) {
             if (shape.size() >= 14)
@@ -176,12 +207,124 @@ public class IDA {
 
     }
 
+
+    public static void ida(Shape shape, int deth, HashSet<String> sameCheck) {
+        if (shape == null)
+            return;
+        String feature = points2String(reArrange(shape).points);
+        if(sameCheck == null||(!sameCheck.contains(feature))){
+            sameCheck.add(feature);
+            for(Shape s: S){
+                if(!shape.shapeList.contains(s)){
+                    for(int i = 0; i < shape.size(); i++){
+                        for (int j = 0; j < symCheck(s); j++) {
+                            for (int k = 0; k < 2; k++){
+                                Shape shape1 = Connector.connect(shape, s, i, j, k == 0);
+                                if (shape1 != null)
+                                    ida(Connector.delete4(shape1), deth);
+                                else
+                                    return;
+                            }
+                        }
+                    }
+                }
+            }
+            return;
+        } else {
+            return;
+        }
+    }
+
+
+    public static void ida(Shape shape, int deth) {
+        if (shape == null) {
+            return;
+        }
+
+        int level = shape.shapeList.size();
+        if (level == 2){
+            if (isSame(shape)){
+                return;
+            }
+        }
+//        if (level < 5 && containSame(shape))
+//            return;
+        if (level == 4) {
+            if (shape.size() >= DETH-deth)
+                return;
+
+        } else if (level == 5) {
+            if (shape.size() >= DETH-4-deth)
+                return;
+        } else if (level == 6) {
+            if (shape.size() >= DETH-8-deth)
+                return;
+        }
+        if (level == 7) {
+            if(shape.size() == 5){
+//                if(!hasSame(shape)){
+                answer.add(shape);
+                long timeNow = System.currentTimeMillis();
+                System.out.println(answer.size()+":"+ (timeNow - startTime) / 1000 + "s");
+                //}
+            } else {
+                return;
+            }
+        }
+
+        if (level >= 5) {
+            HashSet<String> feature = new HashSet<>();
+            ida(shape, deth, feature);
+        }
+
+        for(Shape s: S){
+            if(!shape.shapeList.contains(s)){
+                for(int i = 0; i < shape.size(); i++){
+                    for (int j = 0; j < symCheck(s); j++) {
+                        for (int k = 0; k < 2; k++){
+                            Shape shape1 = Connector.connect(shape, s, i, j, k == 0);
+                            if (shape1 != null)
+                                ida(Connector.delete4(shape1), deth);
+                            else
+                                return;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
     static int symCheck(Shape shape) {
         if (shape.size()==4)
             return 1;
         else
             return 3;
     }
+
+    public static ArrayList<Shape> deleteOdd(ArrayList<Shape> shapes) {
+        ArrayList<Shape> delete = new ArrayList<>();
+        for (int i = 0; i < shapes.size(); i+=40){
+            delete.add(shapes.get(i));
+        }
+        return delete;
+    }
+
+
+    public static LinkedList<LinkedList<Shape>> idaStar() {
+        LinkedList<LinkedList<Shape>> result = new LinkedList<>();
+        dfs(S6);
+        dfs(S7);
+        for (Shape s:answer){
+            LinkedList<Shape> tmp = new LinkedList<>();
+            tmp.add(s);
+            result.add(tmp);
+        }
+        return result;
+    }
+
 
     public static void main(String[] args) {
 //        Shape shape = Connector.connect(S0, S7, 0, 0, true);
@@ -205,11 +348,26 @@ public class IDA {
 //        System.out.println(shape.shapeList.contains(S0));
 
 
-
-        dfs(S6);
+        //ida(S7, 3);
         dfs(S7);
+        dfs(S6);
+        for (Shape s:answer){
+            s = reArrange(s);
+        }
 
-        System.out.println(answer);
+        //answer = deleteOdd(answer);
+
+        answer.sort(new Comparator<Shape>() {
+            @Override
+            public int compare(Shape o1, Shape o2) {
+                String feature1 = points2String(reArrange(o1).points);
+                String feature2 = points2String(reArrange(o2).points);
+
+                return feature2.compareTo(feature1);
+            }
+        });
+
+        //System.out.println(deleteOdd(answer));
 
 
 
@@ -225,9 +383,9 @@ public class IDA {
         jf.setVisible(true);
 
         for(int i=0;i<answer.size();i++) {
-                Pen pen = new Pen(jf, jpanel);
+                Pen4idea pen = new Pen4idea(jf, jpanel);
                 pen.beforeDraw(answer.get(i), 300, 300, 50);
-                pen.draw("X:/javaProject/Find-all-pentagons-using-tangram/Tangram/ima_output/pic"+i+"-.jpg");
+                pen.draw("X:/javaProject/Find-all-pentagons-using-tangram/Tangram/ima_output/test/pic"+i+"-.jpg");
                 jpanel.repaint();
                 System.out.println(i+" ");
 
