@@ -1,6 +1,7 @@
 package LIAO;
 
 import static LIAO.entity.Tangram.*;
+
 import java.util.LinkedList;
 import javax.swing.*;
 
@@ -17,10 +18,14 @@ public class Test {
          
          Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
          LinkedList<LinkedList<Shape>> answerList = new LinkedList<>();
-         algorithm.bfsSearch();
+         //algorithm.bfsSearch();
          //algorithm.dfsSearch();
-         //algorithm.aStarSearch();
+         algorithm.aStarSearch();
          answerList = algorithm.getAnswerList();
+//         int len = 0;
+//         for(int i=0;i<answerList.size();i++) {
+//        	 len += answerList.get(i).size();
+//         }
          
          for(int i=0;i<answerList.size();i++) {
         	 for(int j=0;j<answerList.get(i).size();j++) {
@@ -31,5 +36,6 @@ public class Test {
                  System.out.println(i+" "+j);
         	 }
          }
+
     }
 }
