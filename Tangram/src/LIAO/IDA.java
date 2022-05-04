@@ -7,10 +7,7 @@ import org.springframework.util.MultiValueMap;
 
 import javax.swing.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import static LIAO.entity.Tangram.*;
 
@@ -314,6 +311,20 @@ public class IDA {
         }
         return delete;
     }
+
+
+    public static LinkedList<LinkedList<Shape>> idaStar() {
+        LinkedList<LinkedList<Shape>> result = new LinkedList<>();
+        dfs(S6);
+        dfs(S7);
+        for (Shape s:answer){
+            LinkedList<Shape> tmp = new LinkedList<>();
+            tmp.add(s);
+            result.add(tmp);
+        }
+        return result;
+    }
+
 
     public static void main(String[] args) {
 //        Shape shape = Connector.connect(S0, S7, 0, 0, true);
