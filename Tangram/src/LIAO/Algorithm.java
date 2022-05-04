@@ -26,13 +26,12 @@ public class Algorithm {
 	HashMap<Integer, Integer> hasSameMap = new HashMap<>();
 	int count = 0;
 	int different = 0;
-	IDA ida = new IDA();
 
 	private void displayAnswer(Shape shape) {
 		if (shape.points.size() == 5) {
 			String angleList = getAngleList(shape);
 			if (!hs.containsKey(angleList)) {
-				if (hasSame(shape)) {
+				if (IDA.hasSame(shape)) {
 					return;
 				}
 				different++;
