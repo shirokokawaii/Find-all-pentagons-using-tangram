@@ -205,6 +205,9 @@ public class Algorithm {
 								newShape.skip = shape.skip;
 								newShape = Connector.delete4(newShape);
 								int acuracy = 2;
+								if(newShape.points.size() <3){
+									continue;
+								}
 								if (j == 3) {
 									if (newShape.contains(s[5]) && newShape.points.size() > 11 - acuracy) {
 										continue;
@@ -279,13 +282,16 @@ public class Algorithm {
 
 	public void aStarSearch() {
 		time = System.currentTimeMillis();
-		aStarAlgorithm(s[6], answerSetNotEqual);
+		aStarAlgorithm(s[6]);
 		System.out.println("End:" + (System.currentTimeMillis() - time)/1000 +"s");
 	}
 
-	private void aStarAlgorithm(Shape shape, HashMap<String, Integer> answerSetNotEqual) {
+
+
+	private void aStarAlgorithm(Shape shape) {
 		if (shape.shapesSet.size() == 7) {
 			String tem = getAngleList(shape);
+			System.out.println(checkAngle(shape));
 			if (!answerSetNotEqual.containsKey(tem)) {
 				answerSetNotEqual.put(tem, 0);
 				displayAnswer(shape);
@@ -300,11 +306,13 @@ public class Algorithm {
 		for (int i = 0; i < 6; i++) {// 5,6,7,8,9,10,>11
 			if (!shape.contains(s[i])) {
 				set = Connector.connectAll(shape, s[i]);
-				LinkedList<Shape> set1 = new LinkedList<Shape>();
 				HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
 				while (!set.isEmpty()) {
 					Shape shape1 = set.poll();
 					if (shape1 == null) {
+						continue;
+					}
+					if(shape1.points.size() <3){
 						continue;
 					}
 					if (i == 3) {
@@ -333,7 +341,12 @@ public class Algorithm {
 						LinkedList<Shape> tem = new LinkedList<>();
 						tem.add(shape1);
 						angleSetMap.put(angleSetTem, tem);
-						set1.offer(shape1);
+						int cost = Math.abs(5 - shape1.points.size());
+						if (cost > 5) {
+							costSet.get(6).add(shape1);
+						} else {
+							costSet.get(cost).add(shape1);
+						}
 					} else {
 						if (i == 5) {
 							continue;
@@ -369,26 +382,31 @@ public class Algorithm {
 						}
 						tem.add(shape1);
 						angleSetMap.put(angleSetTem, tem);
-						set1.offer(shape1);
+						int cost = Math.abs(5 - shape1.points.size());
+						if (cost > 5) {
+							costSet.get(6).add(shape1);
+						} else {
+							costSet.get(cost).add(shape1);
+						}
 					}
 				}
 
-				while (!set1.isEmpty()) {
-					Shape shapeTem = set1.poll();
-					int cost = Math.abs(5 - shapeTem.points.size());
-					if (cost > 5) {
-						costSet.get(6).add(shapeTem);
-					} else {
-						costSet.get(cost).add(shapeTem);
-					}
-				}
+				// while (!set1.isEmpty()) {
+				// 	Shape shapeTem = set1.poll();
+				// 	int cost = Math.abs(5 - shapeTem.points.size());
+				// 	if (cost > 5) {
+				// 		costSet.get(6).add(shapeTem);
+				// 	} else {
+				// 		costSet.get(cost).add(shapeTem);
+				// 	}
+				// }
 			}
 		}
 		for (int i = 0; i < 7; i++) {// connect the shape from the lowest cost
 			int len = costSet.get(i).size();
 			for (int j = 0; j < len; j++) {
 				Shape shapeTem = costSet.get(i).get(j);
-				aStarAlgorithm(shapeTem, answerSetNotEqual);
+				aStarAlgorithm(shapeTem);
 			}
 		}
 	}
@@ -551,4 +569,101 @@ public class Algorithm {
 //	}
 //	return answer;
 //}
+    public static void main(String[] args) {
+
+//        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
+//        int[] temp = new int[arr.length];
+//        mergeSort(arr, 0, 7, temp);
+//        System.out.println(Arrays.toString(arr));
+
+        int[] arr = new int[80000];
+        int[] temp = new int[arr.length];
+        for (int i = 0; i < 80000; i++) {
+            arr[i] = (int) (Math.random()*80000);
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        Date date = new Date();
+        String dateString = format.format(date);
+        System.out.println("排序前的时间：" + dateString);
+
+        mergeSort(arr, 0, 79999, temp);
+
+        Date date1 = new Date();
+        String dateString1 = format.format(date1);
+        System.out.println("排序前的时间：" + dateString1);
+    }
+
+    //分治排序
+    public static void mergeSort(int[] arr, int left, int right, int[] temp){
+        //递归，将数组逐步分成单个数，再将逐步其合并排序
+        //在数组内部将数组分成单个数的数组
+        if (left < right){
+            int mid = (left + right) / 2;//中间位置的索引
+
+            //向左递归分解
+            mergeSort(arr, left, mid, temp);
+            //向右递归分解
+            mergeSort(arr, mid + 1, right, temp);
+
+            //每次分完过后，将其合并排序
+            merge(arr, left, mid, right, temp);
+        }
+
+    }
+
+
+    /**
+     * 合并方法
+     * @param arr 排序数组
+     * @param left 左边数组的起始索引
+     * @param mid  左边数组的结束索引
+     * @param right 右边数组的结束索引
+     * @param temp 辅助数组 用来储存合并的数组
+     */
+    public static void merge(int[] arr, int left, int mid, int right, int[] temp){
+        int i = left;//左边数组的起始下标
+        int j = mid + 1;//右边数组的起始索引
+        int t = 0;//temp数组的下标
+
+        //1、比较两个数组中值，将较小的数放入temp数组
+        while (i <= mid && j <= right){
+            if (arr[i] <= arr[j]){
+                temp[t] = arr[i];
+                t++;
+                i++;
+            }else {
+                temp[t] = arr[j];
+                t++;
+                j++;
+            }
+        }
+
+        //2、将剩余数依次添加到数组中
+        while (i <= mid){
+            temp[t] = arr[i];
+            t++;
+            i++;
+        }
+
+        while (j <= right){
+            temp[t] = arr[j];
+            t++;
+            j++;
+        }
+
+        //3、将合并好的数组复制回原数组中
+        t = 0;//从temp数组的开头开始复制
+        int tempLeft = left;//需要复制回的原数组的下标
+
+        while (tempLeft <= right){
+            arr[tempLeft] = temp[t];
+            t++;
+            tempLeft++;
+        }
+    }
+
+
+
+
 }
