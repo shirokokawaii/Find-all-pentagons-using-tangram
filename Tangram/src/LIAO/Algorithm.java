@@ -175,9 +175,9 @@ public class Algorithm {
 	public void dfsSearch() {
 		HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
 		time = System.currentTimeMillis();
+		//dfsAlgorithm(s[7], answerSetNotEqual);
+		//System.out.println("50%");
 		dfsAlgorithm(s[6], answerSetNotEqual);
-		System.out.println("50%");
-		dfsAlgorithm(s[7], answerSetNotEqual);
 		System.out.println("End:" + (System.currentTimeMillis() - time) / 1000);
 	}
 
@@ -204,7 +204,7 @@ public class Algorithm {
 							if (newShape != null) {
 								newShape.skip = shape.skip;
 								newShape = Connector.delete4(newShape);
-								int acuracy = 3;
+								int acuracy = 2;
 								if (j == 3) {
 									if (newShape.contains(s[5]) && newShape.points.size() > 11 - acuracy) {
 										continue;
@@ -233,9 +233,6 @@ public class Algorithm {
 									angleSetMapLocal.put(angleSetTem, tem);
 									dfsAlgorithm(newShape, answerSetNotEqual);
 								} else {
-									if (j == 5) {
-										continue;
-									}
 									LinkedList<Shape> tem = angleSetMapLocal.get(angleSetTem);// tem:The shape that has
 																								// same angleSet
 									int len = tem.size();
@@ -283,9 +280,7 @@ public class Algorithm {
 	public void aStarSearch() {
 		time = System.currentTimeMillis();
 		aStarAlgorithm(s[6], answerSetNotEqual);
-		System.out.println("50%");
-		aStarAlgorithm(s[7], answerSetNotEqual);
-		System.out.println("End:" + (System.currentTimeMillis() - time));
+		System.out.println("End:" + (System.currentTimeMillis() - time)/1000 +"s");
 	}
 
 	private void aStarAlgorithm(Shape shape, HashMap<String, Integer> answerSetNotEqual) {
@@ -488,7 +483,7 @@ public class Algorithm {
 	public boolean hasSame(Shape shape) {
 		int angle = 0;
 		for (int j = 4; j >= 0; j--) {
-			angle += (shape.points.get(j).getAngle()) * Math.pow(10, j);
+			angle += ((shape.points.get(j).getAngle()) * Math.pow(10, j))+ shape.getLength(j);
 		}
 		int[] angleList = new int[5];
 		if (hasSameMap.containsKey(angle)) {
@@ -496,7 +491,7 @@ public class Algorithm {
 		} else {
 			for (int i = 0; i < 5; i++) {
 				for (int j = i; j < 5 + i; j++) {
-					angleList[i] += ((shape.points.get(j % 5).getAngle()) * Math.pow(10, 5 - j + i));
+					angleList[i] += ((shape.points.get(j % 5).getAngle()) * Math.pow(10, 5 - j + i))+ shape.getLength(j);
 				}
 			}
 			for (int i = 0; i < 5; i++) {
