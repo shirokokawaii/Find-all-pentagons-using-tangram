@@ -207,8 +207,6 @@ public class Connector {
                         shapes.add(delete4(newShape));
 
                     }
-
-
                     //序号
                     // System.out.println("-------"+(shapes.size()-1)+"-------");
                     // System.out.println(newShape+"\n  i:"+ i+"  j:"+j+"\n"+"direction" + k);
@@ -230,6 +228,7 @@ public class Connector {
         Shape result = new Shape();
         for (Shape s : shape.shapesSet) {
             result.shapesSet.offer(s);
+            //s.shapesSet = null;
         }
 
         for (char i : shape.pointOrder) {
@@ -241,18 +240,18 @@ public class Connector {
         }
 
         //debug
-        for (Shape s : shape.debugShapeSet) {
-            result.debugShapeSet.offer(s);
-        }
-        for (int i : shape.debugPointOrderA) {
-            result.debugPointOrderA.offer(i);
-        }
-        for (int i : shape.debugPointOrderB) {
-            result.debugPointOrderB.offer(i);
-        }
-        for (boolean b : shape.debugDirection) {
-            result.debugDirection.offer(b);
-        }
+//            for (Shape s : shape.debugShapeSet) {
+//                result.debugShapeSet.offer(s);
+//            }
+//            for (int i : shape.debugPointOrderA) {
+//                result.debugPointOrderA.offer(i);
+//            }
+//            for (int i : shape.debugPointOrderB) {
+//                result.debugPointOrderB.offer(i);
+//            }
+//            for (boolean b : shape.debugDirection) {
+//                result.debugDirection.offer(b);
+//            }
 
 //        if(result.shapesSet.size() == 0) {
 //            Shape s = new Shape();
@@ -268,9 +267,12 @@ public class Connector {
             result.shapeList.offer(shape);
             nameInit(shape);
             result.shapesSet.offer(shape);
-            result.debugShapeSet.offer(shape);
         }
 
+//        for (int i = 0; i < result.shapesSet.size(); i++) {
+//            System.out.println("aaaaa"+result.shapesSet.get(i).shapesSet);
+//            result.shapesSet.get(i).shapesSet = null;
+//        }
 
         return result;
     }
@@ -310,6 +312,10 @@ public class Connector {
             //name++;
         }
     }
+
+
+
+
 
 
     public static void main(String[] args) throws CloneNotSupportedException {
@@ -374,3 +380,4 @@ public class Connector {
     }
 
 }
+
