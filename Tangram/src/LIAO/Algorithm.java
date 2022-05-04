@@ -44,9 +44,9 @@ public class Algorithm {
 	
 	private void draw(Shape shape) {
         jp.repaint();
-        Pen pen1 = new Pen(jf, jp);
-        pen1.beforeDraw(shape, X, Y, size);
-        pen1.draw();
+        Pen pen = new Pen(jf, jp);
+        pen.beforeDraw(shape, X, Y, size);
+        pen.draw();
 	}
 	
 	private void displayAnswer(Shape shape) {
@@ -54,24 +54,23 @@ public class Algorithm {
 			String angleList = getAngleList(shape);
 			if (!hs.containsKey(angleList)) {
 				if (IDA.hasSame(shape)) {
-					shape = null;
 					return;
 				}
 				different++;
 				hs.put(angleList, answerIndex);
 				LinkedList<Shape> tem = new LinkedList<>();
 				tem.add(shape);
-				answerSet.add(tem);
 				if(jp != null) {
 					draw(shape);
 				}
+				answerSet.add(tem);
 				answerIndex++;
 			} else {
 				int tem = hs.get(angleList);
-				answerSet.get(tem).add(shape);
 				if(jp != null) {
 					draw(shape);
 				}
+				answerSet.get(tem).add(shape);
 			}
 			LinkedList<Integer> angleSet = checkAngle(shape);
 			count++;

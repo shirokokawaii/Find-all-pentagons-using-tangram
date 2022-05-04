@@ -26,10 +26,6 @@ public class Test {
          algorithm.dfsSearch();
          //algorithm.aStarSearch();
          answerList = algorithm.getAnswerList();
-//         int len = 0;
-//         for(int i=0;i<answerList.size();i++) {
-//        	 len += answerList.get(i).size();
-//         }
          
          for(int i=0;i<answerList.size();i++) {
         	 for(int j=0;j<answerList.get(i).size();j++) {

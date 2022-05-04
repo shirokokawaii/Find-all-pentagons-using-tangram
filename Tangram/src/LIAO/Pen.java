@@ -9,12 +9,11 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Pen extends Thread{// usage:First create an object of pen, then call the method "draw".
+public class Pen{// usage:First create an object of pen, then call the method "draw".
     int x1, x2, y1, y2 = 0;
     Graphics graphics;
-    JPanel jpanel = new JPanel();
-    JFrame jframe = new JFrame();
-    boolean drawInfinitly;
+    JPanel jpanel;
+    JFrame jframe;
     ArrayList<ArrayList<Double>> xList = new ArrayList<ArrayList<Double>>();
     ArrayList<ArrayList<Double>> yList = new ArrayList<ArrayList<Double>>();
     public Pen(JFrame jframe, JPanel jpanel) {
@@ -33,11 +32,14 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
         double nextAngle = 0;
         int originalPoint = 0;
         double originalAngle = 0;
+        int index = 0;
         char nextPoint;
-        while (!shape.shapesSet.isEmpty()) {
-            Shape shapeFirst = shape.shapesSet.poll();
-            if(!shape.pointOrder.isEmpty()) {
-            	nextPoint = shape.pointOrder.poll();
+//        while (!shape.shapesSet.isEmpty()) {
+        for(Shape shapeFirst :shape.shapesSet) {
+//            if(!shape.pointOrder.isEmpty()) {
+        	if(index < shape.pointOrder.size()) {
+        	nextPoint = shape.pointOrder.get(index);
+        	index++;
             }
             else {
             	nextPoint = 'A';
@@ -85,7 +87,7 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
 
     public void draw() {
         int index = 0;
-        for(int count=0;count<100;count++) {
+        for(int count=0;count<150;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
