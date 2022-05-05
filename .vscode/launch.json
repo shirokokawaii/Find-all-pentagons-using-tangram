@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch UI",
+            "request": "launch",
+            "mainClass": "LIAO.UI",
+            "projectName": "Find-all-pentagons-using-tangram_25b11a5e"
+        },
+        {
+            "type": "java",
             "name": "Launch Test",
             "request": "launch",
             "mainClass": "LIAO.Test",
