@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Test",
+            "request": "launch",
+            "mainClass": "LIAO.Test",
+            "projectName": "Tangram"
+        },
+        {
+            "type": "java",
             "name": "Launch UI",
             "request": "launch",
             "mainClass": "LIAO.UI",

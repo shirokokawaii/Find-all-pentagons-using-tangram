@@ -25,6 +25,7 @@ public class Algorithm {
 	int answerIndex = 0;
 	LinkedList<LinkedList<Shape>> answerSet = new LinkedList<>();
 	HashMap<String, Integer> answerSetNotEqual = new HashMap<>();
+	HashMap<String, Integer> hasSameMap = new HashMap<>();
 	HashMap<String, Integer> hs = new HashMap<>();
 	JFrame jf;
 	JPanel jp;
@@ -46,7 +47,6 @@ public class Algorithm {
 		Pen pen = new Pen(jf, jp);
 		pen.beforeDraw(shape, X, Y, size);
 		pen.draw();
-		jp.repaint();
 	}
 
 	private void displayAnswer(Shape shape) {
@@ -100,7 +100,6 @@ public class Algorithm {
 	}
 
 	public void bfsAlgorithm(Shape shapeIn) {
-		int acuracy = 4;// 0:highest
 		LinkedList<Shape> set1 = new LinkedList<Shape>();
 		LinkedList<Shape> set2 = new LinkedList<Shape>();
 		set1.offer(shapeIn);
@@ -117,45 +116,9 @@ public class Algorithm {
 			}
 			set1.clear();
 			for (Shape shape : set2) {
+				shape = FirstStageprune(shape, i);
 				if (shape == null) {
 					continue;
-				}
-				if (i == 1) {
-					if (shape.contains(s[5]) && shape.points.size() > 17 - acuracy * 3) {
-						continue;
-					}
-					if (!shape.contains(s[5]) && shape.points.size() > 18 - acuracy * 3) {
-						continue;
-					}
-				}
-				if (i == 2) {
-					if (shape.contains(s[5]) && shape.points.size() > 14 - acuracy * 2) {
-						continue;
-					}
-					if (!shape.contains(s[5]) && shape.points.size() > 15 - acuracy * 2) {
-						continue;
-					}
-				}
-				if (i == 3) {
-					if (shape.contains(s[5]) && shape.points.size() > 11 - acuracy) {
-						continue;
-					}
-					if (!shape.contains(s[5]) && shape.points.size() > 12 - acuracy) {
-						continue;
-					}
-				}
-				if (i == 4) {
-					if (shape.contains(s[5]) && shape.points.size() > 8) {
-						continue;
-					}
-					if (!shape.contains(s[5]) && shape.points.size() > 9) {
-						continue;
-					}
-				}
-				if (i == 5) {
-					if (shape.points.size() != 5) {
-						continue;
-					}
 				}
 				String angleSetTem = getAngleList(shape);
 				if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
@@ -204,46 +167,9 @@ public class Algorithm {
 							}
 							newShape.skip = shape.skip;
 							newShape = Connector.delete4(newShape);
-							int acuracy = 4;
-							if (newShape.points.size() < 3) {
+							newShape = FirstStageprune(newShape, j);
+							if (newShape == null) {
 								continue;
-							}
-							if (j == 1) {
-								if (newShape.contains(s[5]) && newShape.points.size() > 17 - (acuracy * 2 + 2)) {
-									continue;
-								}
-								if (!newShape.contains(s[5]) && newShape.points.size() > 18 - (acuracy * 2 + 2)) {
-									continue;
-								}
-							}
-							if (j == 2) {
-								if (newShape.contains(s[5]) && newShape.points.size() > 14 - (acuracy * 2)) {
-									continue;
-								}
-								if (!newShape.contains(s[5]) && newShape.points.size() > 15 - (acuracy * 2)) {
-									continue;
-								}
-							}
-							if (j == 3) {
-								if (newShape.contains(s[5]) && newShape.points.size() > 11 - acuracy) {
-									continue;
-								}
-								if (!newShape.contains(s[5]) && newShape.points.size() > 12 - acuracy) {
-									continue;
-								}
-							}
-							if (j == 4) {
-								if (newShape.contains(s[5]) && newShape.points.size() > 8 - (acuracy / 2)) {
-									continue;
-								}
-								if (!newShape.contains(s[5]) && newShape.points.size() > 9 - (acuracy / 2)) {
-									continue;
-								}
-							}
-							if (j == 5) {
-								if (newShape.points.size() != 5) {
-									continue;
-								}
 							}
 							String angleSetTem = getAngleList(newShape);
 							if (!angleSetMapLocal.containsKey(angleSetTem)) {// angle list is not same
@@ -299,7 +225,7 @@ public class Algorithm {
 		aStarAlgorithm(s[6]);
 		System.out.println("End: " + (System.currentTimeMillis() - time) / 1000 + "s");
 	}
-
+	
 	private void aStarAlgorithm(Shape shape) {
 		if (shape.shapesSet.size() == 7) {
 			String tem = getAngleList(shape);
@@ -319,51 +245,11 @@ public class Algorithm {
 			if (!shape.contains(s[i])) {
 				set = Connector.connectAll(shape, s[i]);
 				HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
-				int acuracy = 4;
 				while (!set.isEmpty()) {
 					Shape shape1 = set.poll();
+					shape1 = FirstStageprune(shape1, i);
 					if (shape1 == null) {
 						continue;
-					}
-					if (shape1.points.size() < 3) {
-						continue;
-					}
-					if (i == 1) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 17 - (acuracy * 3)) {
-							continue;
-						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 18 - (acuracy * 3) - 1) {
-							continue;
-						}
-					}
-					if (i == 2) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 14 - (acuracy * 2) - 1) {
-							continue;
-						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 15 - (acuracy * 2) - 1) {
-							continue;
-						}
-					}
-					if (i == 3) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 11 - acuracy) {
-							continue;
-						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 12 - acuracy) {
-							continue;
-						}
-					}
-					if (i == 4) {
-						if (shape1.contains(s[5]) && shape1.points.size() > 8 - (acuracy / 2)) {
-							continue;
-						}
-						if (!shape1.contains(s[5]) && shape1.points.size() > 9 - (acuracy / 2)) {
-							continue;
-						}
-					}
-					if (i == 5) {
-						if (shape1.points.size() != 5) {
-							continue;
-						}
 					}
 					String angleSetTem = getAngleList(shape1);
 					if (!angleSetMap.containsKey(angleSetTem)) {// angle list is not same
@@ -419,16 +305,6 @@ public class Algorithm {
 						}
 					}
 				}
-
-				// while (!set1.isEmpty()) {
-				// Shape shapeTem = set1.poll();
-				// int cost = Math.abs(5 - shapeTem.points.size());
-				// if (cost > 5) {
-				// costSet.get(6).add(shapeTem);
-				// } else {
-				// costSet.get(cost).add(shapeTem);
-				// }
-				// }
 			}
 		}
 		for (int i = 0; i < 5; i++) {// connect the shape from the lowest cost
@@ -440,6 +316,45 @@ public class Algorithm {
 		}
 	}
 
+	private Shape FirstStageprune(Shape shape, int j) {
+		if (shape.points.size() < 3) {
+			return null;
+		}
+		if (j == 1) {
+			if (shape.contains(s[5]) && shape.points.size() > 5) {
+				return null;
+			}
+			if (!shape.contains(s[5]) && shape.points.size() > 6) {
+				return null;
+			}
+		}
+		if (j == 2) {
+			if (shape.contains(s[5]) && shape.points.size() > 4) {
+				return null;
+			}
+			if (!shape.contains(s[5]) && shape.points.size() > 5) {
+				return null;
+			}
+		}
+		if (j == 3) {
+			if (shape.contains(s[5]) && shape.points.size() > 5) {
+				return null;
+			}
+			if (!shape.contains(s[5]) && shape.points.size() > 6) {
+				return null;
+			}
+		}
+		if (j == 4) {
+			if (shape.contains(s[5]) && shape.points.size() > 6) {
+				return null;
+			}
+			if (!shape.contains(s[5]) && shape.points.size() > 7) {
+				return null;
+			}
+		}
+		return shape;
+	}
+	
 	private boolean elementsEquals(Shape shape1, Shape shape2) {
 		int count1 = 0;
 		int count2 = 0;
@@ -501,86 +416,37 @@ public class Algorithm {
 
 	}
 
-//	public String getAngleList(Shape shape) {
-//		String answer = new String();
-//		int len = shape.points.size();
-//		int[] angleList = new int[len];
-//		for (int i = 0; i < len; i++) {
-//			for (int j = i; j < len + i; j++) {
-//				angleList[i] += ((shape.getAngel(j % len)) * Math.pow(10, len - j + i) + shape.getLength(j));
-//			}
-//		}
-//		int[] arr = new int[angleList.length];
-//		mergeSort(angleList, 0, angleList.length-1, arr);
-//
-//		for (int i = 0; i < len; i++) {
-//			int tem = angleList[i];
-//			String str = Integer.toString(tem);
-//			answer = answer + str;
-//		}
-//		return answer;
-//	}
-
 	public String getAngleList(Shape shape) {
 		int len = shape.points.size();
 		int[] angleList = new int[len];
-		int min = Integer.MAX_VALUE;
+		int[] lengthList = new int[len];
+		int minAngle = Integer.MAX_VALUE;
+		int minLength = Integer.MAX_VALUE;
 		for (int i = 0; i < len; i++) {
 			for (int j = i; j < len + i; j++) {
-				angleList[i] += ((shape.getAngel(j % len)) * Math.pow(10, len - j + i) + shape.getLength(j));
+				angleList[i] += ((shape.getAngel(j % len)) * Math.pow(10, len - j + i));
+				angleList[i] += ((shape.getLength(j % len)) * Math.pow(10, len - j + i));
+
 			}
-			if (angleList[i] < min) {
-				min = angleList[i];
+			if (angleList[i] < minAngle) {
+				minAngle = angleList[i];
+			}
+			if (lengthList[i] < minLength) {
+				minLength = lengthList[i];
 			}
 		}
-		String answer = Integer.toString(min);
+		String answer;
+		String str;
+		if(minAngle<minLength){
+			str = Integer.toString(minLength );
+			answer = Integer.toString(minAngle);
+		}
+		else{
+			str = Integer.toString(minAngle);
+			answer = Integer.toString(minLength);
+		}
+		answer += str;
 		return answer;
 	}
 
-	public static void mergeSort(int[] arr, int left, int right, int[] temp) {
-		if (left < right) {
-			int mid = (left + right) / 2;
-			mergeSort(arr, left, mid, temp);
-			mergeSort(arr, mid + 1, right, temp);
-			merge(arr, left, mid, right, temp);
-		}
-
 	}
-
-	public static void merge(int[] arr, int left, int mid, int right, int[] temp) {
-		int i = left;
-		int j = mid + 1;
-		int t = 0;
-		while (i <= mid && j <= right) {
-			if (arr[i] <= arr[j]) {
-				temp[t] = arr[i];
-				t++;
-				i++;
-			} else {
-				temp[t] = arr[j];
-				t++;
-				j++;
-			}
-		}
-		while (i <= mid) {
-			temp[t] = arr[i];
-			t++;
-			i++;
-		}
-
-		while (j <= right) {
-			temp[t] = arr[j];
-			t++;
-			j++;
-		}
-
-		t = 0;
-		int tempLeft = left;
-
-		while (tempLeft <= right) {
-			arr[tempLeft] = temp[t];
-			t++;
-			tempLeft++;
-		}
-	}
-}
