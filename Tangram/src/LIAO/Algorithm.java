@@ -238,10 +238,10 @@ public class Algorithm {
 		}
 		LinkedList<LinkedList<Shape>> costSet = new LinkedList<LinkedList<Shape>>();
 		LinkedList<Shape> set = new LinkedList<Shape>();
-		for (int i = 0; i < 5; i++) {// up to decagon
+		for (int i = 0; i < 3; i++) {// up to decagon
 			costSet.add(new LinkedList<Shape>());
 		}
-		for (int i = 0; i < 6; i++) {// 5,6,7,8,>9
+		for (int i = 0; i < 6; i++) {// 5,6,>7
 			if (!shape.contains(s[i])) {
 				set = Connector.connectAll(shape, s[i]);
 				HashMap<String, LinkedList<Shape>> angleSetMap = new HashMap<>();
@@ -257,8 +257,8 @@ public class Algorithm {
 						tem.add(shape1);
 						angleSetMap.put(angleSetTem, tem);
 						int cost = Math.abs(5 - shape1.points.size());
-						if (cost > 3) {
-							costSet.get(4).add(shape1);
+						if (cost > 1) {
+							costSet.get(2).add(shape1);
 						} else {
 							costSet.get(cost).add(shape1);
 						}
@@ -298,8 +298,8 @@ public class Algorithm {
 						tem.add(shape1);
 						angleSetMap.put(angleSetTem, tem);
 						int cost = Math.abs(5 - shape1.points.size());
-						if (cost > 3) {
-							costSet.get(4).add(shape1);
+						if (cost > 1) {
+							costSet.get(2).add(shape1);
 						} else {
 							costSet.get(cost).add(shape1);
 						}
@@ -307,7 +307,7 @@ public class Algorithm {
 				}
 			}
 		}
-		for (int i = 0; i < 5; i++) {// connect the shape from the lowest cost
+		for (int i = 0; i < 3; i++) {// connect the shape from the lowest cost
 			int len = costSet.get(i).size();
 			for (int j = 0; j < len; j++) {
 				Shape shapeTem = costSet.get(i).get(j);
