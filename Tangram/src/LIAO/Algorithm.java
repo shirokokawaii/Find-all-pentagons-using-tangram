@@ -238,7 +238,7 @@ public class Algorithm {
 		}
 		LinkedList<LinkedList<Shape>> costSet = new LinkedList<LinkedList<Shape>>();
 		LinkedList<Shape> set = new LinkedList<Shape>();
-		for (int i = 0; i < 3; i++) {// up to decagon
+		for (int i = 0; i < 4; i++) {// up to decagon
 			costSet.add(new LinkedList<Shape>());
 		}
 		for (int i = 0; i < 6; i++) {// 5,6,>7
@@ -298,7 +298,10 @@ public class Algorithm {
 						tem.add(shape1);
 						angleSetMap.put(angleSetTem, tem);
 						int cost = Math.abs(5 - shape1.points.size());
-						if (cost > 1) {
+						if(cost == 0) {
+							aStarAlgorithm(shape1);
+						}
+						else if (cost > 2) {
 							costSet.get(2).add(shape1);
 						} else {
 							costSet.get(cost).add(shape1);
@@ -307,7 +310,7 @@ public class Algorithm {
 				}
 			}
 		}
-		for (int i = 0; i < 3; i++) {// connect the shape from the lowest cost
+		for (int i = 0; i < 4; i++) {// connect the shape from the lowest cost
 			int len = costSet.get(i).size();
 			for (int j = 0; j < len; j++) {
 				Shape shapeTem = costSet.get(i).get(j);
@@ -329,10 +332,10 @@ public class Algorithm {
 			}
 		}
 		if (j == 2) {
-			if (shape.contains(s[5]) && shape.points.size() > 4) {
+			if (shape.contains(s[5]) && shape.points.size() > 6) {
 				return null;
 			}
-			if (!shape.contains(s[5]) && shape.points.size() > 5) {
+			if (!shape.contains(s[5]) && shape.points.size() > 6) {
 				return null;
 			}
 		}
