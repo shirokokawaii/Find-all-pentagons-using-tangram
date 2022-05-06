@@ -23,8 +23,8 @@ public class Test {
 //         algorithm.displayWhileCalculating(jf, jp, X, Y, size);
 //         LinkedList<LinkedList<Shape>> answerList = new LinkedList<>();
          //algorithm.bfsSearch();
-         algorithm.dfsSearch();
-         //algorithm.aStarSearch();
+         //algorithm.dfsSearch();
+         algorithm.aStarSearch();
 //         answerList = algorithm.getAnswerList();
          
 //         for(int i=0;i<answerList.size();i++) {
