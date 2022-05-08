@@ -9,7 +9,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Pen extends Thread{// usage:First create an object of pen, then call the method "draw".
+public class Pen extends Thread{// usage:First create an object of pen, then call the method "beforeDraw", finally call draw.
     int x1, x2, y1, y2 = 0;
     Graphics graphics;
     JPanel jpanel;
@@ -90,7 +90,7 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
         graphics.setColor(Color.white);
         graphics.fillRect(0, 0, jpanel.getHeight(), jpanel.getWidth());
         graphics.setColor(Color.black);
-        for(int count=0;count<10;count++) {
+        for(int count=0;count<100;count++) {//Perhaps larger draw will solve some unknown draw problem...
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
@@ -110,7 +110,7 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
     
     public void draw(String path) {
         int index = 0;
-        for(int count=0;count<100;count++) {
+        for(int count=0;count<1000;count++) {
             ArrayList<Double> x = xList.get(index);
             ArrayList<Double> y = yList.get(index);
             int len = x.size();
@@ -126,12 +126,6 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
                 index =0;
             }
         }
-        try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         savePic(path);
     }
     
@@ -157,7 +151,6 @@ public class Pen extends Thread{// usage:First create an object of pen, then cal
     	try {
 			ImageIO.write(image, "jpg", new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

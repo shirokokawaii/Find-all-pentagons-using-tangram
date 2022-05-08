@@ -11,7 +11,6 @@ public class UI {
 	JComboBox<String> type, method;
 	JTextField path;
 	JButton button1, button2, button3, button4;
-	Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
 	LinkedList<LinkedList<Shape>> answerList = new LinkedList<>();
 	int way = 0;
 	JPanel[] p = new JPanel[100];
@@ -93,7 +92,13 @@ public class UI {
 				way = 4;
 			}
 		});
-
+		
+		JLabel titleNow = new JLabel();
+		titleNow.setBounds(10, 600, 700, 85);
+		titleNow.setForeground(Color.black);
+		titleNow.setFont(new Font("TimesRoman", 1, 15));
+		titleNow.setText("");
+		
 		button1 = new JButton();
 		button1.setBounds(15, 700, 135, 35);
 		button1.setText("Different ways");
@@ -111,7 +116,10 @@ public class UI {
 		button2.setBounds(15, 750, 135, 35);
 		button2.setText("Solve");
 		button2.addActionListener((e) -> {
+			Algorithm algorithm = new Algorithm(S0, S1, S2, S3, S4, S5, S6, S7);
 			algorithm.displayWhileCalculating(rf, panel, 260, 350, 60);
+			algorithm.showLabelWhileCalculating(titleNow);
+			answerList.clear();
 			if (way == 0) {
 				total.setText("Please choose a solve approach before start");
 			}
@@ -187,6 +195,7 @@ public class UI {
 		rf.getContentPane().add(now, null);
 		rf.getContentPane().add(total, null);
 		rf.getContentPane().add(l, null);
+		rf.getContentPane().add(titleNow, null);
 		rf.setVisible(true);
 	}
 

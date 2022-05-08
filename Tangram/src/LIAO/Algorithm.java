@@ -6,6 +6,7 @@ import static LIAO.entity.Tangram.S7;
 import java.util.*;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Algorithm {
@@ -29,6 +30,7 @@ public class Algorithm {
 	HashMap<String, Integer> hs = new HashMap<>();
 	JFrame jf;
 	JPanel jp;
+	JLabel label;
 	int X = 0;
 	int Y = 0;
 	int size = 0;
@@ -41,6 +43,9 @@ public class Algorithm {
 		this.X = X;
 		this.Y = Y;
 		this.size = size;
+	}
+	void showLabelWhileCalculating(JLabel jl) {
+		this.label = jl;
 	}
 
 	private void draw(Shape shape) {
@@ -75,6 +80,9 @@ public class Algorithm {
 			LinkedList<Integer> angleSet = checkAngle(shape);
 			count++;
 			long timeNow = System.currentTimeMillis();
+			if(label != null) {
+				label.setText((count - 1) + ":" + angleSet + " " + (timeNow - time) / 1000 + "s");
+			}
 			System.out.println((count - 1) + ":" + angleSet + " " + (timeNow - time) / 1000 + "s");
 		}
 	}
@@ -95,7 +103,10 @@ public class Algorithm {
 	public void bfsSearch() {
 		time = System.currentTimeMillis();
 		bfsAlgorithm(S6);
-		bfsAlgorithm(S7);
+			bfsAlgorithm(S7);
+		if(label != null) {
+			label.setText("End: " + ((System.currentTimeMillis() - time) / 1000) + "s");
+		}
 		System.out.println("End: " + ((System.currentTimeMillis() - time) / 1000) + "s");
 	}
 
@@ -139,6 +150,10 @@ public class Algorithm {
 		HashMap<String, Boolean> answerSetNotEqual = new HashMap<>();
 		time = System.currentTimeMillis();
 		dfsAlgorithm(s[6], answerSetNotEqual);
+		//dfsAlgorithm(s[7], answerSetNotEqual);
+		if(label != null) {
+			label.setText("End: " + ((System.currentTimeMillis() - time) / 1000) + "s");
+		}
 		System.out.println("End: " + (System.currentTimeMillis() - time) / 1000);
 	}
 
@@ -223,13 +238,16 @@ public class Algorithm {
 	public void aStarSearch() {
 		time = System.currentTimeMillis();
 		aStarAlgorithm(s[6]);
+		//aStarAlgorithm(s[7]);
+		if(label != null) {
+			label.setText("End: " + ((System.currentTimeMillis() - time) / 1000) + "s");
+		}
 		System.out.println("End: " + (System.currentTimeMillis() - time) / 1000 + "s");
 	}
 	
 	private void aStarAlgorithm(Shape shape) {
 		if (shape.shapesSet.size() == 7) {
 			String tem = getAngleList(shape);
-			// System.out.println(checkAngle(shape));
 			if (!answerSetNotEqual.containsKey(tem)) {
 				answerSetNotEqual.put(tem, null);
 				displayAnswer(shape);
